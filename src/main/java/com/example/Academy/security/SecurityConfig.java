@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -53,8 +55,11 @@ public class SecurityConfig {
     }
 
 
-    @Bean
+   @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        
+        
 
         http
             .csrf(csrf -> csrf.disable())
@@ -64,25 +69,94 @@ public class SecurityConfig {
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(auth -> auth
 
-                // 🔓 públicos
+                
+                //AUTENTICACIÓN / REGISTRO
+                // =========================
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers(
                     "/alumnos/register", "/alumnos/auth",
                     "/docentes/register", "/docentes/auth"
                 ).permitAll()
 
-                // 🔐 ADMIN y DOCENTE pueden modificar
+                
+                // CURSOS
+                // =========================
+                .requestMatchers(HttpMethod.GET, "/cursos/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.PUT,  "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.DELETE, "/cursos/**").hasRole("ADMIN")
+
+                
+                // ALUMNOS
+                // =========================
                 .requestMatchers(HttpMethod.PUT, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers("/alumnos/**").hasAnyRole("ADMIN", "ALUMNO")
+
+                
+                // DOCENTES
+                // =========================
                 .requestMatchers(HttpMethod.PUT, "/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
-                                
-
-                // 🔐 acceso normal
-                .requestMatchers("/alumnos/**").hasAnyRole("ADMIN", "ALUMNO")
                 .requestMatchers("/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
+
+            
+                // ASISTENCIAS
+                // =========================
+                .requestMatchers(HttpMethod.GET, "/asistencias/**")
+                    .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
+                .requestMatchers(HttpMethod.POST, "/asistencias/**")
+                    .hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.PUT, "/asistencias/**")
+                    .hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.DELETE, "/asistencias/**")
+                    .hasAnyRole("ADMIN", "DOCENTE")
+
+                // FILES
+                // =========================
+                .requestMatchers(HttpMethod.POST, "/files/upload")
+                    .hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.GET, "/files/download/**")
+                    .authenticated()
+
+                
+                //EXÁMENES
+                // =========================
+                .requestMatchers(HttpMethod.GET, "/examenes/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/examenes/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.PUT,  "/examenes/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.DELETE, "/examenes/**").hasAnyRole("ADMIN", "DOCENTE")
+                
+
+                
+                // ENTREGAS
+                // =========================
+                .requestMatchers(HttpMethod.GET, "/entregas/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/entregas/alumno/**")
+                .hasAnyRole("ALUMNO", "DOCENTE", "ADMIN")
+                .requestMatchers(HttpMethod.POST,"/entregas/examen/*/alumno/*").hasRole("ALUMNO")
+                .requestMatchers(HttpMethod.POST, "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.PUT,  "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.DELETE, "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
+
+
+                // MERCADO PAGO
+                // =========================
+                .requestMatchers(HttpMethod.POST, "/pagos/mercadoPago").permitAll()
+                .requestMatchers(HttpMethod.POST, "/pagos/webhook").permitAll()
+                .requestMatchers(HttpMethod.GET, "/pagos/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/pagos/crear").hasAnyRole("ADMIN")
+                .requestMatchers("/webhooks/**").permitAll()
+                .requestMatchers("/auth/**").permitAll()                            
+                
+
+
+                
+                // ADMIN
+                // =========================
                 .requestMatchers("/admin/**").hasRole("ADMIN")
 
+                
                 .anyRequest().authenticated()
             )
             .addFilterBefore(
@@ -93,4 +167,4 @@ public class SecurityConfig {
         return http.build();
     }
 
-}
+} 

@@ -50,13 +50,7 @@ public class Docente  extends Persona {
     private List<Curso> cursos = new ArrayList<>();
 
 
-    @ManyToMany
-    @JoinTable(
-    name = "docente_asistencia",
-    joinColumns = @JoinColumn(name = "docente_id"),
-    inverseJoinColumns = @JoinColumn(name = "asistencia_id")
-    )   
-    private List<Asistencia> asistencias = new ArrayList<>();
+    
 
     
 }

@@ -47,3 +47,5 @@ Borrado logico, totalmente recomendable para estos tipos de proyectos.
 
 
 ELiminación del admin por el pgadmin, muchos problemas de permisos y roles, creación cuando se inicialice la aplicación.
+
+Los niveles son maestros, los registre directamente en el pgadmin, ya que no se modifican, no se agregan mas, y no se eliminan.

@@ -28,20 +28,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    
+
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain)
-            throws ServletException, IOException {
+        protected void doFilterInternal(
+                HttpServletRequest request,
+                HttpServletResponse response,
+                FilterChain filterChain)
+                throws ServletException, IOException {
+
+        String path = request.getRequestURI();
+
+        if (path.startsWith("/pagos/webhook")
+        || path.startsWith("/pagos/mercadoPago")
+        || path.startsWith("/auth/")
+        || path.startsWith("/webhooks/")) {
+
+    filterChain.doFilter(request, response);
+    return;
+}
+
 
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
-            String username = jwtTokenUtil.getSubject(authHeader);
+                String username = jwtTokenUtil.getSubject(authHeader);
 
-            if (username != null &&
+                if (username != null &&
                 SecurityContextHolder.getContext().getAuthentication() == null &&
                 jwtTokenUtil.verify(authHeader)) {
 
@@ -62,9 +76,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext()
                         .setAuthentication(authentication);
-            }
+                }
         }
 
         filterChain.doFilter(request, response);
-    }
+        }
+
 }

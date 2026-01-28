@@ -6,10 +6,10 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -44,9 +44,9 @@ public class Alumno extends Persona {
     private List<Nivel> nivel = new ArrayList<>();
 
 
-    @ManyToOne
-    @JoinColumn(name = "asistencia_id")
-    private Asistencia asistencia;
+    @OneToMany(mappedBy = "alumno")
+    private List<Asistencia> asistencias = new ArrayList<>();
+
 
     @ManyToMany
     @JoinTable( name = "alumno_examen", 
@@ -55,5 +55,7 @@ public class Alumno extends Persona {
     
     private List<Examen> examen = new ArrayList<>();
 
-    
+    @OneToMany(mappedBy = "alumno", fetch = FetchType.LAZY)
+    private List<ExamenAlumno> entregas = new ArrayList<>();
+
 }

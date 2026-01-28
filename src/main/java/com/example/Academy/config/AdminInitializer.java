@@ -29,7 +29,6 @@ public class AdminInitializer {
         if (!exists) {
 
             Administrador admin = new Administrador();
-            // ⚠️ Si Persona es abstracta, avisame y lo ajustamos
 
             admin.setUsername("admin");
             admin.setEmail("admin@academy.com");
@@ -39,7 +38,7 @@ public class AdminInitializer {
 
             personaRepository.save(admin);
 
-            System.out.println("✅ Admin creado automáticamente");
+            System.out.println(" Admin creado automáticamente");
         }
     }
 }

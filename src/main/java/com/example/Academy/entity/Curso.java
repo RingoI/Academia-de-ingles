@@ -1,18 +1,16 @@
 package com.example.Academy.entity;
 
-import java.util.Date;
 import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +27,9 @@ public class Curso {
     private Long id;
     private String nombre;
     private double costo;
-    private Date horario;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+    private Integer cupo;
     private String tipo;
 
     
@@ -55,8 +55,8 @@ public class Curso {
     )
     private List<Material> materiales = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "asistencia_id")
-    private Asistencia asistencia;
+    @OneToMany(mappedBy = "curso")
+    private List<Asistencia> asistencias = new ArrayList<>();
+
     
 }
