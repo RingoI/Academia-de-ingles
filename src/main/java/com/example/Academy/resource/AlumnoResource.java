@@ -36,6 +36,7 @@ public class AlumnoResource {
         
     }
 
+    // Mala practica, cambiar luego
     @PostMapping("/register")
     public ResponseEntity<?> registerAlumno(@RequestBody CreateAlumnoDTO dto) {
         try {
@@ -62,7 +63,7 @@ public class AlumnoResource {
         }
     }
 
-    
+    //Usar apiResponse
     @PostMapping(path = "/auth", produces = "application/json")
     public ResponseEntity<?> authenticateAlumno(@RequestBody CreateAlumnoDTO createAlumnoDTO) {
         try {
@@ -74,6 +75,7 @@ public class AlumnoResource {
         }
     }
 
+    //Usar ApiResponse
     @DeleteMapping ("/{id}")
     public ResponseEntity<?> deleteAlumno(@RequestBody Long id) {
         try {
@@ -85,7 +87,7 @@ public class AlumnoResource {
     }
 
     
-
+    //Usar ApiResponse
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAlumno(
             @PathVariable Long id,

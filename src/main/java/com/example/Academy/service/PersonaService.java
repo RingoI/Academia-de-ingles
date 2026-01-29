@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.Academy.dto.UpdateAlumnoDTO;
+import com.example.Academy.dto.UpdateDocenteRequestDTO;
 import com.example.Academy.entity.Persona;
 
 @Service
@@ -14,5 +15,6 @@ public interface PersonaService {
     public void create(Persona persona) throws Exception;
     public void updateAlumno(Long id, UpdateAlumnoDTO updateAlumnoDTO) throws Exception;
     public void delete(Long id) throws Exception;
+    public void updateDocente(Long id, UpdateDocenteRequestDTO dto) throws Exception;
     
 }  

@@ -96,9 +96,11 @@ public class SecurityConfig {
                 
                 // DOCENTES
                 // =========================
-                .requestMatchers(HttpMethod.PUT, "/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.DELETE, "/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers("/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
+               
+                .requestMatchers(HttpMethod.DELETE, "/docentes/delete/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/docentes/update/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/docentes/create/**").hasRole("ADMIN")
+
 
             
                 // ASISTENCIAS

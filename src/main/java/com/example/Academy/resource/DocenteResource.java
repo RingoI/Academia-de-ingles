@@ -1,13 +1,19 @@
 package com.example.Academy.resource;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Academy.config.ModelMapperConfig;
+import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.dto.CreateDocenteDTO;
+import com.example.Academy.dto.UpdateDocenteRequestDTO;
 import com.example.Academy.entity.Docente;
 import com.example.Academy.entity.Role;
 import com.example.Academy.service.AuthService;
@@ -28,7 +34,9 @@ public class DocenteResource {
         this.authService = authService;
     }
 
-    @PostMapping("/register")
+    // Mala practica, cambiar luego
+    @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> registerDocente(@RequestBody CreateDocenteDTO dto) {
         try {
             Docente docente = new Docente();
@@ -48,8 +56,28 @@ public class DocenteResource {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponseDTO<Void>> updateDocente(
+            @PathVariable Long id,
+            @RequestBody UpdateDocenteRequestDTO requestDTO) throws Exception {
+
+        personaService.updateDocente(id, requestDTO);
+
+           
+        return ResponseEntity.ok(
+            new ApiResponseDTO<Void>("Docente updated successfully", null));
+    }
+    
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponseDTO<Void>> deleteDocente(@PathVariable Long id) throws Exception {
+        personaService.delete(id);
+        return ResponseEntity.ok(
+            new ApiResponseDTO<Void>("Docente deleted successfully", null));
+    }
+
 
     @PostMapping(path = "/auth", produces = "application/json")
     public ResponseEntity<?> authenticateDocente(@RequestBody CreateDocenteDTO createDocenteDTO) {

@@ -3,10 +3,13 @@ package com.example.Academy.service;
 import org.springframework.stereotype.Service;
 
 import com.example.Academy.dto.UpdateAlumnoDTO;
+import com.example.Academy.dto.UpdateDocenteRequestDTO;
 import com.example.Academy.entity.Alumno;
+import com.example.Academy.entity.Docente;
 import com.example.Academy.entity.Nivel;
 import com.example.Academy.entity.Persona;
 import com.example.Academy.repository.AlumnoRepository;
+import com.example.Academy.repository.DocenteRepository;
 import com.example.Academy.repository.NivelRepository;
 import com.example.Academy.repository.PersonaRepository;
 
@@ -23,12 +26,14 @@ public class PersonaServiceImpl implements PersonaService {
     private final PasswordEncoder passwordEncoder;
     private final NivelRepository nivelRepository; 
     private final AlumnoRepository alumnoRepository;
+    private final DocenteRepository docenteRepository;
 
-    public PersonaServiceImpl(PersonaRepository personaRepository, PasswordEncoder passwordEncoder, NivelRepository nivelRepository, AlumnoRepository alumnoRepository) {
+    public PersonaServiceImpl(PersonaRepository personaRepository, PasswordEncoder passwordEncoder, NivelRepository nivelRepository, AlumnoRepository alumnoRepository, DocenteRepository docenteRepository) {
         this.personaRepository = personaRepository;
         this.passwordEncoder = passwordEncoder;
         this.nivelRepository = nivelRepository;
         this.alumnoRepository = alumnoRepository;
+        this.docenteRepository = docenteRepository;
     }
     
     @Override
@@ -76,5 +81,53 @@ public class PersonaServiceImpl implements PersonaService {
         }
 
         alumnoRepository.save(alumno);
+    }
+
+    @Override
+    public void updateDocente(Long id, UpdateDocenteRequestDTO updateDocenteRequestDTO) throws Exception {
+        Persona persona = personaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Persona no encontrada"));    
+            
+        Docente docente = docenteRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+
+        if (updateDocenteRequestDTO.getUsername() != null) {
+            persona.setUsername(updateDocenteRequestDTO.getUsername());
+        }
+
+        if (updateDocenteRequestDTO.getPassword() != null) {
+            String encodedPassword = passwordEncoder.encode(updateDocenteRequestDTO.getPassword());
+            persona.setPassword(encodedPassword);
+        }
+
+        if (updateDocenteRequestDTO.getTitulo() != null) {
+            docente.setTitulo(updateDocenteRequestDTO.getTitulo());
+        }
+
+        if (updateDocenteRequestDTO.getEstado() != null) {
+            docente.setEstado(updateDocenteRequestDTO.getEstado());
+        }
+
+        if (updateDocenteRequestDTO.getCuit() != null) {
+            docente.setCuit(updateDocenteRequestDTO.getCuit());
+        }
+
+        if (updateDocenteRequestDTO.getNombre() != null) {
+            persona.setNombre(updateDocenteRequestDTO.getNombre());
+        }
+
+        if (updateDocenteRequestDTO.getEmail() != null) {
+            persona.setEmail(updateDocenteRequestDTO.getEmail());
+        }
+
+        if (updateDocenteRequestDTO.getDireccion() != null) {
+            persona.setDireccion(updateDocenteRequestDTO.getDireccion());
+        }
+
+        if (updateDocenteRequestDTO.getFechanacimiento() != null) {
+            persona.setFechanacimiento(updateDocenteRequestDTO.getFechanacimiento());
+        }
+
+        docenteRepository.save(docente);
     }
 } 
