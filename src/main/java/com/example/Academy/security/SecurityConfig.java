@@ -91,14 +91,15 @@ public class SecurityConfig {
                 // =========================
                 .requestMatchers(HttpMethod.PUT, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers("/alumnos/**").hasAnyRole("ADMIN", "ALUMNO")
+                .requestMatchers(HttpMethod.POST, "/alumnos/create/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.GET, "/alumnos/**").permitAll()
 
                 
                 // DOCENTES
                 // =========================
                
-                .requestMatchers(HttpMethod.DELETE, "/docentes/delete/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/docentes/update/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/docentes/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/docentes/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/docentes/create/**").hasRole("ADMIN")
 
 

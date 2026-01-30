@@ -24,6 +24,8 @@ import lombok.Setter;
 public class Alumno extends Persona {
 
     private String dni;
+
+    private Boolean estado;
     
     @ManyToMany
     @JoinTable( name = "alumno_telefono", 
@@ -44,7 +46,7 @@ public class Alumno extends Persona {
     private List<Nivel> nivel = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "alumno")
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Asistencia> asistencias = new ArrayList<>();
 
 

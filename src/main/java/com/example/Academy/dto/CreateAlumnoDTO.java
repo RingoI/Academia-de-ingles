@@ -17,4 +17,5 @@ public class CreateAlumnoDTO {
     private String email;
     private String direccion;
     private LocalDate fechanacimiento;
+    private Boolean estado;
 }
