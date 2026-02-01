@@ -38,7 +38,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     const res = await loginService({ username, password });
-    localStorage.setItem("token", res.token);
+
+    if (!res?.token) {
+      console.error("Respuesta inválida del login", res);
+      throw new Error("Token no recibido");
+    }
+
+    // 🔥 Guardamos el token SIN tocarlo
+    localStorage.setItem("token", res.token.replace("Bearer ", ""));
 
     const me = await getMe();
     setUser(me);
