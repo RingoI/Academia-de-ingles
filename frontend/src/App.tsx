@@ -1,11 +1,12 @@
 import { useAuth } from "./Context/AuthContext";
 import LoginPage from "./Pages/LoginPage";
+import AppLayout from "./Layout/AppLayout";
 
 function App() {
-  const { isAuthenticated, loading, user, logout } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <h2>Cargando aplicación...</h2>;
+    return <h2 className="text-center mt-10">Cargando aplicación...</h2>;
   }
 
   if (!isAuthenticated) {
@@ -13,12 +14,10 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Academia</h1>
-      <p>Usuario: {user?.username}</p>
-      <button onClick={logout}>Cerrar sesión</button>
-      <p>Rol: {user?.role}</p>
-    </div>
+    <AppLayout>
+      <h2 className="text-2xl font-bold mb-4">Bienvenido a la Academia</h2>
+      <p>Seleccioná una opción del menú</p>
+    </AppLayout>
   );
 }
 

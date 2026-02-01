@@ -24,7 +24,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
         <h1 className="text-2xl font-bold text-center text-slate-800 mb-6">
-          Academia
+          Academia Ingles
         </h1>
 
         <div className="space-y-4">
