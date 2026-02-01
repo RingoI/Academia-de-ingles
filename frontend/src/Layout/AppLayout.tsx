@@ -18,7 +18,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             onClick={logout}
             className="bg-indigo-500 hover:bg-indigo-700 px-4 py-2 rounded-lg transition"
           >
-            Logout
+            Cerrar sesión
           </button>
         </div>
       </header>

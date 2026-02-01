@@ -1,22 +1,22 @@
+import { Routes, Route } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
 import LoginPage from "./Pages/LoginPage";
 import AppLayout from "./Layout/AppLayout";
+import CursosPage from "./Pages/CursoPage";
+import CursoDetallePage from "./Pages/CursoDetallePage";
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
 
-  if (loading) {
-    return <h2 className="text-center mt-10">Cargando aplicación...</h2>;
-  }
-
-  if (!isAuthenticated) {
-    return <LoginPage />;
-  }
+  if (loading) return <p>Cargando...</p>;
+  if (!isAuthenticated) return <LoginPage />;
 
   return (
     <AppLayout>
-      <h2 className="text-2xl font-bold mb-4">Bienvenido a la Academia</h2>
-      <p>Seleccioná una opción del menú</p>
+      <Routes>
+        <Route path="/" element={<CursosPage />} />
+        <Route path="/cursos/:id" element={<CursoDetallePage />} />
+      </Routes>
     </AppLayout>
   );
 }
