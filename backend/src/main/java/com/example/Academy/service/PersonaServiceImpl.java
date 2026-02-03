@@ -225,4 +225,11 @@ public class PersonaServiceImpl implements PersonaService {
             .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
 
     }
+
+    @Override
+    public List<Alumno> findAll() {
+        return alumnoRepository.findAll();
+    }
+
+
 }

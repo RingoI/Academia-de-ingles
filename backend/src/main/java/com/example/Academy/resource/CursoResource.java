@@ -32,7 +32,7 @@ public class CursoResource {
     }
     
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
     public ResponseEntity<ApiResponseDTO<CursoResponseDTO>> crearCurso(
             @RequestBody CreateCursoRequestDTO dto) {
 
@@ -55,7 +55,7 @@ public class CursoResource {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
     public ResponseEntity<ApiResponseDTO<Void>> eliminarCurso(@PathVariable Long id) {
         cursoService.eliminarCurso(id);
         return ResponseEntity.ok(
@@ -65,7 +65,7 @@ public class CursoResource {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
     public ResponseEntity<ApiResponseDTO<CursoResponseDTO>> actualizarCurso(
         @PathVariable Long id,
         @RequestBody UpdateCursoRequestDTO dto) {

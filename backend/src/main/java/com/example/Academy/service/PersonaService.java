@@ -25,6 +25,7 @@ public interface PersonaService {
     List<Alumno> getAlumnosActivosConNiveles();
     void MostrarAlumnosPorId(Long id);
     public Alumno getAlumnoById(Long id);
+    List<Alumno> findAll();
     
     
 }  

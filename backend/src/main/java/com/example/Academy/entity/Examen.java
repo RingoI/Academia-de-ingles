@@ -3,6 +3,9 @@ package com.example.Academy.entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -45,6 +48,7 @@ public class Examen {
 
 
     @OneToMany(mappedBy = "examen", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<ExamenAlumno> entregas = new ArrayList<>();
 
 }

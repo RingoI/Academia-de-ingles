@@ -1,6 +1,7 @@
 package com.example.Academy.resource;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,15 @@ public class AlumnoResource {
         }
     } 
 
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
+    public ResponseEntity<List<Alumno>> getAlumnos() {
+        return ResponseEntity.ok(personaService.findAll());
+    }
+
+
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
     public ResponseEntity<?> getAlumnoById(@PathVariable Long id) {
         try {
             Alumno alumno = personaService.getAlumnoById(id);

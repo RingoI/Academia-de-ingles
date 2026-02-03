@@ -12,13 +12,15 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
+const normalizeRoles = (roles: string[]) =>
+  roles.map((r) => r.replace("ROLE_", ""));
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<AuthMeResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
   const isAuthenticated = !!user;
 
-  // 🔁 Al iniciar la app: si hay token → auth/me
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -28,7 +30,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     getMe()
-      .then((data) => setUser(data))
+      .then((data) =>
+        setUser({
+          username: data.username,
+          roles: normalizeRoles(data.roles),
+        }),
+      )
       .catch(() => {
         localStorage.removeItem("token");
         setUser(null);
@@ -40,15 +47,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const res = await loginService({ username, password });
 
     if (!res?.token) {
-      console.error("Respuesta inválida del login", res);
       throw new Error("Token no recibido");
     }
 
-    // 🔥 Guardamos el token SIN tocarlo
     localStorage.setItem("token", res.token.replace("Bearer ", ""));
 
     const me = await getMe();
-    setUser(me);
+    setUser({
+      username: me.username,
+      roles: normalizeRoles(me.roles),
+    });
   };
 
   const logout = () => {
@@ -65,5 +73,4 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// Hook lindo
 export const useAuth = () => useContext(AuthContext);

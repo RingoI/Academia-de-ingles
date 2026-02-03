@@ -1,6 +1,9 @@
 package com.example.Academy.entity;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -34,8 +37,14 @@ public class Curso {
 
     
     
-    @ManyToMany(mappedBy = "cursos" )
+    @ManyToMany
+    @JoinTable(
+        name = "curso_nivel",
+        joinColumns = @JoinColumn(name = "curso_id"),
+        inverseJoinColumns = @JoinColumn(name = "nivel_id")
+    )
     private List<Nivel> niveles = new ArrayList<>();
+
 
     
     @OneToMany(mappedBy = "curso")
@@ -45,6 +54,7 @@ public class Curso {
     private List<Docente> docentes = new ArrayList<>();
 
     @ManyToMany(mappedBy = "cursos")
+    @JsonIgnore
     private List<Alumno> alumnos = new ArrayList<>();
     
     @ManyToMany

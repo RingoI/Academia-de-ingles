@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { createCurso } from "../Services/cursoService";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getCursoById, updateCurso } from "../Services/cursoService";
 
 const NIVELES_MAP: Record<string, number> = {
   A0: 0,
@@ -11,118 +11,115 @@ const NIVELES_MAP: Record<string, number> = {
   C1: 5,
 };
 
-export default function CrearCursoPage() {
+export default function EditarCursoPage() {
+  const { id } = useParams();
   const navigate = useNavigate();
+
   const [nombre, setNombre] = useState("");
   const [niveles, setNiveles] = useState<string[]>([]);
-  const [cupo, setCupo] = useState<number>(0);
+  const [cupo, setCupo] = useState(0);
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const toggleNivel = (nivelBtn: string) => {
+  useEffect(() => {
+    if (!id) return;
+
+    getCursoById(Number(id)).then((curso) => {
+      setNombre(curso.nombre);
+      setNiveles(curso.niveles);
+      setCupo(curso.cupo);
+      setFechaInicio(curso.fechaInicio);
+      setFechaFin(curso.fechaFin);
+      setLoading(false);
+    });
+  }, [id]);
+
+  const toggleNivel = (nivel: string) => {
     setNiveles((prev) =>
-      prev.includes(nivelBtn)
-        ? prev.filter((n) => n !== nivelBtn)
-        : [...prev, nivelBtn],
+      prev.includes(nivel) ? prev.filter((n) => n !== nivel) : [...prev, nivel],
     );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
     try {
-      const request = {
+      await updateCurso(Number(id), {
         nombre,
         nivelesIds: niveles.map((n) => NIVELES_MAP[n]),
-        alumnosIds: [],
-        docentesIds: [],
+        docentesIds: [], // se puede llenar después
+        alumnosIds: [], // se puede llenar después
         cupo,
         fechaInicio,
         fechaFin,
-      };
+      });
 
-      await createCurso(request);
-
-      alert("Curso creado con éxito!");
+      alert("Curso actualizado");
       navigate("/");
-    } catch (err) {
-      console.error(err);
-      alert("Error creando curso");
-    } finally {
-      setLoading(false);
+    } catch (err: any) {
+      console.error("ERROR PUT 👉", err);
+      console.error("STATUS 👉", err?.response?.status);
+      console.error("DATA 👉", err?.response?.data);
+      alert("Error al actualizar");
     }
   };
 
+  if (loading) return <p>Cargando curso...</p>;
+
   return (
     <div className="max-w-xl mx-auto bg-white p-6 rounded-xl shadow">
-      <h2 className="text-2xl font-bold mb-6">Crear curso</h2>
+      <h2 className="text-2xl font-bold mb-6">Editar curso</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Nombre */}
         <input
           className="w-full border p-2 rounded"
-          placeholder="Nombre del curso"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          required
         />
 
-        {/* Niveles */}
         <div>
           <p className="font-medium mb-2">Niveles</p>
           <div className="flex gap-2 flex-wrap">
-            {["A0", "A1", "A2", "B1", "B2", "C1", "C2"].map((nivelBtn) => (
+            {["A0", "A1", "A2", "B1", "B2", "C1"].map((n) => (
               <button
                 type="button"
-                key={nivelBtn}
-                onClick={() => toggleNivel(nivelBtn)}
+                key={n}
+                onClick={() => toggleNivel(n)}
                 className={`px-3 py-1 rounded border ${
-                  niveles.includes(nivelBtn)
-                    ? "bg-indigo-600 text-white"
-                    : "bg-white"
+                  niveles.includes(n) ? "bg-indigo-600 text-white" : "bg-white"
                 }`}
               >
-                {nivelBtn}
+                {n}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Cupo */}
         <input
           type="number"
           className="w-full border p-2 rounded"
-          placeholder="Cupo"
           value={cupo}
           onChange={(e) => setCupo(Number(e.target.value))}
-          required
         />
 
-        {/* Fechas */}
         <div className="flex gap-4">
           <input
             type="date"
             className="w-full border p-2 rounded"
             value={fechaInicio}
             onChange={(e) => setFechaInicio(e.target.value)}
-            required
           />
           <input
             type="date"
             className="w-full border p-2 rounded"
             value={fechaFin}
             onChange={(e) => setFechaFin(e.target.value)}
-            required
           />
         </div>
 
-        <button
-          disabled={loading}
-          className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
-        >
-          {loading ? "Creando..." : "Crear curso"}
+        <button className="w-full bg-indigo-600 text-white py-2 rounded">
+          Guardar cambios
         </button>
       </form>
     </div>

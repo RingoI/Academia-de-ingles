@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -34,6 +36,7 @@ public class Asistencia {
     private boolean presente;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "alumno_id", nullable = false)
     private Alumno alumno;
 

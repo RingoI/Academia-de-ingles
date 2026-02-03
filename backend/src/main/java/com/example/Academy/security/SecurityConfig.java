@@ -106,17 +106,20 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/cursos/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.PUT,  "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.DELETE, "/cursos/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
 
                 
                 // ALUMNOS
                 // =========================
+                .requestMatchers(HttpMethod.POST, "/alumnos/create").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.PUT, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.POST, "/alumnos/create/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.GET, "/alumnos/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/alumnos").authenticated()
 
-                
+
+                .requestMatchers(HttpMethod.GET, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
+
+                                
                 // DOCENTES
                 // =========================
                

@@ -9,5 +9,5 @@ export interface LoginResponse {
 
 export interface AuthMeResponse {
   username: string;
-  role: "ADMIN" | "DOCENTE" | "ALUMNO";
+  roles: string[];
 }

@@ -48,11 +48,13 @@ public class CursoServiceImp implements CursoService {
         List<Nivel> niveles = nivelRepository.findAllById(dto.getNivelesIds());
         List<Alumno> alumnos = alumnoRepository.findAllById(dto.getAlumnosIds());
 
-        for (Nivel n : niveles) {
-            n.getCursos().add(curso);
-            curso.getNiveles().add(n);
+        for (Nivel nivel : niveles) {
+            curso.getNiveles().add(nivel);
+            nivel.getCursos().add(curso); 
         }
-        curso.setNiveles(niveles);
+
+        cursoRepository.save(curso);
+
 
         for (Alumno a : alumnos) {
             a.getCursos().add(curso);
