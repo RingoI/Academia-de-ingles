@@ -39,6 +39,7 @@ public class Examen {
     private Nivel nivel;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "docente_id")
     private Docente docente;
 

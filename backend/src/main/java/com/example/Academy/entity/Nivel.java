@@ -42,6 +42,7 @@ public class Nivel {
     private List<Examen> examenes = new ArrayList<>();
     
     @ManyToOne 
+    @JsonIgnore
     @JoinColumn(name = "docente_id") 
     private Docente docente;
 

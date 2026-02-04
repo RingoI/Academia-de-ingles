@@ -4,6 +4,8 @@ package com.example.Academy.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,6 +27,7 @@ public class Material {
     private String tipo;
 
     @ManyToMany(mappedBy = "materiales")
+    @JsonIgnore
     private List<Docente> docentes = new ArrayList<>();
 
     @ManyToMany(mappedBy = "materiales")

@@ -11,6 +11,11 @@ import AlumnoDetallePage from "./Pages/DetalleAlumnoPage";
 import CrearAlumnoPage from "./Pages/CrearAlumnoPage";
 import AlumnoPage from "./Pages/AlumnoPage";
 
+import EditarDocentePage from "./Pages/EditarDocentePage";
+import DetalleDocentePage from "./Pages/DetalleDocentePage";
+import CrearDocentePage from "./Pages/CrearDocentePage";
+import DocentePage from "./Pages/DocentePage";
+
 function App() {
   const { isAuthenticated, loading } = useAuth();
 
@@ -31,6 +36,12 @@ function App() {
         <Route path="/alumnos/nuevo" element={<CrearAlumnoPage />} />
         <Route path="/alumnos/:id" element={<AlumnoDetallePage />} />
         <Route path="/alumnos/:id/editar" element={<EditarAlumnoPage />} />
+
+        {/* ================= DOCENTES ================= */}
+        <Route path="/docentes" element={<DocentePage />} />
+        <Route path="/docentes/nuevo" element={<CrearDocentePage />} />
+        <Route path="/docentes/:id" element={<DetalleDocentePage />} />
+        <Route path="/docentes/:id/editar" element={<EditarDocentePage />} />
       </Routes>
     </AppLayout>
   );

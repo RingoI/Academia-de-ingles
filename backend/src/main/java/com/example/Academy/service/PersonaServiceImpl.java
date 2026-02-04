@@ -231,5 +231,17 @@ public class PersonaServiceImpl implements PersonaService {
         return alumnoRepository.findAll();
     }
 
+    @Override
+    public List<Docente> findAllDocentes() {
+        return docenteRepository.findAll();
+    }
+
+    @Override
+    public Docente findDocenteById(Long id) {
+    return docenteRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+}
+
+
 
 }

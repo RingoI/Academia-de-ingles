@@ -126,7 +126,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/docentes/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/docentes/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/docentes/create/**").hasRole("ADMIN")
-
+                .requestMatchers(HttpMethod.GET, "/docentes").authenticated()
+                .requestMatchers(HttpMethod.GET, "/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
 
             
                 // ASISTENCIAS

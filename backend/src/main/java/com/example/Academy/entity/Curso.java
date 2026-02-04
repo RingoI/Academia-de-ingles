@@ -51,6 +51,7 @@ public class Curso {
     private List<Administrador> administrador = new ArrayList<>();
 
     @ManyToMany(mappedBy = "cursos")
+    @JsonIgnore
     private List<Docente> docentes = new ArrayList<>();
 
     @ManyToMany(mappedBy = "cursos")

@@ -52,6 +52,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               Alumnos
             </NavLink>
           )}
+
+          {isAdminOrDocente && (
+            <NavLink
+              to="/docentes"
+              className={({ isActive }) =>
+                `font-semibold ${
+                  isActive ? "underline" : "opacity-90 hover:underline"
+                }`
+              }
+            >
+              Docentes
+            </NavLink>
+          )}
         </nav>
       </header>
 

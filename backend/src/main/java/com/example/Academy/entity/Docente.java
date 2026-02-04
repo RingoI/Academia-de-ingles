@@ -3,6 +3,8 @@ package com.example.Academy.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -28,12 +30,15 @@ public class Docente  extends Persona {
     
     
     @OneToMany(mappedBy = "docente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Nivel> niveles = new ArrayList<>();
     
     @OneToMany(mappedBy = "docente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Examen> examenes = new ArrayList<>();
     
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
     name = "docente_material",
     joinColumns = @JoinColumn(name = "docente_id"),
@@ -42,6 +47,7 @@ public class Docente  extends Persona {
     private List<Material> materiales = new ArrayList<>();
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
     name = "curso_docente",
     joinColumns = @JoinColumn(name = "docente_id"),

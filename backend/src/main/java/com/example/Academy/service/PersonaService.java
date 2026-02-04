@@ -10,6 +10,7 @@ import com.example.Academy.dto.CreateDocenteDTO;
 import com.example.Academy.dto.UpdateAlumnoDTO;
 import com.example.Academy.dto.UpdateDocenteRequestDTO;
 import com.example.Academy.entity.Alumno;
+import com.example.Academy.entity.Docente;
 import com.example.Academy.entity.Persona;
 
 @Service
@@ -26,6 +27,8 @@ public interface PersonaService {
     void MostrarAlumnosPorId(Long id);
     public Alumno getAlumnoById(Long id);
     List<Alumno> findAll();
+    List<Docente> findAllDocentes();
+    Docente findDocenteById(Long id);
     
     
 }  

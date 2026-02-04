@@ -1,8 +1,11 @@
 package com.example.Academy.resource;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +16,7 @@ import com.example.Academy.config.ModelMapperConfig;
 import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.dto.CreateDocenteDTO;
 import com.example.Academy.dto.UpdateDocenteRequestDTO;
+import com.example.Academy.entity.Docente;
 import com.example.Academy.service.AuthService;
 import com.example.Academy.service.PersonaService;
 
@@ -73,4 +77,16 @@ public class DocenteResource {
             );
         }
     }
+        @GetMapping
+        @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
+        public ResponseEntity<List<Docente>> getDocente() {
+            return ResponseEntity.ok(personaService.findAllDocentes());
+        }
+
+        @GetMapping("/{id}")
+        @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
+        public ResponseEntity<Docente> getDocenteById(@PathVariable Long id) {
+            return ResponseEntity.ok(personaService.findDocenteById(id));
+        }
+
 }
