@@ -1,6 +1,6 @@
 import React from "react";
 
-function UsernameInput() {
+function UsernameInput({ onChange }) {
 	return (
 		<>
 			<label className="input validator w-full h-12 rounded-2xl shadow-none bg-[#08111d]">
@@ -14,6 +14,7 @@ function UsernameInput() {
 					type="text"
 					className=""
 					required
+					onChange={onChange}
 					placeholder="Usuario Institucional"
 					pattern="[A-Za-z][A-Za-z0-9\-]*"
 					minLength="3"

@@ -1,6 +1,6 @@
 import React from "react";
 
-function PasswordInput() {
+function PasswordInput({ onChange }) {
 	return (
 		<>
 			<label className="input validator h-12 rounded-2xl shadow-none w-full bg-[#08111d]">
@@ -10,7 +10,7 @@ function PasswordInput() {
 						<circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
 					</g>
 				</svg>
-				<input type="password" required placeholder="Constraseña" />
+				<input type="password" required placeholder="Constraseña" onChange={onChange} />
 			</label>
 		</>
 	);

@@ -1,6 +1,9 @@
 import { GraduationCap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
+	const navigate = useNavigate();
+
 	return (
 		<div className="w-full h-18 bg-slate-300 flex items-center justify-between px-5 fixed top-0 z-20">
 			<div className="flex items-center gap-2">
@@ -19,7 +22,10 @@ function NavBar() {
 				</ul>
 			</div>
 			<div>
-				<button className="bg-[#0a2540] px-5 rounded-3xl font-semibold py-1.5 cursor-pointer transition-transform hover:scale-105">
+				<button
+					className="bg-[#0a2540] px-5 rounded-3xl font-semibold py-1.5 cursor-pointer transition-transform hover:scale-105"
+					onClick={() => navigate("/login")}
+				>
 					Ingresar a Plataforma
 				</button>
 			</div>
