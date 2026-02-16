@@ -15,6 +15,7 @@ export const authStore = create(
 					const res = await axiosInstance.post("/auth/login", data);
 					localStorage.setItem("token", res.data.token);
 					await authStore.getState().obtenerRol();
+					return res.status;
 				} catch (error) {
 					console.log("Error en login: ", error);
 				} finally {
