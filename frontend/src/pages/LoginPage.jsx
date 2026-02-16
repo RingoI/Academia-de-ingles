@@ -3,15 +3,18 @@ import UsernameInput from "../components/login/UsernameInput";
 import PasswordInput from "../components/login/PasswordInput";
 import { GraduationCap } from "lucide-react";
 import { authStore } from "../store/auth.store";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
 	const [loginData, setLoginData] = useState({ username: "", password: "" });
 	const { login, isLoggingIn } = authStore();
+	const navigate = useNavigate();
 
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		console.log("Enviando form");
 		e.preventDefault();
-		login(loginData);
+		const status = await login(loginData);
+		if (status === 200) navigate("/dashboard");
 	}
 
 	return (
