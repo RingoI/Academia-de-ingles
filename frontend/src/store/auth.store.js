@@ -40,4 +40,4 @@ export const authStore = create(
 );
 
 //Los username tendrían que ser unicos porque si hay dos iguales con distintos roles puede traer errores
-//De ultima lo que se cheque en el /me tiene que ser por email y no por username.
+//De ultima lo que se verifique en el /me tiene que ser por email y no por username.
