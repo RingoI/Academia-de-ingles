@@ -24,7 +24,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 
 @Configuration
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -125,7 +125,7 @@ public class SecurityConfig {
                
                 .requestMatchers(HttpMethod.DELETE, "/docentes/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/docentes/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/docentes/create/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/docentes/create").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/docentes").authenticated()
                 .requestMatchers(HttpMethod.GET, "/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
 
@@ -163,7 +163,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/entregas/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/entregas/alumno/**")
                 .hasAnyRole("ALUMNO", "DOCENTE", "ADMIN")
-                .requestMatchers(HttpMethod.POST,"/entregas/examen/*/alumno/*").hasRole("ALUMNO")
+                .requestMatchers(HttpMethod.POST,"/entregas/examen/*//*").hasRole("ALUMNO")
                 .requestMatchers(HttpMethod.POST, "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.PUT,  "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
@@ -174,7 +174,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/pagos/mercadoPago").permitAll()
                 .requestMatchers(HttpMethod.POST, "/pagos/webhook").permitAll()
                 .requestMatchers(HttpMethod.GET, "/pagos/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/pagos/crear").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/pagos/crear").authenticated()
                 .requestMatchers("/webhooks/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()                            
                 
@@ -187,7 +187,7 @@ public class SecurityConfig {
 
                 
                 .anyRequest().authenticated()
-            )
+            ) 
             .addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.service.MercadoPagoService;
 import com.mercadopago.exceptions.MPApiException;
-import com.mercadopago.exceptions.MPException;
 import org.springframework.http.HttpStatus;
 
 @RestController
@@ -31,16 +30,36 @@ public class MercadoPagoResource {
 
     @PostMapping("/crear")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponseDTO<String>> crearPago()
-            throws MPException, MPApiException {
+    public ResponseEntity<ApiResponseDTO<String>> crearPago() {
+        try {
+            String urlPago = mercadoPagoService.crearPreferencia();
 
-        String urlPago = mercadoPagoService.crearPreferencia();
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponseDTO<>(
-                        "Preferencia de pago creada correctamente",
-                        urlPago
-                ));
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new ApiResponseDTO<>(
+                            "Preferencia de pago creada correctamente",
+                            urlPago
+                    ));
+        } catch (MPApiException e) {
+            System.out.println("Error MPApiException: " + e.getMessage());
+            System.out.println("Status: " + e.getStatusCode());
+            System.out.println("Response: " + e.getApiResponse());
+            e.printStackTrace();
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponseDTO<>(
+                            "Error en Mercado Pago: " + e.getMessage(),
+                            null
+                    ));
+        } catch (Exception e) {
+            System.out.println("Error general: " + e.getMessage());
+            e.printStackTrace();
+            
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponseDTO<>(
+                            "Error: " + e.getMessage(),
+                            null
+                    ));
+        }
     }
 
     @GetMapping("/success")

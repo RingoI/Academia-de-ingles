@@ -50,13 +50,36 @@ public class MercadoPagoServiceImp implements MercadoPagoService {
             PreferenceRequest.builder()
                 .items(List.of(item))
                 .backUrls(backUrls)
-                .autoReturn("approved")
                 .build();
 
-        PreferenceClient client = new PreferenceClient();
-        Preference preference = client.create(preferenceRequest);
-
-        return preference.getInitPoint();
+        try {
+            PreferenceClient client = new PreferenceClient();
+            Preference preference = client.create(preferenceRequest);
+            
+            System.out.println("✅ Preferencia creada: " + preference.getInitPoint());
+            return preference.getInitPoint();
+        } catch (MPApiException e) {
+            System.out.println("MPApiException en crearPreferencia:");
+            System.out.println("Status: " + e.getStatusCode());
+            System.out.println("Message: " + e.getMessage());
+            
+            try {
+                if (e.getApiResponse() != null) {
+                    System.out.println("   Response Object: " + e.getApiResponse().toString());
+                    System.out.println("   Response Status Code: " + e.getApiResponse().getStatusCode());
+                    System.out.println("   Response Content: " + e.getApiResponse().getContent());
+                }
+            } catch (Exception ex) {
+                System.out.println("   No se pudieron extraer más detalles");
+            }
+            
+            e.printStackTrace();
+            throw e;
+        } catch (MPException e) {
+            System.out.println("MPException en crearPreferencia: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Transactional
