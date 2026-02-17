@@ -10,10 +10,10 @@ function TablaDocentes() {
 
 	console.log("Docentes:  ", docentes);
 
-	const cabecera = ["", "Nombre", "Email", "Direccion", "DNI", "Estado"];
+	const cabecera = ["", "Nombre", "Email", "Direccion", "CUIL", "Estado"];
 
 	return (
-		<div className="overflow-x-auto">
+		<div className="overflow-x-auto pb-5">
 			<table className="table rounded-lg overflow-hidden">
 				<thead className="bg-[#0d1526]">
 					<tr>
@@ -29,7 +29,7 @@ function TablaDocentes() {
 							<td>{d.nombre}</td>
 							<td>{d.email}</td>
 							<td>{d.direccion}</td>
-							<td>{d.dni}</td>
+							<td>{d.cuit}</td>
 							<td>{d.activo ? "Activo" : "Desactivado"}</td>
 						</tr>
 					))}
