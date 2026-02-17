@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { usuarioStore } from "../store/usuarios.store";
+import { CheckCircle2 } from "lucide-react";
 
 function TablaAlumnos() {
 	const { alumnos, obtenerAlumnos } = usuarioStore();
@@ -30,7 +31,16 @@ function TablaAlumnos() {
 							<td>{a.email}</td>
 							<td>{a.direccion}</td>
 							<td>{a.dni}</td>
-							<td>{a.activo ? "Activo" : "Desactivado"}</td>
+							<td>
+								{a.activo ? (
+									<div className="flex items-center gap-1">
+										<CheckCircle2 className="size-4 text-green-500" />
+										<span className="text-sm">Activo</span>
+									</div>
+								) : (
+									"Desactivado"
+								)}
+							</td>
 						</tr>
 					))}
 				</tbody>
