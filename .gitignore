@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Frontend ###
+**/node_modules/
+**/dist/
+**/.env
+**/.env.local
+**/package-lock.json
+
+# Ignorar configuración local
+backend/src/main/resources/application.properties
+backend/src/main/resources/application-local.properties
