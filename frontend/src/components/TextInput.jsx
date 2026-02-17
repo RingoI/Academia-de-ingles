@@ -8,6 +8,7 @@ function TextInput({ tag, placeholder, type = "text", onChange }) {
 				type={type}
 				placeholder={placeholder}
 				className="input input-md bg-[#0e1627] border-slate-800 shadow-none"
+				required
 				onChange={onChange}
 			/>
 		</div>

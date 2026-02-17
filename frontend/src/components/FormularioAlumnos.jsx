@@ -81,7 +81,7 @@ function FormularioAlumnos({ abrirFormularioAlumnos, setAbrirFormularioAlumnos }
 					<div className="flex items-center justify-end gap-3 border border-slate-700 px-3 py-5 rounded-b-xl  ">
 						<button
 							className=" px-3 py-1.5 rounded-md text-slate-300 font-semibold cursor-pointer"
-							onClick={() => setAbrirFormularioAlumnos(!abrirFormularioAlumnos)}
+							onClick={() => setAbrirFormularioAlumnos(false)}
 						>
 							Cancelar
 						</button>
