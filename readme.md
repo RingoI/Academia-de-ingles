@@ -1,6 +1,7 @@
 # Academy – Plataforma de Academia de Inglés
 
 ## Descripción
+
 Backend desarrollado en Java con Spring Boot para la gestión de una academia de inglés.
 Incluye manejo de usuarios (Administrador, Docente, Alumno), autenticación con JWT y
 gestión de cursos, niveles y clases.
@@ -8,6 +9,7 @@ gestión de cursos, niveles y clases.
 ---
 
 ## Tecnologías
+
 - Java 17
 - Spring Boot
 - Spring Data JPA
@@ -21,15 +23,29 @@ gestión de cursos, niveles y clases.
 ## Configuración del entorno
 
 ### Base de datos
+
 - PostgreSQL
 - Crear una base llamada `Academy`
 - Configurar credenciales en `application.properties`
 
 ```properties
+spring.application.name=Academy
+
 spring.datasource.url=jdbc:postgresql://localhost:5432/Academy
 spring.datasource.username=postgres
 spring.datasource.password=admin123
 
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+
+server.port=8082
+
+mercadopago.access-token=TEST-3213017671267481-021518-72d0bb9e6a758e200a9f10194042d530-707253681
+mercadopago.base-url=https://api.mercadopago.com
+```
 
 
 Creación del administrador manualmente, ya que solamente es una persona
@@ -38,6 +54,7 @@ INSERT INTO persona (username, password, nombre, email, DTYPE)
 VALUES ('admin', '<HASH>', 'Administrador', 'admin@academy.com', 'ADMIN');
 
 
+```
 Authenticación basada en Authorization: Bearer <token>
 
 Creacion de nivel mediante pgadmin, la administradora nos dijo que son solamente 6 niveles, totalmente innecesario
@@ -49,3 +66,4 @@ Borrado logico, totalmente recomendable para estos tipos de proyectos.
 ELiminación del admin por el pgadmin, muchos problemas de permisos y roles, creación cuando se inicialice la aplicación.
 
 Los niveles son maestros, los registre directamente en el pgadmin, ya que no se modifican, no se agregan mas, y no se eliminan.
+```
