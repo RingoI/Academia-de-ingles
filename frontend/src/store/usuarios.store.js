@@ -22,4 +22,14 @@ export const usuarioStore = create((set) => ({
 			console.log("Error en obtenerDocentes: ", error);
 		}
 	},
+
+	agregarAlumno: async (data) => {
+		try {
+			const res = await axiosInstance.post("/alumnos/create", data);
+			console.log("Res agregar alumno: ", res);
+			await usuarioStore.getState().obtenerAlumnos();
+		} catch (error) {
+			console.log("Error en agregarAlumno: ", error);
+		}
+	},
 }));
