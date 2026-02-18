@@ -6,18 +6,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Academy.dto.EntregaResponseDTO;
-import com.example.Academy.dto.CorregirEntregaDTO;
 
 @Service
 public interface EntregaService {
 
-    void eliminarEntrega(Long entregaId);
-    EntregaResponseDTO corregirEntrega(Long examenId, CorregirEntregaDTO dto);
-    EntregaResponseDTO realizarEntrega(Long examenId, Long alumnoId, MultipartFile file);
-    EntregaResponseDTO obtenerEntregaPorId(Long entregaId);
-    List<EntregaResponseDTO> obtenerEntregasPorExamen(Long examenId);
-    List<EntregaResponseDTO> obtenerEntregas();
-    List<EntregaResponseDTO> obtenerEntregasPorAlumno(Long alumnoId);
+    EntregaResponseDTO subirArchivo(Long cursoId, Long usuarioId, String rol, MultipartFile file, String tipo);
+    void eliminarArchivo(Long entregaId);
+    List <EntregaResponseDTO> obtenerArchivosPorCurso(Long cursoId);
+    EntregaResponseDTO obtenerArchivoPorId(Long entregaId);
+
 
 
 }

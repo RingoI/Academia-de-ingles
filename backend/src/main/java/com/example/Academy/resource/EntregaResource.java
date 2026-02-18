@@ -10,102 +10,58 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Academy.dto.ApiResponseDTO;
-import com.example.Academy.dto.CorregirEntregaDTO;
 import com.example.Academy.dto.EntregaResponseDTO;
 import com.example.Academy.service.EntregaService;
 
+import lombok.RequiredArgsConstructor;
+
+
 @RestController
 @RequestMapping("/entregas")
+@RequiredArgsConstructor
 public class EntregaResource {
-
     private final EntregaService entregaService;
 
-    public EntregaResource(EntregaService entregaService) {
-        this.entregaService = entregaService;
+    @PostMapping(value = "/curso/{cursoId}/alumno/{alumnoId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAnyRole('ADMIN' ,'ALUMNO')")
+    public ResponseEntity<ApiResponseDTO<EntregaResponseDTO>> subirTarea(@PathVariable Long cursoId, @PathVariable Long alumnoId, @RequestParam("file") MultipartFile file){
+        EntregaResponseDTO entrega = entregaService.subirArchivo(cursoId, alumnoId, "ALUMNO", file, "TAREA");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseDTO<>("Tarea subida correctamente",entrega ));
     }
 
+    @PostMapping(value = "/curso/{cursoId}/docente/{docenteId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE')")
+    public ResponseEntity<ApiResponseDTO<EntregaResponseDTO>> subirMaterial(@PathVariable Long cursoId, @PathVariable Long docenteId, @RequestParam("file") MultipartFile file){
+        EntregaResponseDTO entrega = entregaService.subirArchivo(cursoId, docenteId, "DOCENTE", file, "MATERIAL");
 
-    @PostMapping(
-        value = "/examen/{examenId}/alumno/{alumnoId}",
-        consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-    )
-    @PreAuthorize("hasRole('ALUMNO')")
-    public ResponseEntity<ApiResponseDTO<EntregaResponseDTO>> realizarEntrega(
-            @PathVariable Long examenId,
-            @PathVariable Long alumnoId,
-            @RequestParam("file") MultipartFile file) {
-
-        EntregaResponseDTO entrega =
-                entregaService.realizarEntrega(examenId, alumnoId, file);
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponseDTO<>("Entrega realizada correctamente", entrega));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseDTO<>("Material subido correctamente", entrega));
     }
 
-
-    @GetMapping("/examen/{examenId}")
-    public ResponseEntity<List<EntregaResponseDTO>> obtenerEntregasPorExamen(
-            @PathVariable Long examenId) {
-
-        return ResponseEntity.ok(
-            entregaService.obtenerEntregasPorExamen(examenId)
-        );
+    @GetMapping("/curso/{cursoId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE', 'ALUMNO')")
+    public ResponseEntity<List<EntregaResponseDTO>> obtenerArchivosPorCurso(@PathVariable Long cursoId){
+        return ResponseEntity.ok(entregaService.obtenerArchivosPorCurso(cursoId));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EntregaResponseDTO> obtenerEntregaPorId(
-            @PathVariable Long id) {
-
-        return ResponseEntity.ok(entregaService.obtenerEntregaPorId(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<EntregaResponseDTO>> obtenerEntregas() {
-        return ResponseEntity.ok(entregaService.obtenerEntregas());
-    }
-
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
-    public ResponseEntity<ApiResponseDTO<EntregaResponseDTO>> corregirEntregas(
-        @PathVariable Long id,
-        @RequestBody CorregirEntregaDTO dto) {
-
-    return ResponseEntity.ok(
-        new ApiResponseDTO<>("Entrega corregida exitosamente",
-            entregaService.corregirEntrega(id, dto))
-    );
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE', 'ALUMNO')")
+    public ResponseEntity<EntregaResponseDTO> obtenerArchivoPorId(@PathVariable Long id){
+        return ResponseEntity.ok(entregaService.obtenerArchivoPorId(id));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
-    public ResponseEntity<ApiResponseDTO<Void>> eliminarEntrega(@PathVariable Long id) {
-        entregaService.eliminarEntrega(id);
-        return ResponseEntity.ok(
-            new ApiResponseDTO<Void>("Entrega eliminada exitosamente", null)
-        );
-
+    public ResponseEntity<ApiResponseDTO<Void>> eliminarArchivo(@PathVariable Long id){
+        entregaService.eliminarArchivo(id);
+        return ResponseEntity.ok(new ApiResponseDTO<>("Archivo leiminado exitosamente", null));
     }
-
-
-    @GetMapping("/alumno/{alumnoId}")
-    @PreAuthorize("hasAnyRole('DOCENTE', 'ADMIN')")
-    public ResponseEntity<ApiResponseDTO<List<EntregaResponseDTO>>> 
-            obtenerHistorialPorAlumno(@PathVariable Long alumnoId) {
-
-        return ResponseEntity.ok(
-            new ApiResponseDTO<>(
-                "Historial de entregas del alumno",
-                entregaService.obtenerEntregasPorAlumno(alumnoId)
-            )
-        );
-    }
-
 }
+
+

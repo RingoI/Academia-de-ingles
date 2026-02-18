@@ -18,9 +18,26 @@ public class CreateCursoRequestDTO {
     private LocalDate fechaFin;
     private Long nivelId;
     private Long docenteId;
-    private Long alumnoId;
+    private Long alumnoId; 
     private List<Long> nivelesIds;
     private List<Long> docentesIds;
     private List<Long> alumnosIds;
-    
+
+    @Override
+    public String toString() {
+        return "CreateCursoRequestDTO{" +
+                "nombre='" + nombre + '\'' +
+                ", cupo=" + cupo +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", nivelId=" + nivelId +
+                ", docenteId=" + docenteId +
+                ", alumnoId=" + alumnoId +
+                ", nivelesIds=" + nivelesIds +
+                ", docentesIds=" + docentesIds +
+                ", alumnosIds=" + alumnosIds +
+                '}';
+    }
+
 }
+
