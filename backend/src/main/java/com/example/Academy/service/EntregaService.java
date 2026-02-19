@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Academy.dto.EntregaResponseDTO;
+import org.springframework.core.io.Resource;
+
 
 @Service
 public interface EntregaService {
@@ -14,6 +16,8 @@ public interface EntregaService {
     void eliminarArchivo(Long entregaId);
     List <EntregaResponseDTO> obtenerArchivosPorCurso(Long cursoId);
     EntregaResponseDTO obtenerArchivoPorId(Long entregaId);
+    Resource descargarArchivo(Long entregaId);
+
 
 
 

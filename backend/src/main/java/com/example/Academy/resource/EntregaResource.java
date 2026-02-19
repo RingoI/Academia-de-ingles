@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.http.HttpHeaders;
+import org.springframework.core.io.Resource;
 import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.dto.EntregaResponseDTO;
 import com.example.Academy.service.EntregaService;
@@ -62,6 +63,24 @@ public class EntregaResource {
         entregaService.eliminarArchivo(id);
         return ResponseEntity.ok(new ApiResponseDTO<>("Archivo leiminado exitosamente", null));
     }
+
+
+    //Poner Id del post que devuelve subir archivos
+    @GetMapping("/download/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE', 'ALUMNO')")
+    public ResponseEntity<Resource> descargarArchivo(@PathVariable Long id) {
+
+        Resource resource = entregaService.descargarArchivo(id);
+
+        String contentType = "application/octet-stream";
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
 }
 
 
