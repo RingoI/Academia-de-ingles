@@ -160,7 +160,8 @@ public class SecurityConfig {
                 
                 // ENTREGAS
                 // =========================
-                .requestMatchers(HttpMethod.GET, "/entregas/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/entregas/download/**")
+                .hasAnyRole("ALUMNO", "DOCENTE", "ADMIN")
                 .requestMatchers(HttpMethod.GET, "/entregas/alumno/**")
                 .hasAnyRole("ALUMNO", "DOCENTE", "ADMIN")
                 .requestMatchers(HttpMethod.POST,"/entregas/examen/*//*").hasRole("ALUMNO")

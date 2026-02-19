@@ -1,6 +1,7 @@
 package com.example.Academy.service;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +21,7 @@ import com.example.Academy.entity.Entrega;
 import com.example.Academy.repository.CursoRepository;
 import com.example.Academy.repository.EntregaRepository;
 
+import org.springframework.core.io.Resource;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -120,6 +123,28 @@ public class EntregaServiceImp implements EntregaService{
             entrega.getUsuarioId()
         );
     }
+
+    @Override
+    public Resource descargarArchivo(Long entregaId) {
+        Entrega entrega = entregaRepository.findById(entregaId)
+                .orElseThrow(() -> new RuntimeException("Entrega no encontrada"));
+
+        Path path = Paths.get(UPLOAD_DIR).resolve(entrega.getNombreArchivo());
+
+        try {
+            Resource resource = new UrlResource(path.toUri());
+
+            if (!resource.exists()) {
+                throw new RuntimeException("Archivo no encontrado en el servidor");
+            }
+
+            return resource;
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Error al cargar el archivo");
+        }
+    }
+
 
 }
 
