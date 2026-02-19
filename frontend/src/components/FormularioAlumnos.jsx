@@ -3,24 +3,32 @@ import TextInput from "./TextInput";
 import { UserRoundPlus } from "lucide-react";
 import { usuarioStore } from "../store/usuarios.store";
 
-function FormularioAlumnos({ abrirFormularioAlumnos, setAbrirFormularioAlumnos }) {
-	const { agregarAlumno } = usuarioStore();
+function FormularioAlumnos({ abrirFormularioAlumnos, setAbrirFormularioAlumnos, values = {} }) {
+	const { agregarAlumno, modificarAlumno } = usuarioStore();
 	const [formularioAlumnos, setFormularioAlumnos] = useState({
-		nombre: "",
-		email: "",
-		username: "",
+		nombre: values.nombre || "",
+		email: values.email || "",
+		username: values.username || "",
 		password: "",
-		fechanacimiento: "",
-		dni: "",
-		direccion: "",
-		telefono: "",
+		fechanacimiento: values.fechanacimiento || "",
+		dni: values.dni || "",
+		direccion: values.direccion || "",
+		telefono: values.telefono || "",
 		activo: true,
 		estado: true,
 	});
-
 	function handleSubmit(e) {
 		e.preventDefault();
-		agregarAlumno(formularioAlumnos);
+
+		const data = { ...formularioAlumnos };
+		if (values.id && !data.password) {
+			delete data.password;
+		}
+		if (!values.id) {
+			agregarAlumno(formularioAlumnos);
+		} else {
+			modificarAlumno(values.id, formularioAlumnos);
+		}
 		setAbrirFormularioAlumnos(!abrirFormularioAlumnos);
 	}
 
@@ -29,7 +37,7 @@ function FormularioAlumnos({ abrirFormularioAlumnos, setAbrirFormularioAlumnos }
 			<div className="flex items-center gap-3 border border-slate-700 p-3 rounded-t-xl  ">
 				<UserRoundPlus className="bg-[#0c354b] text-[#06b6d4] size-10 p-2 rounded-md " />
 				<div className="">
-					<h1 className="font-semibold text-xl">Nuevo Alumno</h1>
+					<h1 className="font-semibold text-xl">{values.id ? "Modificar Alumno" : "Nuevo Alumno"}</h1>
 					<p className="text-sm text-slate-400">Completa los datos para registrar al nuevo estudiante.</p>
 				</div>
 			</div>
@@ -40,42 +48,53 @@ function FormularioAlumnos({ abrirFormularioAlumnos, setAbrirFormularioAlumnos }
 							tag={"NOMBRE COMPLETO"}
 							placeholder={"Ej: Juan Perez"}
 							onChange={(e) => setFormularioAlumnos({ ...formularioAlumnos, nombre: e.target.value })}
+							value={formularioAlumnos.nombre}
 						/>
 						<TextInput
 							tag={"EMAIL"}
 							placeholder={"juan.perez@example.com"}
 							onChange={(e) => setFormularioAlumnos({ ...formularioAlumnos, email: e.target.value })}
+							value={formularioAlumnos.email}
 						/>
+
 						<TextInput
 							tag={"USERNAME"}
 							placeholder={"jperez_student"}
 							onChange={(e) => setFormularioAlumnos({ ...formularioAlumnos, username: e.target.value })}
+							value={formularioAlumnos.username}
 						/>
 						<TextInput
 							tag={"CONTRASEÑA"}
 							placeholder={"••••••••"}
 							type="password"
 							onChange={(e) => setFormularioAlumnos({ ...formularioAlumnos, password: e.target.value })}
+							value={formularioAlumnos.password}
+							required={!values.id}
 						/>
 						<TextInput
 							tag={"FECHA DE NACIMIENTO"}
 							type="date"
 							onChange={(e) => setFormularioAlumnos({ ...formularioAlumnos, fechanacimiento: e.target.value })}
+							value={formularioAlumnos.fechanacimiento}
 						/>
 						<TextInput
 							tag={"DNI"}
 							placeholder={"1234567X"}
 							onChange={(e) => setFormularioAlumnos({ ...formularioAlumnos, dni: e.target.value })}
+							value={formularioAlumnos.dni}
 						/>
 						<TextInput
 							tag={"DIRECCIÓN"}
 							placeholder={"Calle Ejemplo 123"}
 							onChange={(e) => setFormularioAlumnos({ ...formularioAlumnos, direccion: e.target.value })}
+							value={formularioAlumnos.direccion}
 						/>
 						<TextInput
 							tag={"TELÉFONO"}
 							placeholder={"+54 9 2477 123456"}
 							onChange={(e) => setFormularioAlumnos({ ...formularioAlumnos, telefono: e.target.value })}
+							value={formularioAlumnos.telefono}
+							required={!values.id}
 						/>
 					</div>
 					<div className="flex items-center justify-end gap-3 border border-slate-700 px-3 py-5 rounded-b-xl  ">
