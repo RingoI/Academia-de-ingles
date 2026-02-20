@@ -12,8 +12,9 @@ import com.example.Academy.entity.ExamenAlumno;
 public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
 
     Optional<ExamenAlumno> findByUsername(String username);
-    
+    boolean existsByUsername(String username);
 
+    
     @Query("SELECT a FROM Alumno a LEFT JOIN FETCH a.nivel WHERE a.activo = true")
     List<Alumno> findAllWithNiveles();
 
