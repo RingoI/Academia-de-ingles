@@ -7,7 +7,7 @@ function TextInput({ tag, placeholder, type = "text", onChange }) {
 			<input
 				type={type}
 				placeholder={placeholder}
-				className="input input-md bg-[#0e1627] border-slate-800 shadow-none"
+				className="input input-md bg-[#0e1627] border-slate-800 shadow-none text-white placeholder:text-slate-500"
 				required
 				onChange={onChange}
 			/>

@@ -12,10 +12,10 @@ function UsernameInput({ onChange }) {
 				</svg>
 				<input
 					type="text"
-					className=""
+					className="bg-transparent text-white placeholder:text-gray-400 outline-none w-full"
 					required
 					onChange={onChange}
-					placeholder="Usuario Institucional"
+					placeholder="Usuario institucional"
 					pattern="[A-Za-z][A-Za-z0-9\-]*"
 					minLength="3"
 					maxLength="30"
