@@ -1,6 +1,9 @@
 import { Banknote, FileText, GraduationCap, LayoutDashboard, LibraryBig, Users } from "lucide-react";
 import ItemMenu from "./ItemMenu";
+import { authStore } from "../store/auth.store";
 function Menu() {
+	const { rol } = authStore();
+
 	return (
 		<div className="bg-[#0b1123] w-60 h-screen p-5">
 			<div className="text-xl flex flex-row items-center justify-start gap-4 w-full ">
@@ -14,7 +17,7 @@ function Menu() {
 			</div>
 			<div className="flex flex-col w-full items-center mt-8 gap-3">
 				<ItemMenu to={"/dashboard"} Icono={LayoutDashboard} tag={"Dashboard"} />
-				<ItemMenu to={"/usuarios"} Icono={Users} tag={"Usuarios"} />
+				{rol === "ROLE_ADMIN" ? <ItemMenu to={"/usuarios"} Icono={Users} tag={"Usuarios"} /> : ""}
 				<ItemMenu to={"/cursos"} Icono={LibraryBig} tag={"Cursos"} />
 				<ItemMenu to={"/pagos"} Icono={Banknote} tag={"Pagos"} />
 				<ItemMenu to={"/examenes"} Icono={FileText} tag={"Exámenes"} />
