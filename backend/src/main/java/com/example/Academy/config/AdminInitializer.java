@@ -86,36 +86,100 @@ public class AdminInitializer {
 
     private void createDocentes() {
 
-        String[] entrenadores = {
-            "Pep Guardiola", "Carlo Ancelotti", "Jurgen Klopp",
-            "Jose Mourinho", "Lionel Scaloni", "Mikel Arteta"
-        };
-
-        for (String nombre : entrenadores) {
-
-            String username = nombre.toLowerCase().replace(" ", "");
-
-            if (personaRepository.findByUsername(username).isPresent()) continue;
-
+        if (personaRepository.findByUsername("pepguardiola").isEmpty()) {
             Docente docente = new Docente();
-            docente.setUsername(username);
+            docente.setUsername("pepguardiola");
             docente.setPassword(passwordEncoder.encode("1234"));
-            docente.setNombre(nombre);
-            docente.setEmail(username + "@academy.com");
-            docente.setDireccion("Centro de Entrenamiento 456");
+            docente.setNombre("Pep Guardiola");
+            docente.setEmail("pepguardiola@academy.com");
+            docente.setDireccion("Rivadavia 456");
             docente.setFechanacimiento(LocalDate.of(1980, 1, 1));
-            docente.setTitulo("Director Técnico Profesional");
+            docente.setTitulo("C1");
             docente.setEstado(true);
-            docente.setCuit("20-" + (int)(Math.random() * 10000000) + "-9");
+            docente.setCuit("20-12345678-9");
             docente.setRole(Role.DOCENTE);
             docente.setActivo(true);
-
             personaRepository.save(docente);
         }
 
+        if (personaRepository.findByUsername("carloancelotti").isEmpty()) {
+            Docente docente = new Docente();
+            docente.setUsername("carloancelotti");
+            docente.setPassword(passwordEncoder.encode("1234"));
+            docente.setNombre("Carlo Ancelotti");
+            docente.setEmail("carloancelotti@academy.com");
+            docente.setDireccion("25 de Mayo 789");
+            docente.setFechanacimiento(LocalDate.of(1980, 1, 1));
+            docente.setTitulo("A1");
+            docente.setEstado(true);
+            docente.setCuit("20-23456789-9");
+            docente.setRole(Role.DOCENTE);
+            docente.setActivo(true);
+            personaRepository.save(docente);
+        }
 
+        if (personaRepository.findByUsername("jurgenklopp").isEmpty()) {
+            Docente docente = new Docente();
+            docente.setUsername("jurgenklopp");
+            docente.setPassword(passwordEncoder.encode("1234"));
+            docente.setNombre("Jurgen Klopp");
+            docente.setEmail("jurgenklopp@academy.com");
+            docente.setDireccion("Francia 34");
+            docente.setFechanacimiento(LocalDate.of(1980, 1, 1));
+            docente.setTitulo("C3");
+            docente.setEstado(true);
+            docente.setCuit("20-34567890-9");
+            docente.setRole(Role.DOCENTE);
+            docente.setActivo(true);
+            personaRepository.save(docente);
+        }
 
+        if (personaRepository.findByUsername("josemourinho").isEmpty()) {
+            Docente docente = new Docente();
+            docente.setUsername("josemourinho");
+            docente.setPassword(passwordEncoder.encode("1234"));
+            docente.setNombre("Jose Mourinho");
+            docente.setEmail("josemourinho@academy.com");
+            docente.setDireccion("Laprida 525");
+            docente.setFechanacimiento(LocalDate.of(1980, 1, 1));
+            docente.setTitulo("B2");
+            docente.setEstado(true);
+            docente.setCuit("20-45678901-9");
+            docente.setRole(Role.DOCENTE);
+            docente.setActivo(true);
+            personaRepository.save(docente);
+        }
 
+        if (personaRepository.findByUsername("lionelscaloni").isEmpty()) {
+            Docente docente = new Docente();
+            docente.setUsername("lionelscaloni");
+            docente.setPassword(passwordEncoder.encode("1234"));
+            docente.setNombre("Lionel Scaloni");
+            docente.setEmail("lionelscaloni@academy.com");
+            docente.setDireccion("Belgrano 678");
+            docente.setFechanacimiento(LocalDate.of(1980, 1, 1));
+            docente.setTitulo("B3");
+            docente.setEstado(true);
+            docente.setCuit("20-56789012-9");
+            docente.setRole(Role.DOCENTE);
+            docente.setActivo(true);
+            personaRepository.save(docente);
+        }
 
+        if (personaRepository.findByUsername("mikelarteta").isEmpty()) {
+            Docente docente = new Docente();
+            docente.setUsername("mikelarteta");
+            docente.setPassword(passwordEncoder.encode("1234"));
+            docente.setNombre("Mikel Arteta");
+            docente.setEmail("mikelarteta@academy.com");
+            docente.setDireccion("Estrada 1289");
+            docente.setFechanacimiento(LocalDate.of(1980, 1, 1));
+            docente.setTitulo("A3");
+            docente.setEstado(true);
+            docente.setCuit("20-67890123-9");
+            docente.setRole(Role.DOCENTE);
+            docente.setActivo(true);
+            personaRepository.save(docente);
+        }
     }
 }
