@@ -4,6 +4,9 @@ import { axiosInstance } from "../utils/axios.js";
 export const usuarioStore = create((set) => ({
 	alumnos: [],
 	docentes: [],
+	usuario: null,
+
+	setUsuario: (usuario) => set({ usuario }),
 
 	obtenerAlumnos: async () => {
 		try {
