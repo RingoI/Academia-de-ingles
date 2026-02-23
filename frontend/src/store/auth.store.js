@@ -9,10 +9,11 @@ export const authStore = create(
 			rol: null,
 			loading: false,
 
-			login: async (data) => {
+			login: async (data, rolSeleccionado) => {
 				set({ isLoggingIn: true });
 				try {
-					const res = await axiosInstance.post("/auth/login", data);
+					const res = await axiosInstance.post(rolSeleccionado.endpoint, data);
+					console.log("Res Login: ", res);
 					localStorage.setItem("token", res.data.token);
 					await authStore.getState().obtenerRol();
 					return res.status;

@@ -14,8 +14,11 @@ function App() {
 		<Routes>
 			<Route element={<Layout />}>
 				<Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN"]} />}>
-					<Route path="/dashboard" element={<DashboardPage />} />
 					<Route path="/usuarios" element={<UsuariosPage />} />
+				</Route>
+
+				<Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ALUMNO"]} />}>
+					<Route path="/dashboard" element={<DashboardPage />} />
 					<Route path="/cursos" element={<CursosPage />} />
 					<Route path="/pagos" element={<PagosPage />} />
 					<Route path="/examenes" element={<ExamenesPage />} />
