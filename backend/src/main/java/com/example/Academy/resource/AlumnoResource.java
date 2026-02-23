@@ -102,4 +102,16 @@ public class AlumnoResource {
         return ResponseEntity.ok(new ApiResponseDTO<>("Alumno actualizado correctamente", null));
     }
 
+
+    //AGREGO. NO ESTABA EN EL BACK ORIGINAL
+    @GetMapping("/sin-curso")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
+    public ResponseEntity<List<Alumno>> getAlumnosSinCurso() {
+        return ResponseEntity.ok(
+            personaService.getAlumnosSinCurso()
+        );
+    }
+
+
+
 }

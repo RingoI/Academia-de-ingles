@@ -242,6 +242,10 @@ public class PersonaServiceImpl implements PersonaService {
         .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
 }
 
-
+    //AGREGO. NO ESTABA EN EL BACK ORIGINAL.
+    @Override
+    public List<Alumno> getAlumnosSinCurso() {
+        return alumnoRepository.findByCursosIsEmpty();
+    }
 
 }

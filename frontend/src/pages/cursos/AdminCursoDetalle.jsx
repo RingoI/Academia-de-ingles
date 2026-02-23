@@ -9,6 +9,7 @@ function AdminCursoDetalle() {
   const [alumnosSinCurso, setAlumnosSinCurso] = useState([]);
   const [docentesDisponibles, setDocentesDisponibles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [busqueda, setBusqueda] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +33,28 @@ function AdminCursoDetalle() {
     fetchData();
   }, [id]);
 
+  const asignarAlumno = async (alumnoId) => {
+    try {
+      await axiosInstance.post(`/cursos/${id}/asignar-alumno/${alumnoId}`);
+
+      // eliminar de la lista sin curso
+      setAlumnosSinCurso(prev =>
+        prev.filter(a => a.id !== alumnoId)
+      );
+
+      // actualizar curso
+      const cursoActualizado = await axiosInstance.get(`/cursos/${id}`);
+      setCurso(cursoActualizado.data);
+
+    } catch (error) {
+      console.log("Error asignando alumno", error);
+    }
+  };
+
+  const alumnosFiltrados = alumnosSinCurso.filter((a) =>
+    a.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
   if (loading) {
     return <div className="p-10 text-white">Cargando...</div>;
   }
@@ -42,7 +65,7 @@ function AdminCursoDetalle() {
 
   return (
     <div className="p-10 text-white space-y-10">
-      
+
       <h1 className="text-2xl font-bold">
         Gestionando: {curso.nombre}
       </h1>
@@ -70,21 +93,38 @@ function AdminCursoDetalle() {
         </div>
 
         {/* Alumnos sin curso */}
-        <div>
+        <div className="min-h-[400px] max-h-[400px] overflow-y-auto">
           <h2 className="text-lg font-semibold mb-4">
             Alumnos sin curso
           </h2>
 
-          {alumnosSinCurso.length === 0 && (
-            <p className="text-slate-400">Todos los alumnos tienen curso</p>
+          <input
+            type="text"
+            placeholder="Buscar alumno..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            className="mb-4 p-2 rounded bg-slate-800 text-white w-full"
+          />
+
+          {alumnosFiltrados.length === 0 && (
+            <p className="text-slate-400">
+              No hay alumnos disponibles
+            </p>
           )}
 
-          {alumnosSinCurso.map((alumno) => (
+          {alumnosFiltrados.map((alumno) => (
             <div
               key={alumno.id}
               className="bg-slate-800 p-2 rounded mb-2 flex justify-between items-center"
             >
               <span>{alumno.nombre}</span>
+
+              <button
+                onClick={() => asignarAlumno(alumno.id)}
+                className="bg-green-600 px-3 py-1 rounded text-sm hover:opacity-80 transition"
+              >
+                Asignar
+              </button>
             </div>
           ))}
         </div>
@@ -119,15 +159,17 @@ function AdminCursoDetalle() {
           </h2>
 
           {docentesDisponibles.length === 0 && (
-            <p className="text-slate-400">No hay docentes disponibles</p>
+            <p className="text-slate-400">
+              No hay docentes disponibles
+            </p>
           )}
 
           {docentesDisponibles.map((docente) => (
             <div
               key={docente.id}
-              className="bg-slate-800 p-2 rounded mb-2 flex justify-between items-center"
+              className="bg-slate-800 p-2 rounded mb-2"
             >
-              <span>{docente.nombre}</span>
+              {docente.nombre}
             </div>
           ))}
         </div>

@@ -100,7 +100,6 @@ public class SecurityConfig {
                     "/docentes/register", "/docentes/auth"
                 ).permitAll()
 
-                
                 // CURSOS
                 // =========================
                 .requestMatchers(HttpMethod.GET, "/cursos/**").permitAll()
@@ -108,7 +107,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT,  "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
 
-                
                 // ALUMNOS
                 // =========================
                 .requestMatchers(HttpMethod.POST, "/alumnos/create").hasAnyRole("ADMIN", "DOCENTE")
