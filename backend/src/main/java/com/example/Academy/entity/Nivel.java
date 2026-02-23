@@ -34,20 +34,12 @@ public class Nivel {
  
 
     @ManyToMany(mappedBy = "niveles")
-    private List<Curso> cursos = new ArrayList<>();
+    private List<Curso> cursos = new ArrayList<>();    
 
+    @ManyToMany(mappedBy = "nivel")
+    private List<Alumno> alumnos = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "nivel")
+    private List<Alumno> docentes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "nivel")
-    private List<Examen> examenes = new ArrayList<>();
-    
-    @ManyToOne 
-    @JsonIgnore
-    @JoinColumn(name = "docente_id") 
-    private Docente docente;
-
-    @ManyToOne 
-    @JsonIgnore
-    @JoinColumn(name = "alumno_id") 
-    private Alumno alumno;   
 }

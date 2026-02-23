@@ -179,7 +179,7 @@ public class SecurityConfig {
                 .requestMatchers("/webhooks/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()                            
                 
-
+                .requestMatchers(HttpMethod.POST, "/nivel").permitAll()
 
                 
                 // ADMIN

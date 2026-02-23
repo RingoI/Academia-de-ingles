@@ -17,10 +17,7 @@ public interface EntregaService {
     List <EntregaResponseDTO> obtenerArchivosPorCurso(Long cursoId);
     EntregaResponseDTO obtenerArchivoPorId(Long entregaId);
     Resource descargarArchivo(Long entregaId);
-
-
-
-
+    List<EntregaResponseDTO> buscarPorDocente(Long docenteId);
 }
 
 

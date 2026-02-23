@@ -29,9 +29,13 @@ public class Docente  extends Persona {
     private String cuit;
     
     
-    @OneToMany(mappedBy = "docente", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Nivel> niveles = new ArrayList<>();
+   @ManyToMany
+    @JoinTable(
+        name = "alumno_nivel",
+        joinColumns = @JoinColumn(name = "alumno_id"),
+        inverseJoinColumns = @JoinColumn(name = "nivel_id")
+    )
+    private List<Nivel> nivel = new ArrayList<>();
     
     @OneToMany(mappedBy = "docente", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

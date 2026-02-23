@@ -16,9 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.Academy.dto.EntregaResponseDTO;
 
 import com.example.Academy.entity.Curso;
+import com.example.Academy.entity.Docente;
 import com.example.Academy.entity.Entrega;
 
 import com.example.Academy.repository.CursoRepository;
+import com.example.Academy.repository.DocenteRepository;
 import com.example.Academy.repository.EntregaRepository;
 
 import org.springframework.core.io.Resource;
@@ -33,6 +35,7 @@ public class EntregaServiceImp implements EntregaService{
 
     private final EntregaRepository entregaRepository;
     private final CursoRepository cursoRepository;
+    private final DocenteRepository docenteRepository;
 
     private static final String UPLOAD_DIR = "uploads/";
 
@@ -145,6 +148,14 @@ public class EntregaServiceImp implements EntregaService{
         }
     }
 
+
+    @Override
+    public List<EntregaResponseDTO> buscarPorDocente(Long docenteId){
+        docenteRepository.findById(docenteId).orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+
+        return entregaRepository.findByUsuarioId(docenteId).stream().map(this::mapearDTO).toList();
+
+    }
 
 }
 

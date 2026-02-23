@@ -81,6 +81,13 @@ public class EntregaResource {
                 .body(resource);
     }
 
+
+    @GetMapping("/docente/{docenteId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
+    public ResponseEntity<List<EntregaResponseDTO>> obtenerEntregarPorDocente(@PathVariable Long docenteId){
+        return ResponseEntity.ok(entregaService.buscarPorDocente(docenteId));
+    }
+
 }
 
 

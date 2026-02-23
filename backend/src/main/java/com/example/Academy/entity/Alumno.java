@@ -45,9 +45,14 @@ public class Alumno extends Persona {
     
     private List<Curso> cursos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+   @ManyToMany
+    @JoinTable(
+        name = "alumno_nivel",
+        joinColumns = @JoinColumn(name = "alumno_id"),
+        inverseJoinColumns = @JoinColumn(name = "nivel_id")
+    )
     private List<Nivel> nivel = new ArrayList<>();
+
 
 
     @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)

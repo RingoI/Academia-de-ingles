@@ -13,4 +13,6 @@ import com.example.Academy.entity.Entrega;
 public interface EntregaRepository extends JpaRepository<Entrega, Long> {
 	@Query("SELECT e FROM Entrega e WHERE e.curso.id = :cursoId")
 	List<Entrega> buscarPorCurso(@Param("cursoId") Long cursoId);
+
+	List<Entrega> findByUsuarioId(Long usuarioId); //El usuarioid sería el id del docente
 }
