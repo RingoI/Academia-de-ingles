@@ -1,4 +1,4 @@
-import { Banknote, FileText, GraduationCap, LayoutDashboard, LibraryBig, Users } from "lucide-react";
+import { Banknote, FileText, FolderOpen, GraduationCap, LayoutDashboard, LibraryBig, Users } from "lucide-react";
 import ItemMenu from "./ItemMenu";
 import { authStore } from "../store/auth.store";
 function Menu() {
@@ -20,7 +20,7 @@ function Menu() {
 				{rol === "ROLE_ADMIN" ? <ItemMenu to={"/usuarios"} Icono={Users} tag={"Usuarios"} /> : ""}
 				<ItemMenu to={"/cursos"} Icono={LibraryBig} tag={"Cursos"} />
 				<ItemMenu to={"/pagos"} Icono={Banknote} tag={"Pagos"} />
-				<ItemMenu to={"/examenes"} Icono={FileText} tag={"Exámenes"} />
+				<ItemMenu to={"/examenes"} Icono={FolderOpen} tag={"Material"} />
 			</div>
 		</div>
 	);

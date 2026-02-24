@@ -8,6 +8,7 @@ export const authStore = create(
 			isLoggingIn: false,
 			rol: null,
 			loading: false,
+			idUsuario: null,
 
 			login: async (data, rolSeleccionado) => {
 				set({ isLoggingIn: true });
@@ -28,8 +29,10 @@ export const authStore = create(
 				set({ loading: true });
 				try {
 					const res = await axiosInstance.get("/auth/me");
-					console.log("res rol: ", res.data.roles);
+
+					console.log("res rol: ", res.data);
 					set({ rol: res.data.roles[0], loading: false });
+					set({ idUsuario: res.data.id });
 				} catch (error) {
 					console.log("Error en obtenerRol: ", error);
 					set({ rol: null, loading: false });

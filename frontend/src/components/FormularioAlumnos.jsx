@@ -101,6 +101,7 @@ function FormularioAlumnos({ abrirFormularioAlumnos, setAbrirFormularioAlumnos, 
 						<button
 							className=" px-3 py-1.5 rounded-md text-slate-300 font-semibold cursor-pointer"
 							onClick={() => setAbrirFormularioAlumnos(false)}
+							type="button"
 						>
 							Cancelar
 						</button>
