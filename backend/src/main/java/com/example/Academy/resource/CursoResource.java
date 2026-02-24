@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.dto.CreateCursoRequestDTO;
 import com.example.Academy.dto.CursoResponseDTO;
+import com.example.Academy.dto.CursosPorDocenteDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
 import com.example.Academy.service.CursoService;
 
@@ -70,10 +71,17 @@ public class CursoResource {
         @PathVariable Long id,
         @RequestBody UpdateCursoRequestDTO dto) {
 
-    return ResponseEntity.ok(
-        new ApiResponseDTO<>("Curso actualizado exitosamente",
-            cursoService.actualizarCurso(id, dto))
-    );
-}
+        return ResponseEntity.ok(
+            new ApiResponseDTO<>("Curso actualizado exitosamente",
+                cursoService.actualizarCurso(id, dto))
+        );
+    }
+
+    @GetMapping("/docente/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
+    public ResponseEntity<ApiResponseDTO<List<CursosPorDocenteDTO>>> obtenerCursosPorDocente(@PathVariable Long id){
+        List<CursosPorDocenteDTO> cursos = cursoService.obtenerCursosPorDocente(id);
+        return ResponseEntity.ok(new ApiResponseDTO<>("Cursos encontrados", cursos));
+    }
 
 }

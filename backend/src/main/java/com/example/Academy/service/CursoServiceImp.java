@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Academy.dto.CreateCursoRequestDTO;
 import com.example.Academy.dto.CursoResponseDTO;
+import com.example.Academy.dto.CursosPorDocenteDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
 import com.example.Academy.entity.Alumno;
 import com.example.Academy.entity.Curso;
@@ -198,6 +199,13 @@ public class CursoServiceImp implements CursoService {
         return mapToResponse(actualizado);
     }
 
+
+    @Override
+    public List<CursosPorDocenteDTO> obtenerCursosPorDocente(Long id){
+        List<Curso> cursos = cursoRepository.findByDocentes_Id(id);
+
+        return cursos.stream().map(curso -> new CursosPorDocenteDTO(curso.getId(), curso.getNombre())).toList();
+    }
 
 }
 

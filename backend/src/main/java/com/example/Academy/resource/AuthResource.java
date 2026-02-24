@@ -2,6 +2,7 @@ package com.example.Academy.resource;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Academy.dto.LoginRequestDTO;
 import com.example.Academy.dto.LoginResponseDTO;
 import com.example.Academy.dto.UserInfoResponseDTO;
+import com.example.Academy.entity.Persona;
+import com.example.Academy.repository.PersonaRepository;
 import com.example.Academy.service.AuthService;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,7 +25,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @RequestMapping("/auth")
 public class AuthResource {
 
-     private final AuthService authService;
+    private final AuthService authService;
+    
+    @Autowired
+    private PersonaRepository personaRepository;
 
     public AuthResource(AuthService authService) {
         this.authService = authService;
@@ -45,8 +51,10 @@ public class AuthResource {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
-        UserInfoResponseDTO dto = new UserInfoResponseDTO(null, roles);
-        dto.setUsername(userDetails.getUsername());
+        Persona persona = personaRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        UserInfoResponseDTO dto = new UserInfoResponseDTO(persona.getId(), roles);
+        dto.setId(persona.getId());
         dto.setRoles(roles);
 
         return ResponseEntity.ok(dto);

@@ -30,5 +30,4 @@ public interface PersonaService {
     List<Docente> findAllDocentes();
     Docente findDocenteById(Long id);
     
-    
 }  
