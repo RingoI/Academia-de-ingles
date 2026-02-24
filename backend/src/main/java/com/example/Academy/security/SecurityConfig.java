@@ -83,7 +83,7 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
-             .cors(cors -> {})
+             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
@@ -105,7 +105,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/cursos/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.PUT,  "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.DELETE, "/cursos/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.DELETE, "/cursos/**").hasRole("ADMIN")
 
                 // ALUMNOS
                 // =========================
