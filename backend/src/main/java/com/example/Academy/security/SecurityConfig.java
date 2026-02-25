@@ -114,7 +114,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/alumnos/create").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.PUT, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.GET, "/alumnos").authenticated()
+                .requestMatchers(HttpMethod.GET, "/alumnos/**").authenticated()
 
 
                 .requestMatchers(HttpMethod.GET, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")

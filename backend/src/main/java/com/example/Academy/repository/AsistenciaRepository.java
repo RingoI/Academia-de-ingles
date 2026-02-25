@@ -17,5 +17,6 @@ public interface AsistenciaRepository extends JpaRepository<Asistencia, Long> {
     );
 
     List<Asistencia> findByCursoIdAndFecha(Long cursoId, LocalDate fecha);
+
 }
 
