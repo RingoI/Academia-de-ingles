@@ -29,6 +29,9 @@ public interface PersonaService {
     List<Alumno> findAll();
     List<Docente> findAllDocentes();
     Docente findDocenteById(Long id);
+
+    //AGREGO. NO ESTABA EN EL BACK ORIGINAL
+    List<Alumno> getAlumnosSinCurso();
     
     
 }  

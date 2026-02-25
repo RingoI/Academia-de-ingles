@@ -13,8 +13,11 @@ public class CursoResponseDTO {
     private Long id;
     private String nombre;
     private List<String> niveles;
-    private List<String> docentes;
-    private List<String> alumnos;
+    
+    // Tuve que cambiar String por PersonaDTO para enviar ID y nombre, necesario para desvincular alumnos y docentes de cursos.
+    private List<PersonaDTO> docentes; 
+    private List<PersonaDTO> alumnos;
+    
     private Integer cupo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;

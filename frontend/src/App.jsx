@@ -8,6 +8,7 @@ import CursosPage from "./pages/CursosPage";
 import PagosPage from "./pages/PagosPage";
 import ExamenesPage from "./pages/ExamenesPage";
 import Layout from "./components/Layout";
+import AdminCursoDetalle from "./pages/cursos/AdminCursoDetalle";
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 					<Route path="/dashboard" element={<DashboardPage />} />
 					<Route path="/usuarios" element={<UsuariosPage />} />
 					<Route path="/cursos" element={<CursosPage />} />
+					<Route path="/cursos/:id" element={<AdminCursoDetalle />} />
 					<Route path="/pagos" element={<PagosPage />} />
 					<Route path="/examenes" element={<ExamenesPage />} />
 				</Route>

@@ -10,7 +10,12 @@ function PasswordInput({ onChange }) {
 						<circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
 					</g>
 				</svg>
-				<input type="password" required placeholder="Constraseña" onChange={onChange} />
+				<input type="password"
+					   required
+					   placeholder="Constraseña"
+					   onChange={onChange}
+					   className="bg-transparent text-white placeholder:text-slate-500 outline-none w-full"   
+				/>
 			</label>
 		</>
 	);

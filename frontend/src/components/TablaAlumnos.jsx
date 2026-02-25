@@ -16,14 +16,14 @@ function TablaAlumnos() {
   return (
     <div className="overflow-x-auto">
       <table className="table rounded-lg overflow-hidden">
-        <thead className="bg-[#0d1526]">
+        <thead className="bg-[#0d1526] text-white">
           <tr>
             {cabecera.map((c) => (
               <th key={c}>{c}</th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-[#0c1224]">
+        <tbody className="bg-[#0c1224] text-white">
           {alumnos.map((a, idx) => (
             <tr key={a.id}>
               <th>{idx + 1}</th>

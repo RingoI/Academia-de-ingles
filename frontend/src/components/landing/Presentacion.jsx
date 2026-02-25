@@ -10,11 +10,11 @@ function Presentacion() {
 					</span>
 				</div>
 				<div>
-					<h1 className="text-6xl">Master your future</h1>
+					<h1 className="text-6xl text-6xl text-white">Master your future</h1>
 					<h1 className="text-6xl text-[#1b95d3] italic">through English.</h1>
 				</div>
 				<p className="text-slate-400">
-					Providence Institute no solo es un instituto. Es una plataforma de <br /> alto rendimiento diseñadas para profesionales y
+					Providence Institute no solo es un instituto. Es una plataforma de <br /> alto rendimiento diseñada para profesionales y
 					mentes <br /> ambiciosas que buscan dominio real del idioma
 				</p>
 				<div className="flex items-center gap-4 w-80 h-12 px-3 bg-[#163855] rounded-3xl">
