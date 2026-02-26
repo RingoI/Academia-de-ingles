@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router-dom";
 import { authStore } from "../store/auth.store";
 
 export const ProteccionRutas = ({ rolesPermitidos, redirigir = "/" }) => {

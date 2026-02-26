@@ -36,15 +36,15 @@ function LoginPage() {
 			<div className="w-full gap-5 flex items-center flex-col justify-center h-full">
 				<div className="text-3xl flex flex-col items-center gap-2">
 					<GraduationCap className="size-15 bg-[#00b5dd] p-2 rounded-2xl text-[#030d18] " />
-					<h1 className="italic">
+					<h1 className="italic text-white">
 						PROVIDENCE <span className="text-[#00b5dd]">INSTITUTE</span>
 					</h1>
 					<span className="text-sm tracking-[0.4rem] text-slate-500">PLATAFORMA INSTITUCIONAL</span>
 				</div>
 				<div className="min-h-100 bg-[##0b1423] w-100 rounded-4xl p-8 border border-slate-800 justify-center shadow-xl shadow-blue-400/10">
 					<div>
-						<h3 className="font-semibold text-xl">Acceso Institucional</h3>
-						<p className="text-sm text-slate-400">Ingresa sus credenciales para acceder a la plataforma</p>
+						<h3 className="font-semibold text-xl text-white">Acceso institucional</h3>
+						<p className="text-sm text-slate-400">Ingrese sus credenciales para acceder a la plataforma</p>
 					</div>
 					<div className="flex justify-between items-center mt-5">
 						{opciones.map((op) => (
@@ -74,15 +74,15 @@ function LoginPage() {
 							<div className="w-full">
 								<button
 									type="submit"
-									className="bg-[#00b5ddb8] cursor-pointer font-semibold  transition-transform hover:translate-y-1 text-[#030d18] w-full h-12 rounded-2xl"
+									className="bg-[#00b5ddb8] cursor-pointer font-semibold  transition-transform hover:translate-y-1 text-[#030d18] w-full h-12 rounded-2xl text-white"
 								>
-									{isLoggingIn ? <span className="loading loading-spinner loading-sm"></span> : "Iniciar Sesion"}
+									{isLoggingIn ? <span className="loading loading-spinner loading-sm"></span> : "Iniciar sesión"}
 								</button>
 							</div>
 						</form>
 					</div>
 				</div>
-				<p className="text-center text-slate-600 text-[10px]">
+				<p className="text-center text-slate-500 text-[10px]">
 					@2026 Providence Institute. Todos los derechos reservados. <br /> PPyL Proyecto Universitario{" "}
 				</p>
 			</div>

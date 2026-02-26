@@ -8,9 +8,9 @@ function TablaAlumnos() {
 	const [editarAlumno, setEditarAlumno] = useState(false);
 	const [datosAlumno, setDatosAlumno] = useState({});
 
-	useEffect(() => {
-		obtenerAlumnos();
-	}, []);
+  useEffect(() => {
+    obtenerAlumnos();
+  }, []);
 
 	const cabecera = ["", "Nombre", "Email", "Direccion", "DNI", "Estado", "Acciones"];
 

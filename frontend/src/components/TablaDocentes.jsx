@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { usuarioStore } from "../store/usuarios.store";
-import { Ban, CheckCheckIcon, CheckCircle2, SquarePen, XCircle } from "lucide-react";
+import { Ban, CheckCircle2, SquarePen, XCircle } from "lucide-react";
 import FormularioDocentes from "./FormularioDocentes";
 
 function TablaDocentes() {
@@ -11,6 +11,8 @@ function TablaDocentes() {
 	useEffect(() => {
 		obtenerDocentes();
 	}, []);
+
+	console.log("Docentes:  ", docentes);
 
 	const cabecera = ["", "Nombre", "Email", "Direccion", "CUIL", "Estado", "Acciones"];
 
@@ -28,13 +30,13 @@ function TablaDocentes() {
 				<thead className="bg-[#0d1526]">
 					<tr>
 						{cabecera.map((c) => (
-							<th>{c}</th>
+							<th key={c}>{c}</th>
 						))}
 					</tr>
 				</thead>
 				<tbody className="bg-[#0c1224]">
 					{docentes.map((d, idx) => (
-						<tr>
+						<tr key={d.id}>
 							<th>{idx + 1}</th>
 							<td>{d.nombre}</td>
 							<td>{d.email}</td>
@@ -73,7 +75,8 @@ function TablaDocentes() {
 									<SquarePen
 										className="size-5 cursor-pointer"
 										onClick={() => {
-											(setEditarDocente(!editarDocente), setDatosDocente(d));
+											setEditarDocente(!editarDocente);
+											setDatosDocente(d);
 										}}
 									/>
 								</span>

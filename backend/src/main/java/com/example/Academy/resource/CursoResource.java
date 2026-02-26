@@ -84,4 +84,51 @@ public class CursoResource {
         return ResponseEntity.ok(new ApiResponseDTO<>("Cursos encontrados", cursos));
     }
 
+
+//ENDPOINTS NUEVOS DE CURSOS
+
+// Endpoint para vincular un alumno al curso
+    @PostMapping("/{id}/asignar-alumno/{alumnoId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponseDTO<Void>> asignarAlumno(
+            @PathVariable Long id, 
+            @PathVariable Long alumnoId) {
+        
+        cursoService.asignarAlumno(id, alumnoId);
+        return ResponseEntity.ok(
+            new ApiResponseDTO<>("Alumno asignado exitosamente", null)
+        );
+    }
+
+    // Endpoint para vincular un docente al curso
+    @PostMapping("/{id}/asignar-docente/{docenteId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponseDTO<Void>> asignarDocente(
+            @PathVariable Long id, 
+            @PathVariable Long docenteId) {
+        
+        cursoService.asignarDocente(id, docenteId);
+        return ResponseEntity.ok(
+            new ApiResponseDTO<>("Docente asignado exitosamente", null)
+        );
+    }
+
+    // Endpoint para desvincular un alumno de un curso
+    @DeleteMapping("/{id}/desvincular-alumno/{alumnoId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponseDTO<Void>> desvincularAlumno(
+        @PathVariable Long id, @PathVariable Long alumnoId) {
+    cursoService.desvincularAlumno(id, alumnoId);
+    return ResponseEntity.ok(new ApiResponseDTO<>("Alumno desvinculado", null));
+}
+
+    // Endpoint para desvincular un docente de un curso
+    @DeleteMapping("/{id}/desvincular-docente/{docenteId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponseDTO<Void>> desvincularDocente(
+        @PathVariable Long id, @PathVariable Long docenteId) {
+    cursoService.desvincularDocente(id, docenteId);
+    return ResponseEntity.ok(new ApiResponseDTO<>("Docente desvinculado", null));
+}
+
 }

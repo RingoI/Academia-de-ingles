@@ -8,13 +8,13 @@ function Footer() {
 				<div className="flex flex-col gap-2">
 					<div className="flex items-center gap-2">
 						<GraduationCap className="bg-[#1b95d3] size-10 p-1 rounded-lg text-[#0a2540]" />
-						<div className="font-semibold">
-							<span className="text-slate-200 text-lg ">PROVIDENCE</span>
+						<div className="font-semibold italic">
+							<span className="text-slate-200 text-lg ">PROVIDENCE </span>
 							<span className="text-[#1b95d3] text-lg ">INSTITUTE</span>
 						</div>
 					</div>
 					<p className="text-slate-400">
-						Redefiniendo el aprendizaje de idiomas para una <br /> nueva generación de profesionales globlaes
+						Redefiniendo el aprendizaje de idiomas para una <br /> nueva generación de profesionales globales.
 					</p>
 				</div>
 				<div className="flex flex-col items-center gap-2">

@@ -4,6 +4,9 @@ import { axiosInstance } from "../utils/axios.js";
 export const usuarioStore = create((set) => ({
 	alumnos: [],
 	docentes: [],
+	usuario: null,
+
+	setUsuario: (usuario) => set({ usuario }),
 
 	obtenerAlumnos: async () => {
 		try {
@@ -48,7 +51,9 @@ export const usuarioStore = create((set) => ({
 			const res = await axiosInstance.put(`/alumnos/${id}`, data);
 			console.log("res: ", res);
 			if (res.status === 200) {
-				usuarioStore.setState((state) => ({ alumnos: state.alumnos.map((a) => (a.id === id ? { ...a, ...data } : a)) }));
+				usuarioStore.setState((state) => ({
+					alumnos: state.alumnos.map((a) => (a.id === id ? { ...a, ...data } : a)),
+				}));
 			}
 		} catch (error) {
 			console.log("Error en modificar alumno: ", error);
@@ -60,7 +65,9 @@ export const usuarioStore = create((set) => ({
 			const res = await axiosInstance.put(`/docentes/${id}`, data);
 			console.log("res: ", res);
 			if (res.status === 200) {
-				usuarioStore.setState((state) => ({ docentes: state.docentes.map((a) => (a.id === id ? { ...a, ...data } : a)) }));
+				usuarioStore.setState((state) => ({
+					docentes: state.docentes.map((d) => (d.id === id ? { ...d, ...data } : d)),
+				}));
 			}
 		} catch (error) {
 			console.log("Error en modificar docentes: ", error);

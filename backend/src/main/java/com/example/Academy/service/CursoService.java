@@ -15,4 +15,10 @@ public interface CursoService {
     void eliminarCurso(Long id);
     CursoResponseDTO actualizarCurso(Long id, UpdateCursoRequestDTO dto);
     List<CursosPorDocenteDTO> obtenerCursosPorDocente(Long id);
+    
+    // Nuevos metodos
+    void asignarAlumno (Long cursoID, Long alumnoID);
+    void asignarDocente(Long cursoId, Long docenteId);
+    void desvincularAlumno(Long cursoId, Long alumnoId);
+    void desvincularDocente(Long cursoId, Long docenteId);
 }
