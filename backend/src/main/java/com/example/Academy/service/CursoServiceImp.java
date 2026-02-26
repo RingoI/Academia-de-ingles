@@ -203,6 +203,20 @@ public void asignarAlumno(Long cursoId, Long alumnoId) {
     Alumno alumno = alumnoRepository.findById(alumnoId)
             .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
 
+    //Evitar duplicados
+    boolean yaAsignado = curso.getAlumnos()
+            .stream()
+            .anyMatch(a -> a.getId().equals(alumnoId));
+
+    if (yaAsignado) {
+        throw new RuntimeException("El alumno ya está asignado");
+    }
+
+    //Validar cupo
+    if (curso.getAlumnos().size() >= curso.getCupo()) {
+        throw new RuntimeException("Cupo máximo alcanzado");
+    }
+
     curso.getAlumnos().add(alumno);
     alumno.getCursos().add(curso);
 
@@ -212,11 +226,21 @@ public void asignarAlumno(Long cursoId, Long alumnoId) {
 @Override
 @Transactional
 public void asignarDocente(Long cursoId, Long docenteId) {
+
     Curso curso = cursoRepository.findById(cursoId)
             .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
     Docente docente = docenteRepository.findById(docenteId)
             .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+
+    //VALIDAR SI YA ESTÁ ASIGNADO
+    boolean yaAsignado = curso.getDocentes()
+            .stream()
+            .anyMatch(d -> d.getId().equals(docenteId));
+
+    if (yaAsignado) {
+        throw new RuntimeException("El docente ya está asignado a este curso");
+    }
 
     curso.getDocentes().add(docente);
     docente.getCursos().add(curso);

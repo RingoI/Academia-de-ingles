@@ -29,6 +29,44 @@ function AdminCursos() {
     alumnosIds: []
   });
 
+  const formatearFecha = (fechaISO) => {
+    const [anio, mes, dia] = fechaISO.split("-");
+    return `${dia}/${mes}/${anio}`;
+  };
+
+  const coloresTexto = [
+    "text-blue-300",
+    "text-purple-300",
+    "text-cyan-300",
+    "text-indigo-300",
+    "text-amber-300",
+    "text-emerald-300",
+    "text-pink-300"
+  ];
+
+  const coloresAura = [
+    "bg-blue-500/25",
+    "bg-purple-500/25",
+    "bg-cyan-500/25",
+    "bg-indigo-500/25",
+    "bg-amber-500/25",
+    "bg-emerald-500/25",
+    "bg-pink-500/25"
+  ];
+
+  const getColorIndex = (nombre) => {
+    const letra = nombre.charAt(0).toUpperCase();
+    return letra.charCodeAt(0) % coloresTexto.length;
+  };
+
+  const getNivelColor = (nombre) => {
+    return coloresTexto[getColorIndex(nombre)];
+  };
+
+  const getNivelAura = (nombre) => {
+    return coloresAura[getColorIndex(nombre)];
+  };
+
   const fetchCursos = async () => {
     try {
       setLoading(true);
@@ -97,12 +135,30 @@ function AdminCursos() {
           </div>
         ) : (
           cursos.map((curso) => (
-            <div key={curso.id} className="bg-slate-900/50 rounded-3xl border border-slate-800 p-8 hover:border-blue-500/40 transition-all flex flex-col shadow-2xl group">
-              <h2 className="text-2xl font-bold text-white mb-6 group-hover:text-blue-400 transition-colors">
+            <div
+              key={curso.id}
+              className="relative overflow-hidden bg-gradient-to-br from-[#0f1c2e] via-[#0c1625] to-[#0a1422] rounded-3xl border border-slate-800 p-8 hover:border-blue-500/40 transition-all flex flex-col shadow-2xl group"
+            >
+              {/* FONDO DECORATIVO GIGANTE */}
+              {/* AURA SUAVE */}
+              <div className={`absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full blur-3xl ${getNivelAura(curso.nombre)}`}></div>
+
+              {/* TEXTO DECORATIVO */}
+              <div
+                className={`absolute bottom-4 right-4 text-[180px] font-black tracking-tight pointer-events-none select-none ${getNivelColor(curso.nombre)}`}
+                style={{
+                  opacity: 0.05,
+                  transform: "translate(20px, 20px)",
+                }}
+              >
+                {curso.nombre}
+              </div>
+            
+              <h2 className="relative z-10 text-2xl font-bold text-white mb-6 group-hover:text-blue-400 transition-colors">
                 {curso.nombre}
               </h2>
               
-              <div className="space-y-4 mb-8 flex-1">
+              <div className="relative z-10 space-y-4 mb-8 flex-1">
                 <div className="flex items-center gap-4 text-slate-400">
                   <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-blue-400">
                     <Layers size={16} />
@@ -114,9 +170,11 @@ function AdminCursos() {
                   <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-purple-400">
                     <GraduationCap size={16} />
                   </div>
-                  <span className="text-sm">Staff: <b className="text-slate-200">{curso.docentes?.join(", ") || "Sin asignar"}</b></span>
+                  <span className="text-sm">Staff: <b className="text-slate-200">{curso.docentes && curso.docentes.length > 0
+                                                                                    ? curso.docentes.map(d => d.nombre).join(", ")
+                                                                                    : "Sin asignar"}</b></span>
                 </div>
-
+                
                 <div className="flex items-center gap-4 text-slate-400">
                   <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-emerald-400">
                     <Users size={16} />
@@ -125,10 +183,10 @@ function AdminCursos() {
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-slate-800 flex items-center justify-between">
+              <div className="relative z-10 pt-6 border-t border-slate-800 flex items-center justify-between">
                 <div className="flex flex-col">
                   <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Vigencia</span>
-                  <span className="text-xs text-slate-300 font-mono">{curso.fechaInicio} — {curso.fechaFin}</span>
+                  <span className="text-xs text-slate-300 font-mono">{formatearFecha(curso.fechaInicio)} — {formatearFecha(curso.fechaFin)}</span>
                 </div>
                 <button
                   onClick={() => navigate(`/cursos/${curso.id}`)}
