@@ -21,7 +21,6 @@ import com.example.Academy.dto.CreateAlumnoDTO;
 import com.example.Academy.dto.CursoAlumnoDTO;
 import com.example.Academy.dto.UpdateAlumnoDTO;
 import com.example.Academy.entity.Alumno;
-import com.example.Academy.entity.Curso;
 import com.example.Academy.entity.Persona;
 import com.example.Academy.service.AuthService;
 import com.example.Academy.service.PersonaService;

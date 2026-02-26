@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.Academy.dto.EntregaResponseDTO;
 
 import com.example.Academy.entity.Curso;
-import com.example.Academy.entity.Docente;
 import com.example.Academy.entity.Entrega;
 
 import com.example.Academy.repository.CursoRepository;
