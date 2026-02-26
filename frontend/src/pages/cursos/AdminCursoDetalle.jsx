@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { CursosService } from "../../utils/CursosService";
-import { 
-  User, 
-  GraduationCap, 
-  Search, 
-  ArrowLeft, 
-  CheckCircle, 
-  Users, 
-  UserPlus, 
+import {
+  User,
+  GraduationCap,
+  Search,
+  ArrowLeft,
+  CheckCircle,
+  Users,
+  UserPlus,
   BookOpen,
   Trash2, // Ícono para desvincular
-  X
-} from "lucide-react"; 
+  X,
+} from "lucide-react";
 
 function AdminCursoDetalle() {
   const { id } = useParams();
@@ -29,7 +29,7 @@ function AdminCursoDetalle() {
       const [cursoData, alumnosData, docentesData] = await Promise.all([
         CursosService.obtenerPorId(id),
         CursosService.getAlumnosSinCurso(),
-        CursosService.getDocentes()
+        CursosService.getDocentes(),
       ]);
       setCurso(cursoData);
       setAlumnosSinCurso(alumnosData);
@@ -84,38 +84,49 @@ function AdminCursoDetalle() {
   };
 
   const alumnosFiltrados = alumnosSinCurso.filter((a) =>
-    a.nombre.toLowerCase().includes(busqueda.toLowerCase())
+    a.nombre?.toLowerCase().includes(busqueda.toLowerCase()),
   );
 
-  const cardContainer = "bg-slate-900/50 rounded-2xl border border-slate-800 p-6 shadow-2xl h-[520px] flex flex-col transition-all hover:border-slate-700/50";
+  const cardContainer =
+    "bg-slate-900/50 rounded-2xl border border-slate-800 p-6 shadow-2xl h-[520px] flex flex-col transition-all hover:border-slate-700/50";
   const scrollArea = "flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-2";
 
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f172a]">
-      <div className="flex flex-col items-center gap-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-        <p className="text-slate-400 font-medium animate-pulse">Cargando gestión...</p>
+  if (loading)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0f172a]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <p className="text-slate-400 font-medium animate-pulse">
+            Cargando gestión...
+          </p>
+        </div>
       </div>
-    </div>
-  );
+    );
 
-  if (!curso) return <div className="p-10 text-white text-center">Curso no encontrado</div>;
+  if (!curso)
+    return (
+      <div className="p-10 text-white text-center">Curso no encontrado</div>
+    );
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-slate-100 p-4 md:p-10">
-      
       {/* --- HEADER --- */}
       <header className="max-w-7xl mx-auto mb-10">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-slate-900/40 p-8 rounded-3xl border border-slate-800 shadow-inner">
           <div className="flex items-center gap-6">
-            <button 
+            <button
               onClick={() => navigate(-1)}
               className="group p-3 bg-slate-800 hover:bg-blue-600 rounded-2xl transition-all duration-300 shadow-lg"
             >
-              <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
+              <ArrowLeft
+                size={24}
+                className="group-hover:-translate-x-1 transition-transform"
+              />
             </button>
             <div>
-              <h1 className="text-4xl font-black text-white tracking-tight">{curso.nombre}</h1>
+              <h1 className="text-4xl font-black text-white tracking-tight">
+                {curso.nombre}
+              </h1>
               <p className="text-slate-400 flex items-center gap-2 mt-1 italic italic">
                 <BookOpen size={14} /> Gestión de integrantes
               </p>
@@ -123,30 +134,34 @@ function AdminCursoDetalle() {
           </div>
 
           <div className="flex items-center gap-4 bg-slate-950/50 p-4 rounded-2xl border border-slate-800">
-             <div className="text-right">
-                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-slate-500">Ocupación</p>
-                <p className="text-2xl font-mono font-bold text-white">
-                  {curso.alumnos?.length} <span className="text-slate-600 text-sm">/ {curso.cupo}</span>
-                </p>
-             </div>
-             <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500">
-                <Users size={24} />
-             </div>
+            <div className="text-right">
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-slate-500">
+                Ocupación
+              </p>
+              <p className="text-2xl font-mono font-bold text-white">
+                {curso.alumnos?.length}{" "}
+                <span className="text-slate-600 text-sm">/ {curso.cupo}</span>
+              </p>
+            </div>
+            <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500">
+              <Users size={24} />
+            </div>
           </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
-        
         {/* --- 1. ALUMNOS INSCRITOS --- */}
         <section className={cardContainer}>
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400 border border-emerald-500/20 text-emerald-400">
               <CheckCircle size={22} />
             </div>
-            <h2 className="text-xl font-bold tracking-tight text-white">Alumnos Inscritos</h2>
+            <h2 className="text-xl font-bold tracking-tight text-white">
+              Alumnos Inscritos
+            </h2>
           </div>
-          
+
           <div className={scrollArea}>
             {curso.alumnos?.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-slate-600 border-2 border-dashed border-slate-800/50 rounded-2xl">
@@ -154,15 +169,20 @@ function AdminCursoDetalle() {
               </div>
             ) : (
               curso.alumnos?.map((alumno, index) => (
-                <div key={index} className="flex items-center justify-between bg-slate-800/30 p-4 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all">
+                <div
+                  key={index}
+                  className="flex items-center justify-between bg-slate-800/30 p-4 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all"
+                >
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black">
                       {alumno.nombre?.charAt(0) || "A"}
                     </div>
-                    <span className="text-slate-200 font-medium">{alumno.nombre || alumno}</span>
+                    <span className="text-slate-200 font-medium">
+                      {alumno.nombre || alumno}
+                    </span>
                   </div>
-                  <button 
-                    onClick={() => manejarDesvincularAlumno(alumno.id)} 
+                  <button
+                    onClick={() => manejarDesvincularAlumno(alumno.id)}
                     className="p-2 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
                     title="Desvincular Alumno"
                   >
@@ -180,11 +200,16 @@ function AdminCursoDetalle() {
             <div className="p-2.5 bg-blue-500/10 rounded-xl text-blue-400 border border-blue-500/20 text-blue-400">
               <UserPlus size={22} />
             </div>
-            <h2 className="text-xl font-bold tracking-tight text-white">Inscribir Alumnos</h2>
+            <h2 className="text-xl font-bold tracking-tight text-white">
+              Inscribir Alumnos
+            </h2>
           </div>
-          
+
           <div className="relative mb-6">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+            <Search
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+              size={18}
+            />
             <input
               type="text"
               placeholder="Buscar..."
@@ -196,8 +221,13 @@ function AdminCursoDetalle() {
 
           <div className={scrollArea}>
             {alumnosFiltrados.map((alumno) => (
-              <div key={alumno.id} className="flex items-center justify-between bg-slate-950/40 p-4 rounded-xl border border-slate-800 hover:border-blue-500/30 group transition-all">
-                <span className="text-slate-300 font-medium">{alumno.nombre}</span>
+              <div
+                key={alumno.id}
+                className="flex items-center justify-between bg-slate-950/40 p-4 rounded-xl border border-slate-800 hover:border-blue-500/30 group transition-all"
+              >
+                <span className="text-slate-300 font-medium">
+                  {alumno.nombre}
+                </span>
                 <button
                   onClick={() => manejarAsignarAlumno(alumno.id)}
                   className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg text-xs font-black transition-all uppercase"
@@ -215,9 +245,11 @@ function AdminCursoDetalle() {
             <div className="p-2.5 bg-purple-500/10 rounded-xl text-purple-400 border border-purple-500/20 text-purple-400">
               <GraduationCap size={22} />
             </div>
-            <h2 className="text-xl font-bold tracking-tight text-white">Docentes a Cargo</h2>
+            <h2 className="text-xl font-bold tracking-tight text-white">
+              Docentes a Cargo
+            </h2>
           </div>
-          
+
           <div className={scrollArea}>
             {curso.docentes?.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-slate-600 border-2 border-dashed border-slate-800/50 rounded-2xl text-slate-500">
@@ -225,18 +257,25 @@ function AdminCursoDetalle() {
               </div>
             ) : (
               curso.docentes?.map((docente, index) => (
-                <div key={index} className="flex items-center justify-between bg-slate-800/30 p-4 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all">
+                <div
+                  key={index}
+                  className="flex items-center justify-between bg-slate-800/30 p-4 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all"
+                >
                   <div className="flex items-center gap-5">
                     <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20">
                       <User size={24} />
                     </div>
                     <div>
-                      <p className="text-slate-100 font-bold">{docente.nombre || docente}</p>
-                      <p className="text-[10px] text-purple-400 font-black uppercase tracking-widest tracking-widest">Titular</p>
+                      <p className="text-slate-100 font-bold">
+                        {docente.nombre || docente}
+                      </p>
+                      <p className="text-[10px] text-purple-400 font-black uppercase tracking-widest tracking-widest">
+                        Titular
+                      </p>
                     </div>
                   </div>
-                  <button 
-                    onClick={() => manejarDesvincularDocente(docente.id)} 
+                  <button
+                    onClick={() => manejarDesvincularDocente(docente.id)}
                     className="p-2 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
                   >
                     <Trash2 size={18} />
@@ -253,15 +292,24 @@ function AdminCursoDetalle() {
             <div className="p-2.5 bg-slate-700/50 rounded-xl text-slate-400 border border-slate-700/50 text-slate-400">
               <Users size={22} />
             </div>
-            <h2 className="text-xl font-bold tracking-tight text-white">Staff Docente</h2>
+            <h2 className="text-xl font-bold tracking-tight text-white">
+              Staff Docente
+            </h2>
           </div>
-          
+
           <div className={scrollArea}>
             {docentesDisponibles.map((docente) => (
-              <div key={docente.id} className="flex items-center justify-between bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-slate-600 transition-all shadow-sm">
+              <div
+                key={docente.id}
+                className="flex items-center justify-between bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-slate-600 transition-all shadow-sm"
+              >
                 <div className="flex flex-col">
-                  <span className="font-bold text-slate-200">{docente.nombre}</span>
-                  <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">Activo</span>
+                  <span className="font-bold text-slate-200">
+                    {docente.nombre}
+                  </span>
+                  <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
+                    Activo
+                  </span>
                 </div>
                 <button
                   onClick={() => manejarAsignarDocente(docente.id)}
@@ -273,7 +321,6 @@ function AdminCursoDetalle() {
             ))}
           </div>
         </section>
-
       </main>
 
       <style>{`
