@@ -40,7 +40,7 @@ public class EntregaServiceImp implements EntregaService{
     private static final String UPLOAD_DIR = "uploads/";
 
     @Override
-    public EntregaResponseDTO subirArchivo(Long cursoId, Long usuarioId, String rol, MultipartFile file, String tipo){
+    public EntregaResponseDTO subirArchivo(Long cursoId, Long usuarioId, String rol, MultipartFile file, String tipo, String nombre){
         Curso curso = cursoRepository.findById(cursoId).orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
         if(file.isEmpty()){
@@ -51,6 +51,7 @@ public class EntregaServiceImp implements EntregaService{
 
         Entrega entrega = new Entrega();
         entrega.setCurso(curso);
+        entrega.setNombre(nombre);
         entrega.setNombreArchivo(nombreArchivo);
         entrega.setTipo(tipo);
         entrega.setFechaSubida(LocalDate.now());
@@ -120,6 +121,7 @@ public class EntregaServiceImp implements EntregaService{
             entrega.getId(),
             entrega.getCurso().getNombre(),
             entrega.getNombreArchivo(),
+            entrega.getNombre(),
             entrega.getTipo(),
             entrega.getFechaSubida(),
             entrega.getSubidoPor(),

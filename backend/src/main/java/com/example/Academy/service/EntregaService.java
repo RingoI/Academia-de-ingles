@@ -12,7 +12,7 @@ import org.springframework.core.io.Resource;
 @Service
 public interface EntregaService {
 
-    EntregaResponseDTO subirArchivo(Long cursoId, Long usuarioId, String rol, MultipartFile file, String tipo);
+    EntregaResponseDTO subirArchivo(Long cursoId, Long usuarioId, String rol, MultipartFile file, String tipo, String nombre);
     void eliminarArchivo(Long entregaId);
     List <EntregaResponseDTO> obtenerArchivosPorCurso(Long cursoId);
     EntregaResponseDTO obtenerArchivoPorId(Long entregaId);

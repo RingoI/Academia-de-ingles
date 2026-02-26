@@ -31,16 +31,16 @@ public class EntregaResource {
 
     @PostMapping(value = "/curso/{cursoId}/alumno/{alumnoId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('ADMIN' ,'ALUMNO')")
-    public ResponseEntity<ApiResponseDTO<EntregaResponseDTO>> subirTarea(@PathVariable Long cursoId, @PathVariable Long alumnoId, @RequestParam("file") MultipartFile file){
-        EntregaResponseDTO entrega = entregaService.subirArchivo(cursoId, alumnoId, "ALUMNO", file, "TAREA");
+    public ResponseEntity<ApiResponseDTO<EntregaResponseDTO>> subirTarea(@PathVariable Long cursoId, @PathVariable Long alumnoId, @RequestParam("file") MultipartFile file, @RequestParam("nombre") String nombre){
+        EntregaResponseDTO entrega = entregaService.subirArchivo(cursoId, alumnoId, "ALUMNO", file, "TAREA", nombre);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseDTO<>("Tarea subida correctamente",entrega ));
     }
 
     @PostMapping(value = "/curso/{cursoId}/docente/{docenteId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('ADMIN','DOCENTE')")
-    public ResponseEntity<ApiResponseDTO<EntregaResponseDTO>> subirMaterial(@PathVariable Long cursoId, @PathVariable Long docenteId, @RequestParam("file") MultipartFile file){
-        EntregaResponseDTO entrega = entregaService.subirArchivo(cursoId, docenteId, "DOCENTE", file, "MATERIAL");
+    public ResponseEntity<ApiResponseDTO<EntregaResponseDTO>> subirMaterial(@PathVariable Long cursoId, @PathVariable Long docenteId, @RequestParam("file") MultipartFile file, @RequestParam("tipo") String tipo, @RequestParam("nombre") String nombre){
+        EntregaResponseDTO entrega = entregaService.subirArchivo(cursoId, docenteId, "DOCENTE", file, tipo, nombre);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseDTO<>("Material subido correctamente", entrega));
     }

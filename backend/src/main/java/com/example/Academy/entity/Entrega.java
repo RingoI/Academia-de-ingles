@@ -24,6 +24,7 @@ public class Entrega {
 	private Long id;
 
 	private String nombreArchivo;
+	private String nombre;
 	private String tipo; //La idea sería poner "TAREA", "EXAMEN o "MATERIAL"
 	private LocalDate fechaSubida;
 

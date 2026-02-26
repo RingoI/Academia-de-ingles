@@ -14,6 +14,7 @@ public class EntregaResponseDTO {
     private Long id;
     private String cursoNombre;
     private String nombreArchivo;
+    private String nombre;
     private String tipo; 
     private LocalDate fechaSubida;
     private String subidoPor;

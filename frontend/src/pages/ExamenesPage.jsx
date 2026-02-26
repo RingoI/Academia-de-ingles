@@ -6,7 +6,7 @@ import { authStore } from "../store/auth.store";
 
 function ExamenesPage() {
 	const [abrirFormulario, setAbrirFormulario] = useState(false);
-	const { idUsuario } = authStore();
+	const { idUsuario, rol } = authStore();
 
 	return (
 		<div className="h-full w-full relative">
@@ -31,7 +31,7 @@ function ExamenesPage() {
 						Subir Material
 					</button>
 				</div>
-				<TablaMaterial idUsuario={idUsuario} />
+				<TablaMaterial idUsuario={idUsuario} rol={rol} />
 			</div>
 		</div>
 	);
