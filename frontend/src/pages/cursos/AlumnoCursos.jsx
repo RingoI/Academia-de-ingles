@@ -13,8 +13,6 @@ function AlumnoCursos() {
 		obtenerCursosAlumno(idUsuario);
 	}, []);
 
-	console.log("cursos alumno: ", cursosAlumno);
-
 	return (
 		<div className="min-h-screen bg-[#0f172a] text-slate-100 p-6 md:p-10">
 			<header className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">

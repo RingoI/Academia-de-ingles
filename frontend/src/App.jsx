@@ -10,6 +10,7 @@ import ExamenesPage from "./pages/ExamenesPage";
 import Layout from "./components/Layout";
 import AdminCursoDetalle from "./pages/cursos/AdminCursoDetalle";
 import AlumnoCursoDetalle from "./pages/cursos/AlumnoCursoDetalle";
+import DocenteCursoDetalle from "./pages/cursos/DocenteCursoDetalle";
 
 function App() {
 	return (
@@ -24,6 +25,7 @@ function App() {
 					<Route path="/cursos" element={<CursosPage />} />
 					<Route path="/cursos/:id" element={<AdminCursoDetalle />} />
 					<Route path="/cursos/alumno/:id" element={<AlumnoCursoDetalle />} />
+					<Route path="/cursos/docente/:id" element={<DocenteCursoDetalle />} />
 					<Route path="/pagos" element={<PagosPage />} />
 					<Route path="/examenes" element={<ExamenesPage />} />
 				</Route>

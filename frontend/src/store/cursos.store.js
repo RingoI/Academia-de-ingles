@@ -17,7 +17,9 @@ export const cursoStore = create((set) => ({
 
 	obtenerCursoPorId: async (cursoId) => {
 		try {
+			console.log("obteniendo info cursos");
 			const res = await axiosInstance.get(`/cursos/${cursoId}`);
+			console.log("res obtener curso: ", res);
 			set({ cursoPorId: res.data });
 		} catch (error) {
 			console.log("Error en obtenerCursoPorId: ", error);

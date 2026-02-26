@@ -138,7 +138,16 @@ public CursoResponseDTO obtenerCursoPorId(Long id) {
     public List<CursosPorDocenteDTO> obtenerCursosPorDocente(Long id){
         List<Curso> cursos = cursoRepository.findByDocentes_Id(id);
 
-        return cursos.stream().map(curso -> new CursosPorDocenteDTO(curso.getId(), curso.getNombre())).toList();
+        return cursos.stream().map(curso -> new CursosPorDocenteDTO(
+            curso.getId(), 
+            curso.getNombre(),
+            curso.getCupo(),
+            curso.getDocentes(),
+            curso.getFechaInicio(),
+            curso.getFechaFin(),
+            curso.getNiveles(),
+            curso.getAlumnos().size()
+        )).toList();
     }
 
 @Override
