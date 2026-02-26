@@ -8,7 +8,7 @@ function Menu() {
 					<GraduationCap className=" bg-[#00b5dd] w-12 h-12 p-2 rounded-xl text-[#030d18] " />
 				</div>
 				<div className="flex flex-col justify-center">
-					<h1 className="leading-5 italic">PROVIDENCE </h1>
+					<h1 className="leading-5 italic text-white">PROVIDENCE </h1>
 					<span className="text-[#00b5dd]">INSTITUTE</span>
 				</div>
 			</div>

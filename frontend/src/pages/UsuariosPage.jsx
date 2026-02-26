@@ -3,15 +3,36 @@ import TablaAlumnos from "../components/TablaAlumnos";
 import { ShieldUser, Users } from "lucide-react";
 import TablaDocentes from "../components/TablaDocentes";
 import FormularioAlumnos from "../components/FormularioAlumnos";
+import FormularioDocente from "../components/FormularioDocente";
 
 function UsuariosPage() {
 	const [abrirFormularioAlumnos, setAbrirFormularioAlumnos] = useState(false);
+	const [abrirFormularioDocente, setAbrirFormularioDocente] = useState(false);
 
 	return (
 		<div className="h-full w-full relative">
-			<div className={`${abrirFormularioAlumnos ? "absolute" : "hidden"} w-full h-full z-10 flex items-center justify-center`}>
-				<FormularioAlumnos abrirFormularioAlumnos={abrirFormularioAlumnos} setAbrirFormularioAlumnos={setAbrirFormularioAlumnos} />
+
+
+		{/* FORM ALUMNOS */}
+		{abrirFormularioAlumnos && (
+			<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+				<FormularioAlumnos
+				abrirFormularioAlumnos={abrirFormularioAlumnos}
+				setAbrirFormularioAlumnos={setAbrirFormularioAlumnos}
+				/>
 			</div>
+			)}
+
+		{/* FORM DOCENTES */}
+		{abrirFormularioDocente && (
+			<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+				<FormularioDocente
+				abrirFormularioDocente={abrirFormularioDocente}
+				setAbrirFormularioDocente={setAbrirFormularioDocente}
+				/>
+			</div>
+		)}
+
 			<div>
 				<h1 className="font-semibold text-3xl text-[#818cf8]">Gestión de Usuarios</h1>
 				<p className="text-slate-400">Administra el acceso de alumnos y docentes.</p>
@@ -37,7 +58,9 @@ function UsuariosPage() {
 						<ShieldUser className="text-[#818cf8] bg-[#0c1224] size-8 p-1 rounded-xl" />
 						<h2 className="font-semibold text-xl">Docentes Registrados</h2>
 					</div>
-					<button className="bg-[#818cf8] shadow-md transition-all duration-300 hover:shadow-indigo-500/50 px-3 py-1.5 rounded-lg font-semibold text-[#0c1224] text-sm cursor-pointer">
+					<button className="bg-[#818cf8] shadow-md transition-all duration-300 hover:shadow-indigo-500/50 px-3 py-1.5 rounded-lg font-semibold text-[#0c1224] text-sm cursor-pointer"
+						onClick={() => setAbrirFormularioDocente(!abrirFormularioDocente)}
+					>
 						Agregar Docente
 					</button>
 				</div>

@@ -29,7 +29,7 @@ function FormularioAlumnos({ abrirFormularioAlumnos, setAbrirFormularioAlumnos }
 			<div className="flex items-center gap-3 border border-slate-700 p-3 rounded-t-xl  ">
 				<UserRoundPlus className="bg-[#0c354b] text-[#06b6d4] size-10 p-2 rounded-md " />
 				<div className="">
-					<h1 className="font-semibold text-xl">Nuevo alumno</h1>
+					<h1 className="font-semibold text-xl text-white">Nuevo alumno</h1>
 					<p className="text-sm text-slate-400">Completa los datos para registrar al nuevo estudiante.</p>
 				</div>
 			</div>
@@ -86,7 +86,7 @@ function FormularioAlumnos({ abrirFormularioAlumnos, setAbrirFormularioAlumnos }
 							Cancelar
 						</button>
 						<button className="bg-[#06b6d4] shadow-md transition-all duration-300 hover:shadow-cyan-500/50 px-3 py-1.5 rounded-lg font-semibold text-[#0c1224] text-sm cursor-pointer">
-							Guardar Alumno
+							Guardar alumno
 						</button>
 					</div>
 				</form>
