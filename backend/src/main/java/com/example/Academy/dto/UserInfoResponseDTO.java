@@ -13,5 +13,5 @@ public class UserInfoResponseDTO {
 
     private Long id;
     private List<String> roles;
-    
+    private String nombre;
 }

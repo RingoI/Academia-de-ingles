@@ -29,8 +29,6 @@ function LoginPage() {
 		if (status === 200) navigate("/dashboard");
 	}
 
-	console.log("Rol Seleccionado: ", rolSeleccionado);
-
 	return (
 		<div className="absolute top-0 z-[-2] h-screen w-screen bg-[#030d18] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(31,30,87,0.7),rgba(255,255,255,0))]">
 			<div className="w-full gap-5 flex items-center flex-col justify-center h-full">

@@ -53,9 +53,10 @@ public class AuthResource {
 
         Persona persona = personaRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        UserInfoResponseDTO dto = new UserInfoResponseDTO(persona.getId(), roles);
+        UserInfoResponseDTO dto = new UserInfoResponseDTO(persona.getId(), roles, persona.getNombre());
         dto.setId(persona.getId());
         dto.setRoles(roles);
+        dto.setNombre(persona.getNombre());
 
         return ResponseEntity.ok(dto);
     }

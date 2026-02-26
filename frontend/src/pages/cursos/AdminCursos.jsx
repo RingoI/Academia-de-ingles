@@ -58,7 +58,7 @@ function AdminCursos() {
         docentesIds: [], nivelesIds: [], alumnosIds: [] 
       });
     } catch (error) {
-      alert("Error al procesar la creación del curso.");
+      alert("Error al procesar la creación del curso." , error);
     }
   };
 

@@ -9,6 +9,7 @@ import PagosPage from "./pages/PagosPage";
 import ExamenesPage from "./pages/ExamenesPage";
 import Layout from "./components/Layout";
 import AdminCursoDetalle from "./pages/cursos/AdminCursoDetalle";
+import AlumnoCursoDetalle from "./pages/cursos/AlumnoCursoDetalle";
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 					<Route path="/dashboard" element={<DashboardPage />} />
 					<Route path="/cursos" element={<CursosPage />} />
 					<Route path="/cursos/:id" element={<AdminCursoDetalle />} />
+					<Route path="/cursos/alumno/:id" element={<AlumnoCursoDetalle />} />
 					<Route path="/pagos" element={<PagosPage />} />
 					<Route path="/examenes" element={<ExamenesPage />} />
 				</Route>

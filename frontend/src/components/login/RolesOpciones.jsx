@@ -1,6 +1,4 @@
 function RolesOpciones({ Icono, text, onClick, activo }) {
-	console.log("activo: ", activo);
-
 	return (
 		<div
 			className={`cursor-pointer w-24 h-16 flex flex-col gap-1 items-center justify-center rounded-xl p-1 border

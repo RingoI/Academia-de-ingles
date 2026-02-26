@@ -5,6 +5,7 @@ export const materialStore = create((set) => ({
 	materiales: [],
 	cursosDocente: [],
 	isDownloading: false,
+	archivosCurso: [],
 
 	obtenerEntregasPorDocente: async (id) => {
 		try {
@@ -80,6 +81,16 @@ export const materialStore = create((set) => ({
 			materialStore.getState().obtenerEntregasPorDocente(idUsuario);
 		} catch (error) {
 			console.log("Error en eliminarArchivo: ", error);
+		}
+	},
+
+	obtenerArchivosPorCurso: async (cursoId) => {
+		try {
+			const res = await axiosInstance.get(`/entregas/curso/${cursoId}`);
+			console.log("res obtenerArchivosporCurso: ", res);
+			set({ archivosCurso: res.data });
+		} catch (error) {
+			console.log("Error en obtenerArchivosPorCurso: ", error);
 		}
 	},
 }));

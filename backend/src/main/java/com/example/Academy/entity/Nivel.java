@@ -5,6 +5,7 @@ package com.example.Academy.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -34,6 +35,7 @@ public class Nivel {
  
 
     @ManyToMany(mappedBy = "niveles")
+    @JsonBackReference
     private List<Curso> cursos = new ArrayList<>();    
 
     @ManyToMany(mappedBy = "nivel")

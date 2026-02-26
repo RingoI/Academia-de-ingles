@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Academy.config.ModelMapperConfig;
 import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.dto.CreateAlumnoDTO;
+import com.example.Academy.dto.CursoAlumnoDTO;
 import com.example.Academy.dto.UpdateAlumnoDTO;
 import com.example.Academy.entity.Alumno;
 import com.example.Academy.entity.Curso;
@@ -71,7 +72,7 @@ public class AlumnoResource {
     
     @GetMapping("/mis-cursos")
     @PreAuthorize("hasRole('ALUMNO')")
-    public ResponseEntity<List<Curso>> getMisCursos(Authentication authentication) {
+    public ResponseEntity<List<CursoAlumnoDTO>> getMisCursos(Authentication authentication) {
 
         String username = authentication.getName();
 
@@ -80,7 +81,17 @@ public class AlumnoResource {
 
         Alumno alumno = (Alumno) persona;
 
-        return ResponseEntity.ok(alumno.getCursos());
+
+        return ResponseEntity.ok(alumno.getCursos().stream().map(curso -> new CursoAlumnoDTO(
+            curso.getId(),
+            curso.getNombre(),
+            curso.getCupo(),
+            curso.getFechaInicio(),
+            curso.getFechaFin(),
+            curso.getDocentes(),
+            curso.getNiveles(),
+            curso.getAlumnos().size()
+        )).toList());
     }
 
     @PostMapping(path = "/auth", produces = "application/json")
