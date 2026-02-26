@@ -39,46 +39,40 @@ public CursoServiceImp(CursoRepository cursoRepository, NivelRepository nivelRep
 @Override
 public CursoResponseDTO crearCurso(CreateCursoRequestDTO dto) {
 
-        Curso curso = new Curso();
-        curso.setNombre(dto.getNombre());
-        curso.setCupo(dto.getCupo());
-        curso.setFechaInicio(dto.getFechaInicio());
-        curso.setFechaFin(dto.getFechaFin());
+    Curso curso = new Curso();
+    curso.setNombre(dto.getNombre());
+    curso.setCupo(dto.getCupo());
+    curso.setFechaInicio(dto.getFechaInicio());
+    curso.setFechaFin(dto.getFechaFin());
 
-       
-        List<Docente> docentes = docenteRepository.findAllById(dto.getDocentesIds());
-        Nivel nivel = nivelRepository.findById(dto.getNivelId()).orElseThrow(() -> new RuntimeException("Nivel no encontrado"));
+    if (dto.getNivelesIds() != null && !dto.getNivelesIds().isEmpty()) {
+        List<Nivel> niveles = nivelRepository.findAllById(dto.getNivelesIds());
+        for (Nivel n : niveles) {
+            curso.getNiveles().add(n);
+            n.getCursos().add(curso);
+        }
+    }
+
+    if (dto.getAlumnosIds() != null && !dto.getAlumnosIds().isEmpty()) {
         List<Alumno> alumnos = alumnoRepository.findAllById(dto.getAlumnosIds());
-
-        
-        curso.getNiveles().add(nivel);
-        nivel.getCursos().add(curso); 
-        
-
-        cursoRepository.save(curso);
-
-
         for (Alumno a : alumnos) {
-            a.getCursos().add(curso);
             curso.getAlumnos().add(a);
+            a.getCursos().add(curso);
         }
+    }
 
-        curso.setAlumnos(alumnos);
-        
-
+    if (dto.getDocentesIds() != null && !dto.getDocentesIds().isEmpty()) {
+        List<Docente> docentes = docenteRepository.findAllById(dto.getDocentesIds());
         for (Docente d : docentes) {
-            d.getCursos().add(curso);
             curso.getDocentes().add(d);
+            d.getCursos().add(curso);
         }
+    }
 
-        curso.setDocentes(docentes);
+    Curso guardado = cursoRepository.save(curso);
 
-        Curso guardado = cursoRepository.save(curso);
-
-        return mapToResponse(guardado);
-   
+    return mapToResponse(guardado);
 }
-
 private CursoResponseDTO mapToResponse(Curso curso) {
 
     List<String> nombresNiveles = curso.getNiveles()
