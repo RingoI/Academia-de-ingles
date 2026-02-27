@@ -45,13 +45,13 @@ function DocenteCursos() {
 										<Layers size={16} />
 									</div>
 									<span className="text-sm">
-										Niveles: <b className="text-slate-200">{c.niveles[0].nombre || "N/A"}</b>
+										Niveles: <b className="text-slate-200">{c.niveles[0]?.nombre || "N/A"}</b>
 									</span>
 								</div>
 							</div>
 
 							<div className="flex items-center gap-4 mb-2 text-slate-400">
-								<div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-purple-400">
+								<div className="min-w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-purple-400">
 									<GraduationCap size={16} />
 								</div>
 								<span className="text-sm">

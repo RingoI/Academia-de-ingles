@@ -15,7 +15,7 @@ function Menu() {
 					<span className="text-[#00b5dd]">INSTITUTE</span>
 				</div>
 			</div>
-			<div className="flex flex-col w-full items-center p-5 mt-8 gap-3">
+			<div className="flex flex-col w-full items-center p-5 gap-3">
 				<ItemMenu to={"/dashboard"} Icono={LayoutDashboard} tag={"Dashboard"} />
 				{rol === "ROLE_ADMIN" ? <ItemMenu to={"/usuarios"} Icono={Users} tag={"Usuarios"} /> : ""}
 				<ItemMenu to={"/cursos"} Icono={LibraryBig} tag={"Cursos"} />
