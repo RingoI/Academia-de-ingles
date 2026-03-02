@@ -3,7 +3,7 @@ import { ShieldUser, Users } from "lucide-react";
 import TablaAlumnos from "../components/TablaAlumnos";
 import TablaDocentes from "../components/TablaDocentes";
 import FormularioAlumnos from "../components/FormularioAlumnos";
-import FormularioDocentes from "../components/FormularioDocente"; 
+import FormularioDocentes from "../components/FormularioDocentes"; 
 
 function UsuariosPage() {
   const [abrirFormularioAlumnos, setAbrirFormularioAlumnos] = useState(false);
@@ -24,11 +24,25 @@ function UsuariosPage() {
 
       {/* MODAL FORM DOCENTES */}
       {abrirFormularioDocentes && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <FormularioDocentes
-            abrirFormularioDocentes={abrirFormularioDocentes}
-            setAbrirFormularioDocentes={setAbrirFormularioDocentes}
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          
+          {/* BACKDROP */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setAbrirFormularioDocentes(false)}
           />
+
+          {/* CONTENIDO MODAL */}
+          <div
+            className="relative z-50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <FormularioDocentes
+              abrirFormularioDocentes={abrirFormularioDocentes}
+              setAbrirFormularioDocentes={setAbrirFormularioDocentes}
+            />
+          </div>
+
         </div>
       )}
 

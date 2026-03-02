@@ -29,6 +29,14 @@ function AdminCursoDetalle() {
     ? curso.alumnos.length >= curso.cupo
     : false;
 
+  const docentesFiltrados = (docentesDisponibles || []).filter((d) =>
+    d.nombre?.toLowerCase().includes(busquedaDocente.toLowerCase())
+  );
+
+  const alumnosFiltrados = (alumnosSinCurso || []).filter((a) =>
+    a.nombre?.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
   const fetchData = async () => {
     try {
       const [cursoData, alumnosData, docentesData] = await Promise.all([
@@ -87,10 +95,6 @@ function AdminCursoDetalle() {
       alert("Error al desvincular docente.");
     }
   };
-
-  const alumnosFiltrados = alumnosSinCurso.filter((a) =>
-    a.nombre?.toLowerCase().includes(busqueda.toLowerCase()),
-  );
 
   const cardContainer =
     "bg-slate-900/50 rounded-2xl border border-slate-800 p-6 shadow-2xl h-[520px] flex flex-col transition-all hover:border-slate-700/50";
@@ -223,33 +227,43 @@ function AdminCursoDetalle() {
               className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-blue-500/40 outline-none text-white"
             />
           </div>
-<div className={scrollArea}>
-  {alumnosFiltrados.length === 0 ? (
-    <div className="h-full flex flex-col items-center justify-center text-slate-500">
-      <Users size={30} className="mb-3 opacity-30" />
-      <p className="text-sm font-medium">
-        No hay alumnos disponibles
-      </p>
-    </div>
-  ) : (
-    alumnosFiltrados.map((alumno) => (
-      <div
-        key={alumno.id}
-        className="flex items-center justify-between bg-slate-950/40 p-4 rounded-xl border border-slate-800 hover:border-blue-500/30 group transition-all"
-      >
-        <span className="text-slate-300 font-medium">
-          {alumno.nombre}
-        </span>
-        <button
-          onClick={() => manejarAsignarAlumno(alumno.id)}
-          className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg text-xs font-black transition-all uppercase"
-        >
-          Vincular
-        </button>
-      </div>
-    ))
-  )}
-</div>
+          <div className={scrollArea}>
+            {cupoCompleto ? (
+              <div className="h-full flex flex-col items-center justify-center text-red-400">
+                <Users size={40} className="mb-4 opacity-40" />
+                <p className="text-lg font-bold uppercase tracking-widest">
+                  Cupo Completo
+                </p>
+                <p className="text-xs text-slate-500 mt-2">
+                  No se pueden inscribir más alumnos
+                </p>
+              </div>
+            ) : alumnosFiltrados.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-slate-500">
+                <Users size={30} className="mb-3 opacity-30" />
+                <p className="text-sm font-medium">
+                  No hay alumnos disponibles
+                </p>
+              </div>
+            ) : (
+              alumnosFiltrados.map((alumno) => (
+                <div
+                  key={alumno.id}
+                  className="flex items-center justify-between bg-slate-950/40 p-4 rounded-xl border border-slate-800 hover:border-blue-500/30 group transition-all"
+                >
+                  <span className="text-slate-300 font-medium">
+                    {alumno.nombre}
+                  </span>
+                  <button
+                    onClick={() => manejarAsignarAlumno(alumno.id)}
+                    className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg text-xs font-black transition-all uppercase"
+                  >
+                    Vincular
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
         </section>
 
         {/* --- 3. DOCENTES ASIGNADOS --- */}
@@ -262,41 +276,38 @@ function AdminCursoDetalle() {
               Docentes a Cargo
             </h2>
           </div>
-
           <div className={scrollArea}>
-            {curso.docentes?.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-slate-600 border-2 border-dashed border-slate-800/50 rounded-2xl text-slate-500">
-                <p className="text-sm font-medium">Pendiente de designación</p>
+            {docentesFiltrados.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-slate-500">
+                <Users size={30} className="mb-3 opacity-30" />
+                <p className="text-sm font-medium">
+                  No hay docentes disponibles
+                </p>
               </div>
             ) : (
-              curso.docentes?.map((docente, index) => (
+              docentesFiltrados.map((docente) => (
                 <div
-                  key={index}
-                  className="flex items-center justify-between bg-slate-800/30 p-4 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all"
+                  key={docente.id}
+                  className="flex items-center justify-between bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-slate-600 transition-all shadow-sm"
                 >
-                  <div className="flex items-center gap-5">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20">
-                      <User size={24} />
-                    </div>
-                    <div>
-                      <p className="text-slate-100 font-bold">
-                        {docente.nombre || docente}
-                      </p>
-                      <p className="text-[10px] text-purple-400 font-black uppercase tracking-widest tracking-widest">
-                        Titular
-                      </p>
-                    </div>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-slate-200">
+                      {docente.nombre}
+                    </span>
+                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
+                      Activo
+                    </span>
                   </div>
                   <button
-                    onClick={() => manejarDesvincularDocente(docente.id)}
-                    className="p-2 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                    onClick={() => manejarAsignarDocente(docente.id)}
+                    className="bg-white text-slate-900 hover:bg-blue-50 px-5 py-2.5 rounded-lg text-[10px] font-black transition-all active:scale-95 uppercase"
                   >
-                    <Trash2 size={18} />
+                    Asignar
                   </button>
                 </div>
               ))
             )}
-          </div>
+          </div>         
         </section>
 
         {/* --- 4. DOCENTES DISPONIBLES --- */}
@@ -310,12 +321,17 @@ function AdminCursoDetalle() {
             </h2>
           </div>
 
-          <div className={scrollArea}>
-            {docentesDisponibles.map((docente) => (
-              <div
-                key={docente.id}
-                className="flex items-center justify-between bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-slate-600 transition-all shadow-sm"
-              >
+        <div className={scrollArea}>
+          {docentesFiltrados.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center text-slate-500">
+              <Users size={30} className="mb-3 opacity-30" />
+              <p className="text-sm font-medium">
+                No hay docentes disponibles
+              </p>
+            </div>
+          ) : (
+            docentesFiltrados.map((docente) => (
+              <div key={docente.id} className="flex items-center justify-between bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-slate-600 transition-all shadow-sm">
                 <div className="flex flex-col">
                   <span className="font-bold text-slate-200">
                     {docente.nombre}
@@ -331,34 +347,10 @@ function AdminCursoDetalle() {
                   Asignar
                 </button>
               </div>
-            ))}
-          </div>
+            ))
+          )}
+        </div>
 
-          <div className={scrollArea}>
-            {docentesFiltrados.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-slate-500">
-                <Users size={30} className="mb-3 opacity-30" />
-                <p className="text-sm font-medium">
-                  No hay docentes disponibles
-                </p>
-              </div>
-            ) : (
-              docentesFiltrados.map((docente) => (
-                <div key={docente.id} className="flex items-center justify-between bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-slate-600 transition-all shadow-sm">
-                  <div className="flex flex-col">
-                    <span className="font-bold text-slate-200">{docente.nombre}</span>
-                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">Activo</span>
-                  </div>
-                  <button
-                    onClick={() => manejarAsignarDocente(docente.id)}
-                    className="bg-white text-slate-900 hover:bg-blue-50 px-5 py-2.5 rounded-lg text-[10px] font-black transition-all active:scale-95 uppercase"
-                  >
-                    Asignar
-                  </button>
-                </div>
-              ))
-            )}
-            </div>
         </section>
       </main>
 

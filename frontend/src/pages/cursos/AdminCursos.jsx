@@ -257,7 +257,7 @@ function AdminCursos() {
 
                 {/* BOTÓN VER DETALLE / GESTIONAR */}
                 <button
-                  onClick={() => navigate(`/admin/cursos/${curso.id}`)}
+                  onClick={() => navigate(`/cursos/${curso.id}`)}
                   className="w-full bg-slate-800 hover:bg-blue-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-lg"
                 >
                   Gestionar Integrantes
