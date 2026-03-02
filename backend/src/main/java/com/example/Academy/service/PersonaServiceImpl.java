@@ -88,7 +88,6 @@ public class PersonaServiceImpl implements PersonaService {
         if (dto.getNivelId() != null) {
             Nivel nivel = nivelRepository.findById(dto.getNivelId())
                     .orElseThrow(() -> new RuntimeException("Nivel no existe"));
-            nivel.setAlumno(alumno);   
             alumno.getNivel().add(nivel);
         }
 

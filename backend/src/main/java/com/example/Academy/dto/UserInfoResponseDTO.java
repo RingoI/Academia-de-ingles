@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserInfoResponseDTO {
 
-    private String username;
+    private Long id;
     private List<String> roles;
-    
+    private String nombre;
 }

@@ -40,12 +40,37 @@ export const usuarioStore = create((set) => ({
 		try {
 			const res = await axiosInstance.post("/docentes/create", data);
 			console.log("Res agregar docente: ", res);
-
 			await usuarioStore.getState().obtenerDocentes();
-
 		} catch (error) {
 			console.log("Error en agregarDocente: ", error);
 		}
 	},
 
+	modificarAlumno: async (id, data) => {
+		try {
+			const res = await axiosInstance.put(`/alumnos/${id}`, data);
+			console.log("res: ", res);
+			if (res.status === 200) {
+				usuarioStore.setState((state) => ({
+					alumnos: state.alumnos.map((a) => (a.id === id ? { ...a, ...data } : a)),
+				}));
+			}
+		} catch (error) {
+			console.log("Error en modificar alumno: ", error);
+		}
+	},
+
+	modificarDocente: async (id, data) => {
+		try {
+			const res = await axiosInstance.put(`/docentes/${id}`, data);
+			console.log("res: ", res);
+			if (res.status === 200) {
+				usuarioStore.setState((state) => ({
+					docentes: state.docentes.map((d) => (d.id === id ? { ...d, ...data } : d)),
+				}));
+			}
+		} catch (error) {
+			console.log("Error en modificar docentes: ", error);
+		}
+	},
 }));

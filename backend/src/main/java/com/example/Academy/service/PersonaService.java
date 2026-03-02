@@ -33,5 +33,4 @@ public interface PersonaService {
     //AGREGO. NO ESTABA EN EL BACK ORIGINAL
     List<Alumno> getAlumnosSinCurso();
     
-    
 }  

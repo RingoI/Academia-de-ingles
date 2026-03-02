@@ -1,6 +1,6 @@
 import React from "react";
 
-function TextInput({ tag, placeholder, type = "text", onChange }) {
+function TextInput({ tag, placeholder, type = "text", onChange, value, required = true }) {
 	return (
 		<div>
 			<span className="font-semibold text-[12px] text-slate-400">{tag}</span>
@@ -10,6 +10,7 @@ function TextInput({ tag, placeholder, type = "text", onChange }) {
 				className="input input-md bg-[#0e1627] border-slate-800 shadow-none text-white placeholder:text-slate-500"
 				required
 				onChange={onChange}
+				defaultValue={value}
 			/>
 		</div>
 	);

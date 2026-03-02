@@ -112,7 +112,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/alumnos/create").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.PUT, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.GET, "/alumnos").authenticated()
+                .requestMatchers(HttpMethod.GET, "/alumnos/**").authenticated()
 
 
                 .requestMatchers(HttpMethod.GET, "/alumnos/**").hasAnyRole("ADMIN", "DOCENTE")
@@ -158,7 +158,8 @@ public class SecurityConfig {
                 
                 // ENTREGAS
                 // =========================
-                .requestMatchers(HttpMethod.GET, "/entregas/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/entregas/download/**")
+                .hasAnyRole("ALUMNO", "DOCENTE", "ADMIN")
                 .requestMatchers(HttpMethod.GET, "/entregas/alumno/**")
                 .hasAnyRole("ALUMNO", "DOCENTE", "ADMIN")
                 .requestMatchers(HttpMethod.POST,"/entregas/examen/*//*").hasRole("ALUMNO")
@@ -176,7 +177,7 @@ public class SecurityConfig {
                 .requestMatchers("/webhooks/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()                            
                 
-
+                .requestMatchers(HttpMethod.POST, "/nivel").permitAll()
 
                 
                 // ADMIN

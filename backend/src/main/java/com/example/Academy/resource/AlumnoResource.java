@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Academy.config.ModelMapperConfig;
 import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.dto.CreateAlumnoDTO;
+import com.example.Academy.dto.CursoAlumnoDTO;
 import com.example.Academy.dto.UpdateAlumnoDTO;
 import com.example.Academy.entity.Alumno;
+import com.example.Academy.entity.Persona;
 import com.example.Academy.service.AuthService;
 import com.example.Academy.service.PersonaService;
 
@@ -65,7 +68,30 @@ public class AlumnoResource {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
+    
+    @GetMapping("/mis-cursos")
+    @PreAuthorize("hasRole('ALUMNO')")
+    public ResponseEntity<List<CursoAlumnoDTO>> getMisCursos(Authentication authentication) {
 
+        String username = authentication.getName();
+
+        Persona persona = personaService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Alumno alumno = (Alumno) persona;
+
+
+        return ResponseEntity.ok(alumno.getCursos().stream().map(curso -> new CursoAlumnoDTO(
+            curso.getId(),
+            curso.getNombre(),
+            curso.getCupo(),
+            curso.getFechaInicio(),
+            curso.getFechaFin(),
+            curso.getDocentes(),
+            curso.getNiveles(),
+            curso.getAlumnos().size()
+        )).toList());
+    }
 
     @PostMapping(path = "/auth", produces = "application/json")
     public ResponseEntity<?> authenticateAlumno(@RequestBody CreateAlumnoDTO createAlumnoDTO) {

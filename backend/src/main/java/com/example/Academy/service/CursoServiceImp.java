@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Academy.dto.CreateCursoRequestDTO;
 import com.example.Academy.dto.CursoResponseDTO;
+import com.example.Academy.dto.CursosPorDocenteDTO;
 import com.example.Academy.dto.PersonaDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
 import com.example.Academy.entity.Alumno;
@@ -44,36 +45,34 @@ public CursoResponseDTO crearCurso(CreateCursoRequestDTO dto) {
     curso.setFechaInicio(dto.getFechaInicio());
     curso.setFechaFin(dto.getFechaFin());
 
-    List<Docente> docentes = docenteRepository.findAllById(dto.getDocentesIds());
-    List<Nivel> niveles = nivelRepository.findAllById(dto.getNivelesIds());
-    List<Alumno> alumnos = alumnoRepository.findAllById(dto.getAlumnosIds());
-
-    for (Nivel nivel : niveles) {
-        curso.getNiveles().add(nivel);
-        nivel.getCursos().add(curso);
+    if (dto.getNivelesIds() != null && !dto.getNivelesIds().isEmpty()) {
+        List<Nivel> niveles = nivelRepository.findAllById(dto.getNivelesIds());
+        for (Nivel n : niveles) {
+            curso.getNiveles().add(n);
+            n.getCursos().add(curso);
+        }
     }
 
-    cursoRepository.save(curso);
-
-    for (Alumno a : alumnos) {
-        a.getCursos().add(curso);
-        curso.getAlumnos().add(a);
+    if (dto.getAlumnosIds() != null && !dto.getAlumnosIds().isEmpty()) {
+        List<Alumno> alumnos = alumnoRepository.findAllById(dto.getAlumnosIds());
+        for (Alumno a : alumnos) {
+            curso.getAlumnos().add(a);
+            a.getCursos().add(curso);
+        }
     }
 
-    curso.setAlumnos(alumnos);
-
-    for (Docente d : docentes) {
-        d.getCursos().add(curso);
-        curso.getDocentes().add(d);
+    if (dto.getDocentesIds() != null && !dto.getDocentesIds().isEmpty()) {
+        List<Docente> docentes = docenteRepository.findAllById(dto.getDocentesIds());
+        for (Docente d : docentes) {
+            curso.getDocentes().add(d);
+            d.getCursos().add(curso);
+        }
     }
-
-    curso.setDocentes(docentes);
 
     Curso guardado = cursoRepository.save(curso);
 
     return mapToResponse(guardado);
 }
-
 private CursoResponseDTO mapToResponse(Curso curso) {
 
     List<String> nombresNiveles = curso.getNiveles()
@@ -126,7 +125,24 @@ public CursoResponseDTO obtenerCursoPorId(Long id) {
             .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
     return mapToResponse(curso);
 
+
 }
+
+    @Override
+    public List<CursosPorDocenteDTO> obtenerCursosPorDocente(Long id){
+        List<Curso> cursos = cursoRepository.findByDocentes_Id(id);
+
+        return cursos.stream().map(curso -> new CursosPorDocenteDTO(
+            curso.getId(), 
+            curso.getNombre(),
+            curso.getCupo(),
+            curso.getDocentes(),
+            curso.getFechaInicio(),
+            curso.getFechaFin(),
+            curso.getNiveles(),
+            curso.getAlumnos().size()
+        )).toList();
+    }
 
 @Override
 @Transactional
