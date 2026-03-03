@@ -31,11 +31,11 @@ function AlumnoCursoDetalle() {
               />
             </button>
             <div>
-              <h1 className="text-4xl font-black text-white tracking-tight">
+              <h1 className="font-semibold text-3xl text-slate-400">
                 {cursoPorId?.nombre}
               </h1>
               <p className="text-slate-400 flex items-center gap-2 mt-1 italic">
-                <BookOpen size={14} /> Archivos del Curso
+                <BookOpen size={14} /> Archivos del curso
               </p>
             </div>
           </div>
@@ -48,8 +48,8 @@ function AlumnoCursoDetalle() {
             <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-400 border border-emerald-500/20 ">
               <File size={22} />
             </div>
-            <h2 className="text-xl font-bold tracking-tight text-white">
-              Archivos subidos por el Docente
+            <h2 className="text-xl font-bold tracking-tight text-slate-400">
+              Archivos subidos por el docente
             </h2>
           </div>
           <div className="flex flex-col gap-5">

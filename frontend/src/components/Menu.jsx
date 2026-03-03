@@ -48,7 +48,7 @@ function Menu() {
 					? "Alumno"
 					: "Administrador"}
 				</span>
-				<span className="text-sm font-semibold text-white">
+				<span className="text-sm font-semibold text-slate-400">
 					{nombre || "Admin"}
 				</span>
 				</div>

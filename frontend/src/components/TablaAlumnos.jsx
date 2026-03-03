@@ -46,11 +46,11 @@ function TablaAlumnos({ busqueda }) {
         <thead className="bg-[#0d1526]">
           <tr>
             {cabecera.map((c) => (
-              <th key={c} className="text-white">{c}</th>
+              <th key={c} className="text-slate-300">{c}</th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-[#0c1224]">
+        <tbody className="bg-[#0c1224] text-slate-300">
           {alumnosFiltrados.map((a, idx) => (
             <tr key={a.id}>
               <th>{idx + 1}</th>

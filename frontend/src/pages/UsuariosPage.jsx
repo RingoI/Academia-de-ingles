@@ -50,13 +50,21 @@ function UsuariosPage() {
       )}
 
       {/* TITULO */}
-      <div>
-        <h1 className="font-semibold text-3xl text-[#818cf8]">Gestión de usuarios</h1>
-        <p className="text-slate-400">Administra el acceso de alumnos y docentes.</p>
-      </div>
+      <header className="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+				<div className="mb-1">
+					<h1 className="font-semibold text-3xl text-slate-400">
+						Gestión de usuarios
+					</h1>
+					<p className="text-slate-400">
+						Administra el acceso de alumnos y docentes
+					</p>
+				</div>
+			</header>
 
+      <div className="border-b border-slate-400 mt-6 mb-10"></div>
+      
     {/* TABS */}
-    <div className="mt-8 flex gap-6 border-b border-slate-700">
+    <div className="flex gap-6 border-b border-slate-700">
     <button
         onClick={() => setTabActiva("alumnos")}
         className={`pb-2 font-semibold transition-all ${

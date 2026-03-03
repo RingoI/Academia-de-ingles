@@ -9,23 +9,31 @@ function AlumnoCursos() {
 	const { idUsuario } = authStore();
 	const navigate = useNavigate();
 
+	const formatearFecha = (fechaISO) => {
+		const [anio, mes, dia] = fechaISO.split("-");
+		return `${dia}/${mes}/${anio}`;
+	};
+
 	useEffect(() => {
 		obtenerCursosAlumno(idUsuario);
 	}, []);
 
 	return (
-		<div className="min-h-screen bg-[#0f172a] text-slate-100 p-6 md:p-10">
-			<header className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-				<div>
-					<h1 className="text-4xl font-black tracking-tight text-white">Tus Cursos</h1>
-					<p className="text-slate-400 mt-2 flex items-center gap-2 font-medium">
-						<Info size={16} className="text-blue-500" />
+		<div className="h-full w-full relative">
+			<header className="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+				<div className="mb-1">
+					<h1 className="font-semibold text-3xl text-slate-400">
+						Mis cursos
+					</h1>
+					<p className="text-slate-400">
 						Información de los cursos a los que perteneces
 					</p>
 				</div>
 			</header>
 
-			<div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			<div className="border-b border-slate-400 mt-6 mb-10"></div>
+
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 				{cursosAlumno.length === 0 ? (
 					<div className="col-span-full py-20 text-center bg-slate-900/30 rounded-3xl border-2 border-dashed border-slate-800">
 						<Layers size={48} className="mx-auto mb-4 opacity-20" />
@@ -45,7 +53,7 @@ function AlumnoCursos() {
 										<Layers size={16} />
 									</div>
 									<span className="text-sm">
-										Niveles: <b className="text-slate-200">{c.niveles[0].nombre || "N/A"}</b>
+										Niveles: <b className="text-slate-200">{c.niveles?.[0]?.nombre || "N/A"}</b>
 									</span>
 								</div>
 							</div>
@@ -75,7 +83,7 @@ function AlumnoCursos() {
 								<div className="flex flex-col">
 									<span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Vigencia</span>
 									<span className="text-xs text-slate-300 font-mono">
-										{c.fechaInicio} — {c.fechaFin}
+										{formatearFecha(c.fechaInicio)} — {formatearFecha(c.fechaFin)}
 									</span>
 								</div>
 								<button

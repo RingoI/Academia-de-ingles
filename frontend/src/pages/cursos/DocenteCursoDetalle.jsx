@@ -31,9 +31,9 @@ function DocenteCursoDetalle() {
 							<ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
 						</button>
 						<div>
-							<h1 className="text-4xl font-black text-white tracking-tight">{cursoPorId?.nombre}</h1>
+							<h1 className="font-semibold text-3xl text-slate-400">{cursoPorId?.nombre}</h1>
 							<p className="text-slate-400 flex items-center gap-2 mt-1 italic">
-								<BookOpen size={14} /> Archivos del Curso
+								<BookOpen size={14} /> Archivos del curso
 							</p>
 						</div>
 					</div>
@@ -46,7 +46,7 @@ function DocenteCursoDetalle() {
 						<div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-400 border border-emerald-500/20 ">
 							<File size={22} />
 						</div>
-						<h2 className="text-xl font-bold tracking-tight text-white">Archivos subidos por el Docente</h2>
+						<h2 className="text-xl font-bold tracking-tight text-slate-400">Archivos subidos por el Docente</h2>
 					</div>
 					<div className="flex flex-col gap-5">
 						{archivosCurso.map((arc, idx) => (
@@ -86,7 +86,7 @@ function DocenteCursoDetalle() {
 						<div className="p-2.5 bg-emerald-500/10 rounded-xl  border border-emerald-500/20 text-emerald-400">
 							<CheckCircle size={22} />
 						</div>
-						<h2 className="text-xl font-bold tracking-tight text-white">Alumnos Inscritos</h2>
+						<h2 className="text-xl font-bold tracking-tight text-slate-400">Alumnos inscritos</h2>
 					</div>
 					<div className="flex flex-col gap-4">
 						{cursoPorId?.alumnos.length === 0 ? (

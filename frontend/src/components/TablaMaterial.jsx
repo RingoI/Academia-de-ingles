@@ -42,13 +42,13 @@ function TablaMaterial({ idUsuario, rol }) {
         <thead className="bg-[#0d1526]">
           <tr>
             {cabeceras.map((c) => (
-              <th>{c}</th>
+              <th key={c}>{c}</th>
             ))}
           </tr>
         </thead>
         <tbody className="bg-[#0c1224]">
           {materiales.map((m, idx) => (
-            <tr key={idx}>
+            <tr key={m.id}>
               <th>{idx + 1}</th>
               <th>{m.cursoNombre}</th>
               <th className="font-normal">

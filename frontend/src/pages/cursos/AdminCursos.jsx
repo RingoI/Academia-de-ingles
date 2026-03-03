@@ -163,28 +163,32 @@ function AdminCursos() {
     );
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-slate-100 p-6 md:p-10">
+    <div className="h-full w-full relative">
       {/* HEADER DE SECCIÓN */}
-      <header className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div>
-          <h1 className="text-4xl font-black tracking-tight text-white">
+      <header className="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="mb-1">
+          <h1 className="font-semibold text-3xl text-slate-400">
             Administración de cursos
           </h1>
-          <p className="text-slate-400 mt-2 flex items-center gap-2 font-medium">
-            <Info size={16} className="text-blue-500" />
+          <p className="text-slate-400">
             Configuración de oferta académica y cupos
           </p>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-2xl transition-all shadow-xl shadow-blue-900/30 active:scale-95"
-        >
-          <Plus size={20} /> Crear nuevo curso
-        </button>
+        <div className="flex justify-end mb-8">
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-[#06b6d4] shadow-md transition-all duration-300 hover:shadow-indigo-500/50 px-4 py-2 rounded-lg font-semibold text-[#0c1224] text-sm cursor-pointer flex items-center gap-2"
+          >
+            <Plus size={16} />
+            Crear curso
+          </button>
+        </div>
       </header>
 
+      <div className="border-b border-slate-400 mt-6 mb-10"></div>
+
       {/* GRILLA DE TARJETAS */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {cursos.length === 0 ? (
           <div className="col-span-full py-20 text-center bg-slate-900/30 rounded-3xl border-2 border-dashed border-slate-800">
             <Layers size={48} className="mx-auto mb-4 opacity-20" />
@@ -297,7 +301,7 @@ function AdminCursos() {
           <div className="bg-slate-900 border border-slate-800 w-full max-w-xl rounded-[2.5rem] shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
             <div className="flex justify-between items-center mb-8">
               <div>
-                <h2 className="text-3xl font-black text-white">Nuevo Curso</h2>
+                <h2 className="text-3xl font-black text-white">Nuevo curso</h2>
                 <p className="text-slate-500 text-sm">
                   Completá los datos básicos del nivel.
                 </p>
@@ -313,7 +317,7 @@ function AdminCursos() {
             <form onSubmit={handleCrearCurso} className="space-y-6">
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                  Nombre Descriptivo
+                  Nombre descriptivo
                 </label>
                 <input
                   required
@@ -330,7 +334,7 @@ function AdminCursos() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                    Cupo de Alumnos
+                    Cupo de alumnos
                   </label>
                   <input
                     type="number"
@@ -372,7 +376,7 @@ function AdminCursos() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                    Fecha de Inicio
+                    Fecha de inicio
                   </label>
                   <input
                     required
@@ -386,7 +390,7 @@ function AdminCursos() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                    Fecha de Finalización
+                    Fecha de finalización
                   </label>
                   <input
                     required
@@ -405,23 +409,13 @@ function AdminCursos() {
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-5 rounded-[1.5rem] shadow-xl shadow-blue-900/20 transition-all active:scale-[0.97] uppercase tracking-widest"
                 >
-                  Confirmar Registro
+                  Crear curso
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
-
-      {/* ESTILOS DE SCROLLBAR */}
-      <style>{`
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #334155; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .group { animation: fadeIn 0.5s ease-out forwards; }
-      `}</style>
     </div>
   );
 }
