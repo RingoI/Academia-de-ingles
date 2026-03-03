@@ -3,7 +3,7 @@ import { usuarioStore } from "../store/usuarios.store";
 import { Ban, CheckCircle2, SquarePen, XCircle } from "lucide-react";
 import FormularioDocentes from "./FormularioDocentes";
 
-function TablaDocentes() {
+function TablaDocentes({ busqueda }) {
 	const { docentes, obtenerDocentes, modificarDocente } = usuarioStore();
 	const [editarDocente, setEditarDocente] = useState(false);
 	const [datosDocente, setDatosDocente] = useState({});
@@ -14,7 +14,17 @@ function TablaDocentes() {
 
 	console.log("Docentes:  ", docentes);
 
-	const cabecera = ["", "Nombre", "Email", "Direccion", "CUIL", "Estado", "Acciones"];
+	const docentesFiltrados = docentes.filter((d) => {
+	const texto = (busqueda || "").toLowerCase();
+
+	return (
+		d.nombre?.toLowerCase().includes(texto) ||
+		d.email?.toLowerCase().includes(texto) ||
+		d.dni?.toString().includes(texto)
+	);
+	});
+
+	const cabecera = ["", "Nombre", "Email", "Dirección", "CUIL", "Estado", "Acciones"];
 
 	return (
 		<div className="overflow-x-auto pb-5">
@@ -27,7 +37,7 @@ function TablaDocentes() {
 				/>
 			</div>
 			<table className="table rounded-lg overflow-hidden">
-				<thead className="bg-[#0d1526]">
+				<thead className="bg-[#0d1526] text-white">
 					<tr>
 						{cabecera.map((c) => (
 							<th key={c}>{c}</th>
@@ -35,7 +45,7 @@ function TablaDocentes() {
 					</tr>
 				</thead>
 				<tbody className="bg-[#0c1224]">
-					{docentes.map((d, idx) => (
+					{docentesFiltrados.map((d, idx) => (
 						<tr key={d.id}>
 							<th>{idx + 1}</th>
 							<td>{d.nombre}</td>

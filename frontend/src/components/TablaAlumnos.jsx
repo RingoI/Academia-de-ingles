@@ -3,11 +3,11 @@ import { usuarioStore } from "../store/usuarios.store";
 import { Ban, CheckCircle2, SquarePen, XCircle } from "lucide-react";
 import FormularioAlumnos from "./FormularioAlumnos";
 
-function TablaAlumnos() {
+function TablaAlumnos({ busqueda }) {
   const { alumnos, obtenerAlumnos, modificarAlumno } = usuarioStore();
   const [editarAlumno, setEditarAlumno] = useState(false);
   const [datosAlumno, setDatosAlumno] = useState({});
-
+ 
   useEffect(() => {
     obtenerAlumnos();
   }, []);
@@ -16,11 +16,17 @@ function TablaAlumnos() {
     "",
     "Nombre",
     "Email",
-    "Direccion",
+    "Dirección",
     "DNI",
     "Estado",
     "Acciones",
   ];
+
+  const alumnosFiltrados = alumnos.filter((a) =>
+    a.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+    a.email.toLowerCase().includes(busqueda.toLowerCase()) ||
+    a.dni.toString().includes(busqueda)
+  );
 
   console.log("alumnos: ", alumnos);
 
@@ -40,12 +46,12 @@ function TablaAlumnos() {
         <thead className="bg-[#0d1526]">
           <tr>
             {cabecera.map((c) => (
-              <th>{c}</th>
+              <th className="text-white">{c}</th>
             ))}
           </tr>
         </thead>
         <tbody className="bg-[#0c1224]">
-          {alumnos.map((a, idx) => (
+          {alumnosFiltrados.map((a, idx) => (
             <tr>
               <th>{idx + 1}</th>
               <td>{a.nombre}</td>

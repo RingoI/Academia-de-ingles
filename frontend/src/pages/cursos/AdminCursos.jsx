@@ -168,7 +168,7 @@ function AdminCursos() {
       <header className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
           <h1 className="text-4xl font-black tracking-tight text-white">
-            Administración de Cursos
+            Administración de cursos
           </h1>
           <p className="text-slate-400 mt-2 flex items-center gap-2 font-medium">
             <Info size={16} className="text-blue-500" />
@@ -177,9 +177,9 @@ function AdminCursos() {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-2xl font-black transition-all shadow-xl shadow-blue-900/30 active:scale-95"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-2xl transition-all shadow-xl shadow-blue-900/30 active:scale-95"
         >
-          <Plus size={20} /> CREAR NUEVO CURSO
+          <Plus size={20} /> Crear nuevo curso
         </button>
       </header>
 
@@ -279,7 +279,7 @@ function AdminCursos() {
                   onClick={() => navigate(`/cursos/${curso.id}`)}
                   className="w-full bg-slate-800 hover:bg-blue-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-lg"
                 >
-                  Gestionar Integrantes
+                  Gestionar integrantes
                   <ArrowRight
                     size={18}
                     className="group-hover/btn:translate-x-1 transition-transform"
