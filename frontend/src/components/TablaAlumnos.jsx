@@ -7,7 +7,7 @@ function TablaAlumnos({ busqueda }) {
   const { alumnos, obtenerAlumnos, modificarAlumno } = usuarioStore();
   const [editarAlumno, setEditarAlumno] = useState(false);
   const [datosAlumno, setDatosAlumno] = useState({});
- 
+
   useEffect(() => {
     obtenerAlumnos();
   }, []);
@@ -21,11 +21,11 @@ function TablaAlumnos({ busqueda }) {
     "Estado",
     "Acciones",
   ];
-
-  const alumnosFiltrados = alumnos.filter((a) =>
-    a.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-    a.email.toLowerCase().includes(busqueda.toLowerCase()) ||
-    a.dni.toString().includes(busqueda)
+  const alumnosFiltrados = alumnos.filter(
+    (a) =>
+      (a?.nombre ?? "").toLowerCase().includes(busqueda?.toLowerCase() ?? "") ||
+      (a?.email ?? "").toLowerCase().includes(busqueda?.toLowerCase() ?? "") ||
+      (a?.dni?.toString() ?? "").includes(busqueda ?? ""),
   );
 
   console.log("alumnos: ", alumnos);
@@ -46,7 +46,9 @@ function TablaAlumnos({ busqueda }) {
         <thead className="bg-[#0d1526]">
           <tr>
             {cabecera.map((c) => (
-              <th key={c} className="text-slate-300">{c}</th>
+              <th key={c} className="text-slate-300">
+                {c}
+              </th>
             ))}
           </tr>
         </thead>
