@@ -139,6 +139,8 @@ function AdminCursos() {
     }
   };
 
+
+  
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0f172a]">
@@ -250,7 +252,7 @@ function AdminCursos() {
                       Vigencia
                     </span>
                     <span className="text-xs text-slate-300 font-mono">
-                      {curso.fechaInicio} — {curso.fechaFin}
+                      {formatearFecha(curso.fechaInicio)} — {formatearFecha(curso.fechaFin)}
                     </span>
                   </div>
                 </div>

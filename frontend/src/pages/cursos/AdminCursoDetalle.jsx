@@ -24,6 +24,8 @@ function AdminCursoDetalle() {
   const [loading, setLoading] = useState(true);
   const [busqueda, setBusqueda] = useState("");
   const [busquedaDocente, setBusquedaDocente] = useState("");
+  const [busquedaInscritos, setBusquedaInscritos] = useState("");
+  const [busquedaDocentesAsignados, setBusquedaDocentesAsignados] = useState("");
   const cupoCompleto =
   curso?.alumnos && curso?.cupo
     ? curso.alumnos.length >= curso.cupo
@@ -96,6 +98,20 @@ function AdminCursoDetalle() {
     }
   };
 
+  const alumnosInscritosFiltrados = curso?.alumnos?.filter(a =>
+    a.nombre?.toLowerCase().includes(busquedaInscritos.toLowerCase())
+  );
+
+  const docentesDisponiblesFiltrados = docentesDisponibles
+    .filter(d => !curso?.docentes?.some(cd => cd.id === d.id))
+    .filter(d =>
+      d.nombre?.toLowerCase().includes(busquedaDocente.toLowerCase())
+    );
+   
+  const docentesAsignadosFiltrados = curso?.docentes?.filter(d =>
+    d.nombre?.toLowerCase().includes(busquedaDocentesAsignados.toLowerCase())
+  );
+
   const cardContainer =
     "bg-slate-900/50 rounded-2xl border border-slate-800 p-6 shadow-2xl h-[520px] flex flex-col transition-all hover:border-slate-700/50";
   const scrollArea = "flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-2";
@@ -145,7 +161,7 @@ function AdminCursoDetalle() {
           <div className="flex items-center gap-4 bg-slate-950/50 p-4 rounded-2xl border border-slate-800">
             <div className="text-right">
               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-slate-500">
-                Ocupación
+                Cupo
               </p>
               <p className="text-2xl font-mono font-bold text-white">
                 {curso.alumnos?.length}{" "}
@@ -167,33 +183,50 @@ function AdminCursoDetalle() {
               <CheckCircle size={22} />
             </div>
             <h2 className="text-xl font-bold tracking-tight text-white">
-              Alumnos Inscritos
+              Alumnos inscritos
             </h2>
           </div>
 
+        <div className="relative mb-6">
+          <Search
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+            size={18}
+          />
+          <input
+            type="text"
+            placeholder="Buscar alumno inscrito..."
+            value={busquedaInscritos}
+            onChange={(e) => setBusquedaInscritos(e.target.value)}
+            className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/40 outline-none text-white"
+          />
+        </div>
+
           <div className={scrollArea}>
-            {curso.alumnos?.length === 0 ? (
+            {alumnosInscritosFiltrados?.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-slate-600 border-2 border-dashed border-slate-800/50 rounded-2xl">
-                <p className="text-sm font-medium">Sin alumnos vinculados</p>
+                <div className="h-full flex flex-col items-center justify-center text-slate-500">
+                  <Users size={80} className="mb-3 opacity-30" />
+                  <p className="text-sm font-medium">
+                    Aún no hay estudiantes en este curso
+                  </p>
+                </div>
               </div>
             ) : (
-              curso.alumnos?.map((alumno, index) => (
+              alumnosInscritosFiltrados?.map((alumno, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between bg-slate-800/30 p-4 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all"
+                  className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black">
-                      {alumno.nombre?.charAt(0) || "A"}
-                    </div>
+     
                     <span className="text-slate-200 font-medium">
                       {alumno.nombre || alumno}
                     </span>
                   </div>
                   <button
                     onClick={() => manejarDesvincularAlumno(alumno.id)}
-                    className="p-2 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
-                    title="Desvincular Alumno"
+                    className="p-0 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                    title="Desvincular alumno"
                   >
                     <Trash2 size={18} />
                   </button>
@@ -210,7 +243,7 @@ function AdminCursoDetalle() {
               <UserPlus size={22} />
             </div>
             <h2 className="text-xl font-bold tracking-tight text-white">
-              Inscribir Alumnos
+              Inscribir alumnos
             </h2>
           </div>
 
@@ -221,7 +254,7 @@ function AdminCursoDetalle() {
             />
             <input
               type="text"
-              placeholder="Buscar..."
+              placeholder="Buscar alumno sin curso..."
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-blue-500/40 outline-none text-white"
@@ -230,17 +263,14 @@ function AdminCursoDetalle() {
           <div className={scrollArea}>
             {cupoCompleto ? (
               <div className="h-full flex flex-col items-center justify-center text-red-400">
-                <Users size={40} className="mb-4 opacity-40" />
-                <p className="text-lg font-bold uppercase tracking-widest">
+                <Users size={80} className="mb-4 opacity-60" />
+                <p className="text-sm font-medium">
                   Cupo Completo
-                </p>
-                <p className="text-xs text-slate-500 mt-2">
-                  No se pueden inscribir más alumnos
                 </p>
               </div>
             ) : alumnosFiltrados.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-slate-500">
-                <Users size={30} className="mb-3 opacity-30" />
+                <Users size={80} className="mb-3 opacity-30" />
                 <p className="text-sm font-medium">
                   No hay alumnos disponibles
                 </p>
@@ -249,16 +279,16 @@ function AdminCursoDetalle() {
               alumnosFiltrados.map((alumno) => (
                 <div
                   key={alumno.id}
-                  className="flex items-center justify-between bg-slate-950/40 p-4 rounded-xl border border-slate-800 hover:border-blue-500/30 group transition-all"
+                  className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all"
                 >
-                  <span className="text-slate-300 font-medium">
+                  <span className="text-slate-200 font-medium">
                     {alumno.nombre}
                   </span>
                   <button
                     onClick={() => manejarAsignarAlumno(alumno.id)}
-                    className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg text-xs font-black transition-all uppercase"
+                    className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase transition-all"
                   >
-                    Vincular
+                    Inscribir
                   </button>
                 </div>
               ))
@@ -269,60 +299,85 @@ function AdminCursoDetalle() {
         {/* --- 3. DOCENTES ASIGNADOS --- */}
         <section className={cardContainer}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2.5 bg-purple-500/10 rounded-xl text-purple-400 border border-purple-500/20 text-purple-400">
-              <GraduationCap size={22} />
+            <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400 border border-emerald-500/20 text-emerald-400">
+              <CheckCircle size={22} />
             </div>
             <h2 className="text-xl font-bold tracking-tight text-white">
-              Docentes a Cargo
+              Docentes asignados
             </h2>
           </div>
+
+          <div className="relative mb-6">
+            <Search
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+              size={18}
+            />
+            <input
+              type="text"
+              placeholder="Buscar docente asignado..."
+              value={busquedaDocentesAsignados}
+              onChange={(e) => setBusquedaDocentesAsignados(e.target.value)}
+              className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/40 outline-none text-white"
+            />
+          </div>
+
           <div className={scrollArea}>
-            {docentesFiltrados.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-slate-500">
-                <Users size={30} className="mb-3 opacity-30" />
-                <p className="text-sm font-medium">
-                  No hay docentes disponibles
-                </p>
-              </div>
-            ) : (
-              docentesFiltrados.map((docente) => (
-                <div
-                  key={docente.id}
-                  className="flex items-center justify-between bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-slate-600 transition-all shadow-sm"
+          {docentesAsignadosFiltrados?.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center text-slate-500">
+              <Users size={80} className="mb-3 opacity-30" />
+              <p className="text-sm font-medium">
+                Sin docentes asignados
+              </p>
+            </div>
+          ) : (
+            docentesAsignadosFiltrados.map((docente) => (
+              <div
+                key={docente.id}
+                className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all"
+              >
+                <span className="text-slate-200 font-medium">
+                  {docente.nombre}
+                </span>
+
+                <button
+                  onClick={() => manejarDesvincularDocente(docente.id)}
+                  className="p-0 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
                 >
-                  <div className="flex flex-col">
-                    <span className="font-bold text-slate-200">
-                      {docente.nombre}
-                    </span>
-                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
-                      Activo
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => manejarAsignarDocente(docente.id)}
-                    className="bg-white text-slate-900 hover:bg-blue-50 px-5 py-2.5 rounded-lg text-[10px] font-black transition-all active:scale-95 uppercase"
-                  >
-                    Asignar
-                  </button>
-                </div>
-              ))
-            )}
-          </div>         
+                  <Trash2 size={18} />
+                </button>
+              </div>
+            ))
+          )}
+        </div>        
         </section>
 
-        {/* --- 4. DOCENTES DISPONIBLES --- */}
+        {/* --- 4. DOCENTES DISPONIBLES --- */}       
         <section className={cardContainer}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2.5 bg-slate-700/50 rounded-xl text-slate-400 border border-slate-700/50 text-slate-400">
+            <div className="p-2.5 bg-blue-500/10 rounded-xl text-purple-400 border border-blue-500/20 text-blue-400">
               <Users size={22} />
             </div>
             <h2 className="text-xl font-bold tracking-tight text-white">
-              Staff Docente
+              Docentes disponibles
             </h2>
           </div>
 
+          <div className="relative mb-6">
+            <Search
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+              size={18}
+            />
+            <input
+              type="text"
+              placeholder="Buscar docente disponible..."
+              value={busquedaDocente}
+              onChange={(e) => setBusquedaDocente(e.target.value)}
+              className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-purple-500/40 outline-none text-white"
+            />
+          </div>
+
         <div className={scrollArea}>
-          {docentesFiltrados.length === 0 ? (
+          {docentesDisponiblesFiltrados.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-slate-500">
               <Users size={30} className="mb-3 opacity-30" />
               <p className="text-sm font-medium">
@@ -330,19 +385,18 @@ function AdminCursoDetalle() {
               </p>
             </div>
           ) : (
-            docentesFiltrados.map((docente) => (
-              <div key={docente.id} className="flex items-center justify-between bg-slate-950 p-5 rounded-xl border border-slate-800 hover:border-slate-600 transition-all shadow-sm">
-                <div className="flex flex-col">
-                  <span className="font-bold text-slate-200">
-                    {docente.nombre}
-                  </span>
-                  <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
-                    Activo
-                  </span>
-                </div>
+            docentesDisponiblesFiltrados.map((docente) => (
+              <div
+                key={docente.id}
+                className="flex items-center justify-between bg-slate-800/30 p-2 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all"
+              >
+                <span className="text-slate-200 font-medium">
+                  {docente.nombre}
+                </span>
+
                 <button
                   onClick={() => manejarAsignarDocente(docente.id)}
-                  className="bg-white text-slate-900 hover:bg-blue-50 px-5 py-2.5 rounded-lg text-[10px] font-black transition-all active:scale-95 uppercase"
+                  className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase transition-all"
                 >
                   Asignar
                 </button>
