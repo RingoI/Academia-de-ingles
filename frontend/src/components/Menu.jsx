@@ -1,8 +1,18 @@
-import { Banknote, CircleUserIcon, FileText, FolderOpen, GraduationCap, LayoutDashboard, LibraryBig, Users } from "lucide-react";
+import { Banknote, CircleUserIcon, LogOut, FileText, FolderOpen, GraduationCap, LayoutDashboard, LibraryBig, Users } from "lucide-react";
 import ItemMenu from "./ItemMenu";
 import { authStore } from "../store/auth.store";
+import { useNavigate } from "react-router-dom";
+
 function Menu() {
-	const { rol, nombre } = authStore();
+	const logout = authStore.getState().logout;
+	const rol = authStore((state) => state.rol);
+	const nombre = authStore((state) => state.nombre);
+	const navigate = useNavigate();
+
+	const handleLogout = () => {
+    	logout();
+    	navigate("/login");
+  	};
 
 	return (
 		<div className="bg-[#0b1123] w-60 h-screen relative">
@@ -22,12 +32,40 @@ function Menu() {
 				<ItemMenu to={"/pagos"} Icono={Banknote} tag={"Pagos"} />
 				{rol === "ROLE_DOCENTE" ? <ItemMenu to={"/examenes"} Icono={FolderOpen} tag={"Material"} /> : ""}
 			</div>
-			<div className="border-t border-slate-800 px-6 absolute bottom-0 w-full h-20 gap-2 flex  items-center">
-				<CircleUserIcon className="size-7" />
-				<div className="flex flex-col leading-4 ">
-					<span className="">{rol === "ROLE_DOCENTE" ? "Prof." : rol === "ROLE_ALUMNO" ? "Alumno" : "ADMIN"}</span>
-					<span className="font-semibold">{nombre || "Admin"}</span>
+			<div className="border-t border-slate-800 absolute bottom-0 w-full p-5 flex flex-col gap-4 bg-[#0a0f1f]">
+
+			{/* Usuario */}
+			<div className="flex items-center gap-3">
+				<div className="bg-slate-800 p-2 rounded-lg">
+				<CircleUserIcon className="size-5 text-slate-300" />
 				</div>
+
+				<div className="flex flex-col leading-4">
+				<span className="text-xs text-slate-400">
+					{rol === "ROLE_DOCENTE"
+					? "Profesor"
+					: rol === "ROLE_ALUMNO"
+					? "Alumno"
+					: "Administrador"}
+				</span>
+				<span className="text-sm font-semibold text-white">
+					{nombre || "Admin"}
+				</span>
+				</div>
+			</div>
+
+			{/* Logout */}
+			<button
+				onClick={() => {
+				authStore.getState().logout();
+				navigate("/login");
+				}}
+				className="flex items-center gap-2 text-sm text-slate-400 hover:text-red-400 transition"
+			>
+				<LogOut className="size-4" />
+				Cerrar sesión
+			</button>
+
 			</div>
 		</div>
 	);
