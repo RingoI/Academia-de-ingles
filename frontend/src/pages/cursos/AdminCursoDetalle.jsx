@@ -25,18 +25,17 @@ function AdminCursoDetalle() {
   const [busqueda, setBusqueda] = useState("");
   const [busquedaDocente, setBusquedaDocente] = useState("");
   const [busquedaInscritos, setBusquedaInscritos] = useState("");
-  const [busquedaDocentesAsignados, setBusquedaDocentesAsignados] = useState("");
+  const [busquedaDocentesAsignados, setBusquedaDocentesAsignados] =
+    useState("");
   const cupoCompleto =
-  curso?.alumnos && curso?.cupo
-    ? curso.alumnos.length >= curso.cupo
-    : false;
+    curso?.alumnos && curso?.cupo ? curso.alumnos.length >= curso.cupo : false;
 
   const docentesFiltrados = (docentesDisponibles || []).filter((d) =>
-    d.nombre?.toLowerCase().includes(busquedaDocente.toLowerCase())
+    d.nombre?.toLowerCase().includes(busquedaDocente.toLowerCase()),
   );
 
   const alumnosFiltrados = (alumnosSinCurso || []).filter((a) =>
-    a.nombre?.toLowerCase().includes(busqueda.toLowerCase())
+    a.nombre?.toLowerCase().includes(busqueda.toLowerCase()),
   );
 
   const fetchData = async () => {
@@ -98,18 +97,18 @@ function AdminCursoDetalle() {
     }
   };
 
-  const alumnosInscritosFiltrados = curso?.alumnos?.filter(a =>
-    a.nombre?.toLowerCase().includes(busquedaInscritos.toLowerCase())
+  const alumnosInscritosFiltrados = curso?.alumnos?.filter((a) =>
+    a.nombre?.toLowerCase().includes(busquedaInscritos.toLowerCase()),
   );
 
   const docentesDisponiblesFiltrados = docentesDisponibles
-    .filter(d => !curso?.docentes?.some(cd => cd.id === d.id))
-    .filter(d =>
-      d.nombre?.toLowerCase().includes(busquedaDocente.toLowerCase())
+    .filter((d) => !curso?.docentes?.some((cd) => cd.id === d.id))
+    .filter((d) =>
+      d.nombre?.toLowerCase().includes(busquedaDocente.toLowerCase()),
     );
-   
-  const docentesAsignadosFiltrados = curso?.docentes?.filter(d =>
-    d.nombre?.toLowerCase().includes(busquedaDocentesAsignados.toLowerCase())
+
+  const docentesAsignadosFiltrados = curso?.docentes?.filter((d) =>
+    d.nombre?.toLowerCase().includes(busquedaDocentesAsignados.toLowerCase()),
   );
 
   const cardContainer =
@@ -187,19 +186,19 @@ function AdminCursoDetalle() {
             </h2>
           </div>
 
-        <div className="relative mb-6">
-          <Search
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
-            size={18}
-          />
-          <input
-            type="text"
-            placeholder="Buscar alumno inscrito..."
-            value={busquedaInscritos}
-            onChange={(e) => setBusquedaInscritos(e.target.value)}
-            className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/40 outline-none text-white"
-          />
-        </div>
+          <div className="relative mb-6">
+            <Search
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+              size={18}
+            />
+            <input
+              type="text"
+              placeholder="Buscar alumno inscrito..."
+              value={busquedaInscritos}
+              onChange={(e) => setBusquedaInscritos(e.target.value)}
+              className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/40 outline-none text-white"
+            />
+          </div>
 
           <div className={scrollArea}>
             {alumnosInscritosFiltrados?.length === 0 ? (
@@ -218,7 +217,6 @@ function AdminCursoDetalle() {
                   className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all"
                 >
                   <div className="flex items-center gap-4">
-     
                     <span className="text-slate-200 font-medium">
                       {alumno.nombre || alumno}
                     </span>
@@ -264,9 +262,7 @@ function AdminCursoDetalle() {
             {cupoCompleto ? (
               <div className="h-full flex flex-col items-center justify-center text-red-400">
                 <Users size={80} className="mb-4 opacity-60" />
-                <p className="text-sm font-medium">
-                  Cupo Completo
-                </p>
+                <p className="text-sm font-medium">Cupo Completo</p>
               </div>
             ) : alumnosFiltrados.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-slate-500">
@@ -281,25 +277,9 @@ function AdminCursoDetalle() {
                   key={alumno.id}
                   className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all"
                 >
-<<<<<<< HEAD
-                  <div className="flex items-center gap-5">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20">
-                      <User size={24} />
-                    </div>
-                    <div>
-                      <p className="text-slate-100 font-bold">
-                        {docente?.nombre || "Sin nombre"}
-                      </p>
-                      <p className="text-[10px] text-purple-400 font-black uppercase tracking-widest tracking-widest">
-                        Titular
-                      </p>
-                    </div>
-                  </div>
-=======
                   <span className="text-slate-200 font-medium">
                     {alumno.nombre}
                   </span>
->>>>>>> curso-branch
                   <button
                     onClick={() => manejarAsignarAlumno(alumno.id)}
                     className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase transition-all"
@@ -338,36 +318,34 @@ function AdminCursoDetalle() {
           </div>
 
           <div className={scrollArea}>
-          {docentesAsignadosFiltrados?.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-slate-500">
-              <Users size={80} className="mb-3 opacity-30" />
-              <p className="text-sm font-medium">
-                Sin docentes asignados
-              </p>
-            </div>
-          ) : (
-            docentesAsignadosFiltrados.map((docente) => (
-              <div
-                key={docente.id}
-                className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all"
-              >
-                <span className="text-slate-200 font-medium">
-                  {docente.nombre}
-                </span>
-
-                <button
-                  onClick={() => manejarDesvincularDocente(docente.id)}
-                  className="p-0 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
-                >
-                  <Trash2 size={18} />
-                </button>
+            {docentesAsignadosFiltrados?.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-slate-500">
+                <Users size={80} className="mb-3 opacity-30" />
+                <p className="text-sm font-medium">Sin docentes asignados</p>
               </div>
-            ))
-          )}
-        </div>        
+            ) : (
+              docentesAsignadosFiltrados.map((docente) => (
+                <div
+                  key={docente.id}
+                  className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all"
+                >
+                  <span className="text-slate-200 font-medium">
+                    {docente.nombre}
+                  </span>
+
+                  <button
+                    onClick={() => manejarDesvincularDocente(docente.id)}
+                    className="p-0 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
         </section>
 
-        {/* --- 4. DOCENTES DISPONIBLES --- */}       
+        {/* --- 4. DOCENTES DISPONIBLES --- */}
         <section className={cardContainer}>
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-blue-500/10 rounded-xl text-purple-400 border border-blue-500/20 text-blue-400">
@@ -392,35 +370,34 @@ function AdminCursoDetalle() {
             />
           </div>
 
-        <div className={scrollArea}>
-          {docentesDisponiblesFiltrados.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-slate-500">
-              <Users size={30} className="mb-3 opacity-30" />
-              <p className="text-sm font-medium">
-                No hay docentes disponibles
-              </p>
-            </div>
-          ) : (
-            docentesDisponiblesFiltrados.map((docente) => (
-              <div
-                key={docente.id}
-                className="flex items-center justify-between bg-slate-800/30 p-2 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all"
-              >
-                <span className="text-slate-200 font-medium">
-                  {docente.nombre}
-                </span>
-
-                <button
-                  onClick={() => manejarAsignarDocente(docente.id)}
-                  className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase transition-all"
-                >
-                  Asignar
-                </button>
+          <div className={scrollArea}>
+            {docentesDisponiblesFiltrados.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-slate-500">
+                <Users size={30} className="mb-3 opacity-30" />
+                <p className="text-sm font-medium">
+                  No hay docentes disponibles
+                </p>
               </div>
-            ))
-          )}
-        </div>
+            ) : (
+              docentesDisponiblesFiltrados.map((docente) => (
+                <div
+                  key={docente.id}
+                  className="flex items-center justify-between bg-slate-800/30 p-2 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all"
+                >
+                  <span className="text-slate-200 font-medium">
+                    {docente.nombre}
+                  </span>
 
+                  <button
+                    onClick={() => manejarAsignarDocente(docente.id)}
+                    className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase transition-all"
+                  >
+                    Asignar
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
         </section>
       </main>
 

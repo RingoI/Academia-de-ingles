@@ -12,7 +12,7 @@ import {
   ChevronRight,
   Info,
   BookOpen,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 
 function AdminCursos() {
@@ -45,7 +45,7 @@ function AdminCursos() {
     "text-indigo-300",
     "text-amber-300",
     "text-emerald-300",
-    "text-pink-300"
+    "text-pink-300",
   ];
 
   const coloresAura = [
@@ -55,7 +55,7 @@ function AdminCursos() {
     "bg-indigo-500/25",
     "bg-amber-500/25",
     "bg-emerald-500/25",
-    "bg-pink-500/25"
+    "bg-pink-500/25",
   ];
 
   const getColorIndex = (nombre) => {
@@ -155,8 +155,6 @@ function AdminCursos() {
     }
   };
 
-
-  
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0f172a]">
@@ -218,15 +216,6 @@ function AdminCursos() {
                       className="cursor-pointer text-slate-500 hover:text-red-500 transition-colors"
                     />
                   </div>
-<<<<<<< HEAD
-                  <span className="text-sm">
-                    Niveles:{" "}
-                    <b className="text-slate-200">
-                      {curso.niveles?.length ? curso.niveles.join(", ") : "N/A"}
-                    </b>
-                  </span>
-=======
->>>>>>> curso-branch
                 </div>
 
                 <div className="space-y-4 mb-8">
@@ -237,21 +226,12 @@ function AdminCursos() {
                     <span className="text-sm">
                       Niveles:{" "}
                       <b className="text-slate-200">
-                        {curso.niveles?.join(", ") || "N/A"}
+                        {curso.niveles?.length
+                          ? curso.niveles.join(", ")
+                          : "N/A"}
                       </b>
                     </span>
                   </div>
-<<<<<<< HEAD
-                  <span className="text-sm">
-                    Staff:{" "}
-                    <b className="text-slate-200">
-                      {curso.docentes?.map((d) => d.nombre).join(", ") ||
-                        "Sin asignar"}
-                    </b>
-                  </span>
-                </div>
-=======
->>>>>>> curso-branch
 
                   <div className="flex items-center gap-4 text-slate-400">
                     <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-purple-400">
@@ -288,7 +268,8 @@ function AdminCursos() {
                       Vigencia
                     </span>
                     <span className="text-xs text-slate-300 font-mono">
-                      {formatearFecha(curso.fechaInicio)} — {formatearFecha(curso.fechaFin)}
+                      {formatearFecha(curso.fechaInicio)} —{" "}
+                      {formatearFecha(curso.fechaFin)}
                     </span>
                   </div>
                 </div>
@@ -299,7 +280,10 @@ function AdminCursos() {
                   className="w-full bg-slate-800 hover:bg-blue-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-lg"
                 >
                   Gestionar Integrantes
-                  <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
+                  <ArrowRight
+                    size={18}
+                    className="group-hover/btn:translate-x-1 transition-transform"
+                  />
                 </button>
               </div>
             </div>
@@ -357,7 +341,6 @@ function AdminCursos() {
                     className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono text-white"
                   />
                 </div>
-<<<<<<< HEAD
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
                     Niveles
@@ -384,8 +367,6 @@ function AdminCursos() {
                     ))}
                   </select>
                 </div>
-=======
->>>>>>> curso-branch
               </div>
 
               <div className="grid grid-cols-2 gap-6">
