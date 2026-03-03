@@ -127,6 +127,12 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/docentes").authenticated()
                 .requestMatchers(HttpMethod.GET, "/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
 
+
+                // NIVELES
+                // =========================
+                .requestMatchers(HttpMethod.GET, "/niveles/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/niveles/crear/**").hasRole("ADMIN")
+
             
                 // ASISTENCIAS
                 // =========================

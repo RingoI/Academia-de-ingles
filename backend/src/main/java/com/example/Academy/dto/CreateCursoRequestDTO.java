@@ -16,9 +16,6 @@ public class CreateCursoRequestDTO {
     private Integer cupo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    private Long nivelId;
-    private Long docenteId;
-    private Long alumnoId;
     private List<Long> nivelesIds;
     private List<Long> docentesIds;
     private List<Long> alumnosIds;
@@ -30,8 +27,7 @@ public class CreateCursoRequestDTO {
                 ", cupo=" + cupo +
                 ", fechaInicio=" + fechaInicio +
                 ", fechaFin=" + fechaFin +
-                ", nivelId=" + nivelId +
-                ", docenteId=" + docenteId +
+                ", nivelesIds=" + nivelesIds +
                 ", docentesIds=" + docentesIds +
                 ", alumnosIds=" + alumnosIds +
                 '}';

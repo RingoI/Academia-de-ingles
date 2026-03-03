@@ -267,7 +267,7 @@ function AdminCursoDetalle() {
                     </div>
                     <div>
                       <p className="text-slate-100 font-bold">
-                        {docente.nombre || docente}
+                        {docente?.nombre || "Sin nombre"}
                       </p>
                       <p className="text-[10px] text-purple-400 font-black uppercase tracking-widest tracking-widest">
                         Titular

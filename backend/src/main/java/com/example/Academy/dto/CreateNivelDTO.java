@@ -8,4 +8,5 @@ import lombok.Setter;
 
 public class CreateNivelDTO {
 	private String nombre;
+	private Long id;
 }

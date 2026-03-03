@@ -18,6 +18,7 @@ function AdminCursos() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const [niveles, setNiveles] = useState([]);
 
   // Estado para el formulario (CreateCursoRequestDTO)
   const [formData, setFormData] = useState({
@@ -44,12 +45,27 @@ function AdminCursos() {
 
   useEffect(() => {
     fetchCursos();
+
+    const fetchNiveles = async () => {
+      try {
+        const response = await fetch("http://localhost:8082/niveles");
+        const data = await response.json();
+
+        const ordenados = data.sort((a, b) => a.id - b.id);
+
+        setNiveles(ordenados);
+      } catch (error) {
+        console.error("Error al obtener niveles", error);
+      }
+    };
+
+    fetchNiveles();
   }, []);
 
   const handleCrearCurso = async (e) => {
     e.preventDefault();
     try {
-      // Usamos el service que centraliza la lógica
+      console.log("Enviando curso:", formData);
       await CursosService.crear(formData);
       setShowModal(false);
       fetchCursos(); // Refrescamos la lista automáticamente
@@ -154,7 +170,7 @@ function AdminCursos() {
                   <span className="text-sm">
                     Niveles:{" "}
                     <b className="text-slate-200">
-                      {curso.niveles?.join(", ") || "N/A"}
+                      {curso.niveles?.length ? curso.niveles.join(", ") : "N/A"}
                     </b>
                   </span>
                 </div>
@@ -166,7 +182,8 @@ function AdminCursos() {
                   <span className="text-sm">
                     Staff:{" "}
                     <b className="text-slate-200">
-                      {curso.docentes?.join(", ") || "Sin asignar"}
+                      {curso.docentes?.map((d) => d.nombre).join(", ") ||
+                        "Sin asignar"}
                     </b>
                   </span>
                 </div>
@@ -265,7 +282,32 @@ function AdminCursos() {
                     className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono"
                   />
                 </div>
-                {/* Espacio para futuros campos como Costo o Tipo si lo requerís */}
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
+                    Niveles
+                  </label>
+
+                  <select
+                    multiple
+                    value={formData.nivelesIds}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        nivelesIds: Array.from(
+                          e.target.selectedOptions,
+                          (option) => Number(option.value),
+                        ),
+                      })
+                    }
+                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-slate-300"
+                  >
+                    {niveles.map((nivel) => (
+                      <option key={nivel.id} value={nivel.id}>
+                        {nivel.nombre}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-6">
