@@ -11,6 +11,8 @@ import {
   Layers,
   ChevronRight,
   Info,
+  BookOpen,
+  ArrowRight
 } from "lucide-react";
 
 function AdminCursos() {
@@ -30,6 +32,44 @@ function AdminCursos() {
     nivelesIds: [],
     alumnosIds: [],
   });
+
+  const formatearFecha = (fechaISO) => {
+    const [anio, mes, dia] = fechaISO.split("-");
+    return `${dia}/${mes}/${anio}`;
+  };
+
+  const coloresTexto = [
+    "text-blue-300",
+    "text-purple-300",
+    "text-cyan-300",
+    "text-indigo-300",
+    "text-amber-300",
+    "text-emerald-300",
+    "text-pink-300"
+  ];
+
+  const coloresAura = [
+    "bg-blue-500/25",
+    "bg-purple-500/25",
+    "bg-cyan-500/25",
+    "bg-indigo-500/25",
+    "bg-amber-500/25",
+    "bg-emerald-500/25",
+    "bg-pink-500/25"
+  ];
+
+  const getColorIndex = (nombre) => {
+    const letra = nombre.charAt(0).toUpperCase();
+    return letra.charCodeAt(0) % coloresTexto.length;
+  };
+
+  const getNivelColor = (nombre) => {
+    return coloresTexto[getColorIndex(nombre)];
+  };
+
+  const getNivelAura = (nombre) => {
+    return coloresAura[getColorIndex(nombre)];
+  };
 
   const fetchCursos = async () => {
     try {
@@ -80,7 +120,7 @@ function AdminCursos() {
         alumnosIds: [],
       });
     } catch (error) {
-      alert("Error al procesar la creación del curso.", error);
+      alert("Error al procesar la creación del curso.");
     }
   };
 
@@ -115,6 +155,8 @@ function AdminCursos() {
     }
   };
 
+
+  
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0f172a]">
@@ -156,29 +198,50 @@ function AdminCursos() {
           cursos.map((curso) => (
             <div
               key={curso.id}
-              className="bg-slate-900/50 rounded-3xl border border-slate-800 p-8 hover:border-blue-500/40 transition-all flex flex-col shadow-2xl group"
+              className="relative overflow-hidden bg-gradient-to-br from-[#0f1c2e] via-[#0c1625] to-[#0a1422] rounded-3xl border border-slate-800 p-8 hover:border-blue-500/40 transition-all flex flex-col shadow-2xl group"
             >
-              <h2 className="text-2xl font-bold text-white mb-6 group-hover:text-blue-400 transition-colors">
-                {curso.nombre}
-              </h2>
+              {/* FONDO DECORATIVO GIGANTE */}
+              <div className="absolute -right-10 -top-10 text-slate-500/5 rotate-12 group-hover:text-blue-500/10 transition-colors">
+                <BookOpen size={160} />
+              </div>
 
-              <div className="space-y-4 mb-8 flex-1">
-                <div className="flex items-center gap-4 text-slate-400">
-                  <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-blue-400">
-                    <Layers size={16} />
+              <div className="relative z-10 flex-1">
+                <div className="flex justify-between items-start mb-6">
+                  <h2 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors pr-10">
+                    {curso.nombre}
+                  </h2>
+                  <div className="flex items-center gap-2">
+                    {/* BOTÓN ELIMINAR */}
+                    <Trash2
+                      size={20}
+                      onClick={() => manejarEliminarCurso(curso.id)}
+                      className="cursor-pointer text-slate-500 hover:text-red-500 transition-colors"
+                    />
                   </div>
+<<<<<<< HEAD
                   <span className="text-sm">
                     Niveles:{" "}
                     <b className="text-slate-200">
                       {curso.niveles?.length ? curso.niveles.join(", ") : "N/A"}
                     </b>
                   </span>
+=======
+>>>>>>> curso-branch
                 </div>
 
-                <div className="flex items-center gap-4 text-slate-400">
-                  <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-purple-400">
-                    <GraduationCap size={16} />
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center gap-4 text-slate-400">
+                    <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-blue-400">
+                      <Layers size={16} />
+                    </div>
+                    <span className="text-sm">
+                      Niveles:{" "}
+                      <b className="text-slate-200">
+                        {curso.niveles?.join(", ") || "N/A"}
+                      </b>
+                    </span>
                   </div>
+<<<<<<< HEAD
                   <span className="text-sm">
                     Staff:{" "}
                     <b className="text-slate-200">
@@ -187,44 +250,56 @@ function AdminCursos() {
                     </b>
                   </span>
                 </div>
+=======
+>>>>>>> curso-branch
 
-                <div className="flex items-center gap-4 text-slate-400">
-                  <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-emerald-400">
-                    <Users size={16} />
+                  <div className="flex items-center gap-4 text-slate-400">
+                    <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-purple-400">
+                      <GraduationCap size={16} />
+                    </div>
+                    <span className="text-sm">
+                      Staff:{" "}
+                      <b className="text-slate-200">
+                        {curso.docentes && curso.docentes.length > 0
+                          ? curso.docentes.map((d) => d.nombre).join(", ")
+                          : "Sin asignar"}
+                      </b>
+                    </span>
                   </div>
-                  <span className="text-sm">
-                    Cupos:{" "}
-                    <b className="text-slate-200">
-                      {curso.alumnos?.length} / {curso.cupo}
-                    </b>
-                  </span>
+
+                  <div className="flex items-center gap-4 text-slate-400">
+                    <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-emerald-400">
+                      <Users size={16} />
+                    </div>
+                    <span className="text-sm">
+                      Cupos:{" "}
+                      <b className="text-slate-200">
+                        {curso.alumnos?.length || 0} / {curso.cupo}
+                      </b>
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-slate-800 flex items-center justify-between">
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
-                    Vigencia
-                  </span>
-                  <span className="text-xs text-slate-300 font-mono">
-                    {curso.fechaInicio} — {curso.fechaFin}
-                  </span>
+              <div className="relative z-10 pt-6 border-t border-slate-800 flex flex-col gap-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+                      Vigencia
+                    </span>
+                    <span className="text-xs text-slate-300 font-mono">
+                      {formatearFecha(curso.fechaInicio)} — {formatearFecha(curso.fechaFin)}
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-3">
-                {/* BOTÓN ELIMINAR */}
-                <Trash2
-                  size={20}
-                  onClick={() => manejarEliminarCurso(curso.id)}
-                  className="cursor-pointer text-slate-500 hover:text-red-500 transition-colors"
-                />
-                {/* BOTÓN VER DETALLE */}
+                {/* BOTÓN VER DETALLE / GESTIONAR */}
                 <button
                   onClick={() => navigate(`/cursos/${curso.id}`)}
-                  className="bg-slate-800 hover:bg-white hover:text-slate-900 p-3 rounded-xl transition-all shadow-lg"
+                  className="w-full bg-slate-800 hover:bg-blue-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-lg"
                 >
-                  <ChevronRight size={20} />
+                  Gestionar Integrantes
+                  <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
                 </button>
               </div>
             </div>
@@ -264,7 +339,7 @@ function AdminCursos() {
                     setFormData({ ...formData, nombre: e.target.value })
                   }
                   placeholder="Ej: English Advanced C1 - 2026"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-slate-700"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-slate-700 text-white"
                 />
               </div>
 
@@ -279,9 +354,10 @@ function AdminCursos() {
                     onChange={(e) =>
                       setFormData({ ...formData, cupo: e.target.value })
                     }
-                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono text-white"
                   />
                 </div>
+<<<<<<< HEAD
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
                     Niveles
@@ -308,6 +384,8 @@ function AdminCursos() {
                     ))}
                   </select>
                 </div>
+=======
+>>>>>>> curso-branch
               </div>
 
               <div className="grid grid-cols-2 gap-6">
@@ -360,6 +438,8 @@ function AdminCursos() {
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .group { animation: fadeIn 0.5s ease-out forwards; }
       `}</style>
     </div>
   );
