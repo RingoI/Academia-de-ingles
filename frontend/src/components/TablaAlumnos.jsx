@@ -23,9 +23,9 @@ function TablaAlumnos({ busqueda }) {
   ];
 
   const alumnosFiltrados = alumnos.filter((a) =>
-    a.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-    a.email.toLowerCase().includes(busqueda.toLowerCase()) ||
-    a.dni.toString().includes(busqueda)
+    (a?.nombre ?? "").toLowerCase().includes(busqueda?.toLowerCase() ?? "") ||
+    (a?.email ?? "").toLowerCase().includes(busqueda?.toLowerCase() ?? "") ||
+    (a?.dni?.toString() ?? "").includes(busqueda ?? "")
   );
 
   console.log("alumnos: ", alumnos);
