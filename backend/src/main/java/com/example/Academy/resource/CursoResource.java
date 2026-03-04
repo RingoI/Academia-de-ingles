@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +19,12 @@ import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.dto.CreateCursoRequestDTO;
 import com.example.Academy.dto.CursoResponseDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
+import com.example.Academy.dto.AlumnoResponseDTO;
 import com.example.Academy.service.CursoService;
 
 @RestController
 @RequestMapping("/cursos")
+@CrossOrigin(origins = "http://localhost:5173")
 public class CursoResource {
 
 
@@ -76,4 +79,22 @@ public class CursoResource {
     );
 }
 
+        // =========================
+        // LISTAR ALUMNOS POR CURSO
+        // =========================
+    @GetMapping("/{id}/alumnos")
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
+    public ResponseEntity<ApiResponseDTO<List<AlumnoResponseDTO>>> obtenerAlumnosPorCurso(
+         @PathVariable Long id) {
+
+     // Debes crear este método en tu cursoService
+     List<AlumnoResponseDTO> alumnos = cursoService.obtenerAlumnosPorCurso(id);
+
+     return ResponseEntity.ok(
+               new ApiResponseDTO<>(
+                     "Alumnos del curso obtenidos correctamente",
+                     alumnos
+            )   
+    );
+}
 }

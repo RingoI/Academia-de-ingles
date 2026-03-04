@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.Academy.dto.CreateCursoRequestDTO;
 import com.example.Academy.dto.CursoResponseDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
+import com.example.Academy.dto.AlumnoResponseDTO;
 
 public interface CursoService {
     
@@ -13,5 +14,6 @@ public interface CursoService {
     CursoResponseDTO obtenerCursoPorId(Long id);
     void eliminarCurso(Long id);
     CursoResponseDTO actualizarCurso(Long id, UpdateCursoRequestDTO dto);
+    public List<AlumnoResponseDTO> obtenerAlumnosPorCurso(Long cursoId) ;
 
 }

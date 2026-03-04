@@ -8,24 +8,25 @@ import CursosPage from "./pages/CursosPage";
 import PagosPage from "./pages/PagosPage";
 import ExamenesPage from "./pages/ExamenesPage";
 import Layout from "./components/Layout";
-
+import AsistenciaPage from "./pages/AsistenciaPage";
 function App() {
-	return (
-		<Routes>
-			<Route element={<Layout />}>
-				<Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN"]} />}>
-					<Route path="/dashboard" element={<DashboardPage />} />
-					<Route path="/usuarios" element={<UsuariosPage />} />
-					<Route path="/cursos" element={<CursosPage />} />
-					<Route path="/pagos" element={<PagosPage />} />
-					<Route path="/examenes" element={<ExamenesPage />} />
-				</Route>
-			</Route>
-
-			<Route path="/" element={<HomePage />} />
-			<Route path="/login" element={<LoginPage />} />
-		</Routes>
-	);
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN"]} />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/usuarios" element={<UsuariosPage />} />
+          <Route path="/cursos" element={<CursosPage />} />
+          <Route path="/cursos/:cursoId" element={<DetalleCursoPage />} />
+          <Route path="/asistencias/:cursoId" element={<AsistenciaPage />} />
+          <Route path="/pagos" element={<PagosPage />} />
+          <Route path="/examenes" element={<ExamenesPage />} />
+        </Route>
+      </Route>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+    </Routes>
+  );
 }
 
 export default App;

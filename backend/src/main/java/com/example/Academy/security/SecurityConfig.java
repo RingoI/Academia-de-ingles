@@ -54,9 +54,25 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        
+        // El origen de tu React
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        
+        // Métodos permitidos
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
+        
+        // IMPORTANTE: En lugar de "*", seamos específicos con los headers
+        configuration.setAllowedHeaders(List.of(
+            "Authorization", 
+            "Content-Type", 
+            "Accept", 
+            "X-Requested-With", 
+            "Cache-Control"
+        ));
+        
+        // Permitir que los headers de respuesta sean visibles si fuera necesario
+        configuration.setExposedHeaders(List.of("Authorization"));
+        
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -83,14 +99,14 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
-             .cors(cors -> {})
+             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(auth -> auth
 
-                
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 //AUTENTICACIÓN / REGISTRO
                 // =========================
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
@@ -132,10 +148,12 @@ public class SecurityConfig {
             
                 // ASISTENCIAS
                 // =========================
-                .requestMatchers(HttpMethod.GET, "/asistencias/**")
-                    .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
-                .requestMatchers(HttpMethod.POST, "/asistencias/**")
-                    .hasAnyRole("ADMIN", "DOCENTE")
+                //.requestMatchers(HttpMethod.GET, "/asistencias/**")
+                //    .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
+                //.requestMatchers(HttpMethod.POST, "/asistencias/**")
+                //    .hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.GET, "/asistencias/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/asistencias/**").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/asistencias/**")
                     .hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/asistencias/**")
