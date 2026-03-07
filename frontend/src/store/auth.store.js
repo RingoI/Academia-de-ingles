@@ -39,6 +39,18 @@ export const authStore = create(
 					set({ rol: null, loading: false });
 				}
 			},
+
+			logout: () => {
+				localStorage.removeItem("token");
+				set({
+					isLoggingIn: false,
+					rol: null,
+					loading: false,
+					idUsuario: null,
+					nombre: "",
+				});
+			},
+
 		}),
 		{ name: "auth-storage", getStorage: () => localStorage },
 	),

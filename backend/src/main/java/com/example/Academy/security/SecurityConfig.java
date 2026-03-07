@@ -127,6 +127,12 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/docentes").authenticated()
                 .requestMatchers(HttpMethod.GET, "/docentes/**").hasAnyRole("ADMIN", "DOCENTE")
 
+
+                // NIVELES
+                // =========================
+                .requestMatchers(HttpMethod.GET, "/niveles/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/niveles/crear/**").hasRole("ADMIN")
+
             
                 // ASISTENCIAS
                 // =========================
@@ -155,7 +161,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/examenes/**").hasAnyRole("ADMIN", "DOCENTE")
                 
 
-                
+                //AVISOS
+                .requestMatchers(HttpMethod.POST, "/avisos").hasAnyRole("ADMIN", "DOCENTE")
+
                 // ENTREGAS
                 // =========================
                 .requestMatchers(HttpMethod.GET, "/entregas/download/**")
