@@ -1,5 +1,6 @@
 package com.example.Academy.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -43,14 +44,16 @@ public class AvisoServiceImp implements AvisoService{
 		if(persona instanceof Alumno alumno){
 			List<Aviso> institucionales = avisoRepository.findByInstitucionalTrue();
 			List<Aviso> deCursos = avisoRepository.findByCursoIn(alumno.getCursos());
-			return Stream.concat(institucionales.stream(), deCursos.stream()).toList();
+			return Stream.concat(institucionales.stream(), deCursos.stream()).
+			sorted(Comparator.comparing(Aviso::getFechaCreacion).reversed()).
+			toList();
 		} else if (persona instanceof Docente docente){
 			List<Aviso> institucionales = avisoRepository.findByInstitucionalTrue();
 			List<Aviso> propios = avisoRepository.findByCreador(docente);
-			return Stream.concat(institucionales.stream(),propios.stream()).toList();
+			return Stream.concat(institucionales.stream(),propios.stream()).sorted(Comparator.comparing(Aviso::getFechaCreacion).reversed()).toList();
 		
 		}else if (persona instanceof Administrador){
-			return avisoRepository.findAll();
+			return avisoRepository.findAllByOrderByFechaCreacionDesc();
 		}
 
 		return List.of();

@@ -15,4 +15,6 @@ public interface AvisoRepository extends JpaRepository<Aviso, Long> {
 	List<Aviso> findByCursoIn(List<Curso> cursos);
 
 	List<Aviso> findByCreador(Persona creador);
+
+	List<Aviso> findAllByOrderByFechaCreacionDesc();
 }

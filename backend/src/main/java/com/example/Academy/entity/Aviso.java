@@ -1,10 +1,8 @@
 package com.example.Academy.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,6 +38,6 @@ public class Aviso {
 	//por si el aviso es a todo el instituto
 	private boolean institucional;
 
-	private LocalDate fechaCreacion = LocalDate.now();
+	private LocalDateTime fechaCreacion = LocalDateTime.now();
 
 }
