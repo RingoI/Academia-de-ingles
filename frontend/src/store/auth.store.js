@@ -3,58 +3,72 @@ import { persist } from "zustand/middleware";
 import { axiosInstance } from "../utils/axios";
 
 export const authStore = create(
-	persist(
-		(set) => ({
-			isLoggingIn: false,
-			rol: null,
-			loading: false,
-			idUsuario: null,
-			nombre: "",
+  persist(
+    (set) => ({
+      token: null,
+      isLoggingIn: false,
+      rol: null,
+      loading: false,
+      idUsuario: null,
+      nombre: "",
 
-			login: async (data, rolSeleccionado) => {
-				set({ isLoggingIn: true });
-				try {
-					const res = await axiosInstance.post(rolSeleccionado.endpoint, data);
-					console.log("Res Login: ", res);
-					localStorage.setItem("token", res.data.token);
-					await authStore.getState().obtenerRol();
-					return res.status;
-				} catch (error) {
-					console.log("Error en login: ", error);
-				} finally {
-					set({ isLoggingIn: false });
-				}
-			},
+      login: async (data, rolSeleccionado) => {
+        set({ isLoggingIn: true });
+        try {
+          const res = await axiosInstance.post(rolSeleccionado.endpoint, data);
 
-			obtenerRol: async () => {
-				set({ loading: true });
-				try {
-					const res = await axiosInstance.get("/auth/me");
-					console.log("res rol: ", res.data);
-					set({ rol: res.data.roles[0], loading: false });
-					set({ nombre: res.data.nombre });
-					set({ idUsuario: res.data.id });
-				} catch (error) {
-					console.log("Error en obtenerRol: ", error);
-					set({ rol: null, loading: false });
-				}
-			},
+          console.log("Res Login: ", res);
 
-			logout: () => {
-				localStorage.removeItem("token");
-				set({
-					isLoggingIn: false,
-					rol: null,
-					loading: false,
-					idUsuario: null,
-					nombre: "",
-				});
-			},
+          const tokenRecibido = res.data.token;
 
-		}),
-		{ name: "auth-storage", getStorage: () => localStorage },
-	),
+          // Guardamos token en Zustand
+          set({ token: tokenRecibido });
+
+          // Guardamos token en localStorage
+          localStorage.setItem("token", tokenRecibido);
+
+          await authStore.getState().obtenerRol();
+
+          return res.status;
+        } catch (error) {
+          console.log("Error en login: ", error);
+        } finally {
+          set({ isLoggingIn: false });
+        }
+      },
+
+      obtenerRol: async () => {
+        set({ loading: true });
+        try {
+          const res = await axiosInstance.get("/auth/me");
+
+          console.log("res rol: ", res.data);
+
+          set({
+            rol: res.data.roles[0],
+            nombre: res.data.nombre,
+            idUsuario: res.data.id,
+            loading: false,
+          });
+        } catch (error) {
+          console.log("Error en obtenerRol: ", error);
+          set({ rol: null, loading: false });
+        }
+      },
+
+      logout: () => {
+        localStorage.removeItem("token");
+
+        set({
+          token: null,
+          isLoggingIn: false,
+          rol: null,
+          loading: false,
+          idUsuario: null,
+          nombre: "",
+        });
+      },
+    }),
+    { name: "auth-storage", getStorage: () => localStorage },
+  ),
 );
-
-//Los username tendrían que ser unicos porque si hay dos iguales con distintos roles puede traer errores
-//De ultima lo que se verifique en el /me tiene que ser por email y no por username.

@@ -37,6 +37,7 @@ function App() {
           <Route path="/pagos" element={<PagosPage />} />
           <Route path="/examenes" element={<ExamenesPage />} />
           <Route path="/avisos" element={<AvisosPage />} />
+          <Route path="/asistencias/:cursoId" element={<AsistenciaPage />} />
           <Route
             path="/docente/curso/:cursoId/tarea/:tareaId"
             element={<DocenteTareaDetalle />}

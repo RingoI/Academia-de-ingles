@@ -1,7 +1,9 @@
 package com.example.Academy.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.example.Academy.dto.CreateCursoRequestDTO;
@@ -9,6 +11,7 @@ import com.example.Academy.dto.CursoResponseDTO;
 import com.example.Academy.dto.CursosPorDocenteDTO;
 import com.example.Academy.dto.PersonaDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
+import com.example.Academy.dto.AlumnoResponseDTO;
 import com.example.Academy.entity.Alumno;
 import com.example.Academy.entity.Curso;
 import com.example.Academy.entity.Docente;
@@ -17,8 +20,7 @@ import com.example.Academy.repository.AlumnoRepository;
 import com.example.Academy.repository.CursoRepository;
 import com.example.Academy.repository.DocenteRepository;
 import com.example.Academy.repository.NivelRepository;
-
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CursoServiceImp implements CursoService {
@@ -27,13 +29,16 @@ private final CursoRepository cursoRepository;
 private final NivelRepository nivelRepository;
 private final DocenteRepository docenteRepository;
 private final AlumnoRepository alumnoRepository;
+private final ModelMapper modelMapper;
 
 public CursoServiceImp(CursoRepository cursoRepository, NivelRepository nivelRepository,
-        DocenteRepository docenteRepository, AlumnoRepository alumnoRepository) {
+        DocenteRepository docenteRepository, AlumnoRepository alumnoRepository,ModelMapper modelMapper ) {
     this.cursoRepository = cursoRepository;
     this.nivelRepository = nivelRepository;
     this.docenteRepository = docenteRepository;
     this.alumnoRepository = alumnoRepository;
+    this.modelMapper = modelMapper;
+    
 }
 
 @Override
@@ -119,13 +124,28 @@ public List<CursoResponseDTO> obtenerCursos() {
             .toList();
 }
 
-@Override
-public CursoResponseDTO obtenerCursoPorId(Long id) {
-    Curso curso = cursoRepository.findById(id)
+    @Override
+    public CursoResponseDTO obtenerCursoPorId(Long id) {
+        Curso curso = cursoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
+        return mapToResponse(curso);
+
+    }
+    
+    
+    @Override
+    public List<AlumnoResponseDTO> obtenerAlumnosPorCurso(Long cursoId) {
+        Curso curso = cursoRepository.findById(cursoId)
             .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
-    return mapToResponse(curso);
+        
+        // Forzamos la carga de la colección si es Lazy
+        int cantidad = curso.getAlumnos().size();
+        System.out.println("DEBUG: Alumnos en DB para este curso: " + cantidad);
 
-
+        return curso.getAlumnos().stream()
+                    .map(alumno -> modelMapper.map(alumno, AlumnoResponseDTO.class))
+                    .collect(Collectors.toList());
+                    
 }
 
     @Override
@@ -291,5 +311,5 @@ public void desvincularDocente(Long cursoId, Long docenteId) {
 
     cursoRepository.save(curso);
 }
-}
 
+}

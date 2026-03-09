@@ -57,8 +57,12 @@ public class Curso {
     @JsonIgnore
     private List<Docente> docentes = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "cursos")
-    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+        name = "alumno_curso", // <--- Asegurate que tu INSERT sea en ESTA tabla
+        joinColumns = @JoinColumn(name = "curso_id"),
+        inverseJoinColumns = @JoinColumn(name = "alumno_id")
+    )
     private List<Alumno> alumnos = new ArrayList<>();
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
