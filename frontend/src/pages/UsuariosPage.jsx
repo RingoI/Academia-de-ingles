@@ -61,13 +61,13 @@ function UsuariosPage() {
 				</div>
 			</header>
 
-      <div className="border-b border-slate-400 mt-6 mb-10"></div>
+      <div className="border-b border-slate-400 mt-2 mb-6"></div>
       
     {/* TABS */}
-    <div className="flex gap-6 border-b border-slate-700">
+    <div className="flex gap-6 border-b border-slate-700 mt-6 mb-10">
     <button
         onClick={() => setTabActiva("alumnos")}
-        className={`pb-2 font-semibold transition-all ${
+        className={`pb-2 font-semibold ${
         tabActiva === "alumnos"
             ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
             : "text-slate-400 hover:text-white"
@@ -78,7 +78,7 @@ function UsuariosPage() {
 
     <button
         onClick={() => setTabActiva("docentes")}
-        className={`pb-2 font-semibold transition-all ${
+        className={`pb-2 font-semibold ${
         tabActiva === "docentes"
             ? "text-[#818cf8] border-b-2 border-[#818cf8]"
             : "text-slate-400 hover:text-white"

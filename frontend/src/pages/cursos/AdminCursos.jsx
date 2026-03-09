@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CursosService } from "../../utils/CursosService";
-import { Trash2 } from "lucide-react";
 import {
   Plus,
-  Calendar,
   Users,
   GraduationCap,
   X,
+  Trash2, 
   Layers,
-  ChevronRight,
-  Info,
   BookOpen,
   ArrowRight,
 } from "lucide-react";
@@ -174,7 +171,7 @@ function AdminCursos() {
             Configuración de oferta académica y cupos
           </p>
         </div>
-        <div className="flex justify-end mb-8">
+        <div className="flex justify-end mb-4">
           <button
             onClick={() => setShowModal(true)}
             className="bg-[#06b6d4] shadow-md transition-all duration-300 hover:shadow-indigo-500/50 px-4 py-2 rounded-lg font-semibold text-[#0c1224] text-sm cursor-pointer flex items-center gap-2"
@@ -185,7 +182,7 @@ function AdminCursos() {
         </div>
       </header>
 
-      <div className="border-b border-slate-400 mt-6 mb-10"></div>
+      <div className="border-b border-slate-400 mt-2 mb-8"></div>
 
       {/* GRILLA DE TARJETAS */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

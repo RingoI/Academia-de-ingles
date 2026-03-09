@@ -55,7 +55,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
@@ -152,7 +152,17 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/files/download/**")
                     .authenticated()
 
-                
+                // FORO
+                // =========================
+                .requestMatchers(HttpMethod.GET, "/foro/**")
+                    .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
+                .requestMatchers(HttpMethod.POST, "/foro/**")
+                    .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
+                .requestMatchers(HttpMethod.DELETE, "/foro/**")
+                    .hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.PATCH, "/foro/**")
+                    .hasAnyRole("ADMIN", "DOCENTE")
+
                 //EXÁMENES
                 // =========================
                 .requestMatchers(HttpMethod.GET, "/examenes/**").permitAll()
@@ -172,7 +182,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.PUT,  "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
                 .requestMatchers(HttpMethod.DELETE, "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
-
 
                 // MERCADO PAGO
                 // =========================

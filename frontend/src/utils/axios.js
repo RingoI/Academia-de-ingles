@@ -2,10 +2,7 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:8082",
-  haeders: {
-    "Content-Type": "application/json",
-  },
-  //		withCredentials: true,
+    //		withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(

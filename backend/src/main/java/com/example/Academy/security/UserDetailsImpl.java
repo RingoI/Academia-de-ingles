@@ -25,8 +25,6 @@ public class UserDetailsImpl implements UserDetails {
         );
     }
 
-
-
     @Override
     public String getPassword() {
         return persona.getPassword();
@@ -45,5 +43,8 @@ public class UserDetailsImpl implements UserDetails {
         return Boolean.TRUE.equals(persona.getActivo());
     }
 
+    public Persona getPersona() {
+        return persona;
+    }
 }
 

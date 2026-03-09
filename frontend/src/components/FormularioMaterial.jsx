@@ -39,7 +39,7 @@ function FormularioMaterial({ idUsuario, setAbrirFormulario }) {
 			<div className="flex items-center gap-3 border border-slate-700 p-3 rounded-t-xl  ">
 				<FileUp className="bg-[#0c354b] text-[#06b6d4] size-10 p-2 rounded-md " />
 				<div className="">
-					<h1 className="font-semibold text-xl">Subir Nuevo Material</h1>
+					<h1 className="font-semibold text-slate-400 text-xl">Subir nuevo material</h1>
 					<p className="text-sm text-slate-400">Publica recursos educativos para tus alumnos</p>
 				</div>
 			</div>
@@ -47,22 +47,22 @@ function FormularioMaterial({ idUsuario, setAbrirFormulario }) {
 				<form action="" className="w-full" onSubmit={(e) => handleSubmit(e)}>
 					<div className="grid p-5 gap-5 ">
 						<div className="flex flex-col">
-							<span className="font-semibold text-sm text-slate-400">NOMBRE DEL ARCHIVO</span>
+							<span className="font-semibold text-sm text-slate-400">Nombre del archivo</span>
 							<input
 								placeholder="Ej: Guia de Tiempo Verbales - Unit 1"
 								value={materialData.nombreArchivo}
-								className="input w-full input-md bg-[#0e1627] border-slate-800 shadow-none"
+								className="input w-full input-md bg-[#0e1627] text-slate-400 border-slate-800 shadow-none"
 								onChange={(e) => setMaterialData({ ...materialData, nombreArchivo: e.target.value })}
 							/>
 						</div>
 						<div className="grid grid-cols-2 gap-4">
 							<div className="flex flex-col">
-								<span className="font-semibold text-slate-400 text-sm">CURSO</span>
+								<span className="font-semibold text-slate-400 text-sm">Curso</span>
 								<select
 									name=""
 									id=""
 									value={materialData.cursoId ?? ""}
-									className="bg-[#0e1527] font-semibold border rounded-md py-2 px-1 border-slate-800 text-slate-300 text-md"
+									className="bg-[#0e1527] border rounded-md py-2 px-1 border-slate-800 text-slate-300 text-md"
 									onChange={(e) => setMaterialData({ ...materialData, cursoId: e.target.value })}
 								>
 									<option value="" disabled>
@@ -76,13 +76,13 @@ function FormularioMaterial({ idUsuario, setAbrirFormulario }) {
 								</select>
 							</div>
 							<div className="flex flex-col">
-								<span className="font-semibold text-slate-400 text-sm">TIPO DE MATERIAL</span>
+								<span className="font-semibold text-slate-400 text-sm">Tipo de material</span>
 								<select
 									name=""
 									id=""
 									value={materialData.tipo ?? ""}
 									onChange={(e) => setMaterialData({ ...materialData, tipo: e.target.value })}
-									className="bg-[#0e1527] font-semibold border rounded-md py-2 px-1 border-slate-800 text-slate-300 text-md"
+									className="bg-[#0e1527] border rounded-md py-2 px-1 border-slate-800 text-slate-300 text-md"
 								>
 									<option value="" disabled>
 										Seleccione un tipo de material
@@ -94,11 +94,11 @@ function FormularioMaterial({ idUsuario, setAbrirFormulario }) {
 							</div>
 						</div>
 						<div className="flex flex-col">
-							<span className="font-semibold text-slate-400 text-sm">SELECCIONA EL ARCHIVO</span>
+							<span className="font-semibold text-slate-400 text-sm">Seleccionar archivo</span>
 							<input
 								type="file"
 								key={key}
-								className="file-input bg-[#0e1527]"
+								className="file-input text-slate-400 bg-[#0e1527]"
 								onChange={(e) => setMaterialData({ ...materialData, file: e.target.files[0] })}
 							/>
 						</div>
