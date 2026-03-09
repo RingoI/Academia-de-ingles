@@ -182,6 +182,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/tareas/**")
                 .hasAnyRole("DOCENTE", "ALUMNO", "ADMIN")
 
+                //AVISOS
+                .requestMatchers(HttpMethod.POST, "/avisos").hasAnyRole("ADMIN", "DOCENTE")
+
                 
                 // ENTREGAS
                 // =========================

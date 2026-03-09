@@ -11,15 +11,19 @@ import Layout from "./components/Layout";
 import AdminCursoDetalle from "./pages/cursos/AdminCursoDetalle";
 import AlumnoCursoDetalle from "./pages/cursos/AlumnoCursoDetalle";
 import DocenteCursoDetalle from "./pages/cursos/DocenteCursoDetalle";
+<<<<<<< HEAD
 import DocenteTareaDetalle from "./pages/cursos/DocecnteTareaDetalle";
+=======
+import AvisosPage from "./pages/AvisosPage";
+>>>>>>> mendez-branch
 
 function App() {
-  return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN"]} />}>
-          <Route path="/usuarios" element={<UsuariosPage />} />
-        </Route>
+	return (
+		<Routes>
+			<Route element={<Layout />}>
+				<Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN"]} />}>
+					<Route path="/usuarios" element={<UsuariosPage />} />
+				</Route>
 
         <Route
           element={
@@ -35,6 +39,7 @@ function App() {
           <Route path="/cursos/docente/:id" element={<DocenteCursoDetalle />} />
           <Route path="/pagos" element={<PagosPage />} />
           <Route path="/examenes" element={<ExamenesPage />} />
+		  <Route path="/avisos" element={<AvisosPage />} />
           <Route
             path="/docente/curso/:cursoId/tarea/:tareaId"
             element={<DocenteTareaDetalle />}
@@ -42,10 +47,10 @@ function App() {
         </Route>
       </Route>
 
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-    </Routes>
-  );
+			<Route path="/" element={<HomePage />} />
+			<Route path="/login" element={<LoginPage />} />
+		</Routes>
+	);
 }
 
 export default App;

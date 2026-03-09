@@ -22,12 +22,8 @@ function DocenteCursos() {
 		<div className="h-full w-full relative">
 			<header className="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
 				<div className="mb-1">
-					<h1 className="font-semibold text-3xl text-slate-400">
-						Mis Cursos
-					</h1>
-					<p className="text-slate-400">
-						Información de los cursos a los que perteneces
-					</p>
+					<h1 className="font-semibold text-3xl text-slate-400">Mis Cursos</h1>
+					<p className="text-slate-400">Información de los cursos a los que perteneces</p>
 				</div>
 			</header>
 
@@ -53,13 +49,13 @@ function DocenteCursos() {
 										<Layers size={16} />
 									</div>
 									<span className="text-sm">
-										Niveles: <b className="text-slate-200">{c.niveles?.[0]?.nombre || "N/A"}</b>
+										Niveles: <b className="text-slate-200">{c.niveles[0]?.nombre || "N/A"}</b>
 									</span>
 								</div>
 							</div>
 
 							<div className="flex items-center gap-4 mb-2 text-slate-400">
-								<div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-purple-400">
+								<div className="min-w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-purple-400">
 									<GraduationCap size={16} />
 								</div>
 								<span className="text-sm">
