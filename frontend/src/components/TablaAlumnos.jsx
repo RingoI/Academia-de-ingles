@@ -21,6 +21,7 @@ function TablaAlumnos({ busqueda }) {
     "Estado",
     "Acciones",
   ];
+
   const alumnosFiltrados = alumnos.filter(
     (a) =>
       (a?.nombre ?? "").toLowerCase().includes(busqueda?.toLowerCase() ?? "") ||
