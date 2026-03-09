@@ -9,7 +9,7 @@ export const materialStore = create((set) => ({
 
   obtenerEntregasPorDocente: async (id) => {
     try {
-      const res = await axiosInstance.get(`/entregas/docente/${id}`);
+      const res = await axiosInstance.get(`/materiales/docente/${id}`);
       console.log("Res de obtenerEntregasPorDocente: ", res);
       set({ materiales: res.data });
     } catch (error) {
@@ -17,14 +17,13 @@ export const materialStore = create((set) => ({
     }
   },
 
-  agregarMaterial: async (cursoId, docenteId, file, tipo, nombreArchivo) => {
+  agregarMaterial: async (cursoId, docenteId, file, nombreArchivo) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("tipo", tipo);
       formData.append("nombre", nombreArchivo);
       const res = await axiosInstance.post(
-        `/entregas/curso/${cursoId}/docente/${docenteId}`,
+        `/materiales/curso/${cursoId}/docente/${docenteId}`,
         formData,
       );
       await materialStore.getState().obtenerEntregasPorDocente(docenteId);
@@ -34,21 +33,11 @@ export const materialStore = create((set) => ({
     }
   },
 
-  obtenerCursosPorDocente: async (id) => {
-    try {
-      const res = await axiosInstance.get(`/cursos/docente/${id}`);
-      console.log("Res de ObtenerCursosoPorDocente: ", res);
-      set({ cursosDocente: res.data.data });
-    } catch (error) {
-      console.log("Error en obtenerCursosPorDocente: ", error);
-    }
-  },
-
   descargarArchivos: async (id, nombreArchivo) => {
     set({ isDownloading: true });
     try {
       console.log("ID: ", id);
-      const res = await axiosInstance.get(`/entregas/download/${id}`, {
+      const res = await axiosInstance.get(`/materiales/descargar/${id}`, {
         responseType: "blob",
       });
 
@@ -60,7 +49,7 @@ export const materialStore = create((set) => ({
       let fileName = `${nombreArchivo}.pdf`;
       if (contentDispoistion) {
         const match = contentDispoistion.match(/filename="(.+)"/);
-        if (match.length > 1) {
+        if (match && match.length > 1) {
           fileName = match[1];
         }
       }
@@ -79,7 +68,7 @@ export const materialStore = create((set) => ({
 
   eliminarArchivo: async (id, idUsuario) => {
     try {
-      const res = await axiosInstance.delete(`/entregas/${id}`);
+      const res = await axiosInstance.delete(`/materiales/${id}`);
       console.log("Res eliminar archivo: ", res);
       materialStore.getState().obtenerEntregasPorDocente(idUsuario);
     } catch (error) {
@@ -89,11 +78,45 @@ export const materialStore = create((set) => ({
 
   obtenerArchivosPorCurso: async (cursoId) => {
     try {
-      const res = await axiosInstance.get(`/entregas/curso/${cursoId}`);
+      const res = await axiosInstance.get(`/materiales/curso/${cursoId}`);
       console.log("res obtenerArchivosporCurso: ", res);
       set({ archivosCurso: res.data });
     } catch (error) {
       console.log("Error en obtenerArchivosPorCurso: ", error);
+    }
+  },
+
+  obtenerCursosPorDocente: async (id) => {
+    try {
+      const res = await axiosInstance.get(`/cursos/docente/${id}`);
+      console.log("Res de ObtenerCursosoPorDocente: ", res);
+      set({ cursosDocente: res.data.data });
+    } catch (error) {
+      console.log("Error en obtenerCursosPorDocente: ", error);
+    }
+  },
+
+  agregarContenido: async (cursoId, docenteId, file, nombre, tipo) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("nombre", nombre);
+      formData.append("tipo", tipo);
+
+      const res = await axiosInstance.post(
+        `materiales/curso/${cursoId}/docente/${docenteId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+
+      return res.status;
+    } catch (error) {
+      console.log("Error en agregarContenido:", error);
+      return error.response?.status;
     }
   },
 }));

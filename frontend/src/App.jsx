@@ -11,6 +11,7 @@ import Layout from "./components/Layout";
 import AdminCursoDetalle from "./pages/cursos/AdminCursoDetalle";
 import AlumnoCursoDetalle from "./pages/cursos/AlumnoCursoDetalle";
 import DocenteCursoDetalle from "./pages/cursos/DocenteCursoDetalle";
+import DocenteTareaDetalle from "./pages/cursos/DocecnteTareaDetalle";
 
 function App() {
   return (
@@ -34,6 +35,10 @@ function App() {
           <Route path="/cursos/docente/:id" element={<DocenteCursoDetalle />} />
           <Route path="/pagos" element={<PagosPage />} />
           <Route path="/examenes" element={<ExamenesPage />} />
+          <Route
+            path="/docente/curso/:cursoId/tarea/:tareaId"
+            element={<DocenteTareaDetalle />}
+          />
         </Route>
       </Route>
 

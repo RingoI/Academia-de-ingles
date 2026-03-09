@@ -15,7 +15,6 @@ public class ExamenResponseDTO {
     private LocalDate fecha;
     private String tipo;
     private Double puntajeMaximo;
-
-    private Long nivelId;
+    private Long cursoId;
     private Long docenteId;
 }

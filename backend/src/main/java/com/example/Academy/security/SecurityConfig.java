@@ -155,23 +155,61 @@ public class SecurityConfig {
                 
                 //EXÁMENES
                 // =========================
-                .requestMatchers(HttpMethod.GET, "/examenes/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/examenes/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.PUT,  "/examenes/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.DELETE, "/examenes/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.POST, "/examenes/**")
+                .hasAnyRole("DOCENTE", "ADMIN")
+
+                .requestMatchers(HttpMethod.PUT, "/examenes/**")
+                .hasAnyRole("DOCENTE", "ADMIN")
+
+                .requestMatchers(HttpMethod.DELETE, "/examenes/**")
+                .hasAnyRole("DOCENTE", "ADMIN")
+
+                .requestMatchers(HttpMethod.GET, "/examenes/**")
+                .hasAnyRole("DOCENTE", "ALUMNO", "ADMIN")
                 
+
+                //TAREAS
+                // =========================
+                .requestMatchers(HttpMethod.POST, "/tareas/**")
+                .hasAnyRole("DOCENTE", "ADMIN")
+
+                .requestMatchers(HttpMethod.PUT, "/tareas/**")
+                .hasAnyRole("DOCENTE", "ADMIN")
+
+                .requestMatchers(HttpMethod.DELETE, "/tareas/**")
+                .hasAnyRole("DOCENTE", "ADMIN")
+
+                .requestMatchers(HttpMethod.GET, "/tareas/**")
+                .hasAnyRole("DOCENTE", "ALUMNO", "ADMIN")
 
                 
                 // ENTREGAS
                 // =========================
-                .requestMatchers(HttpMethod.GET, "/entregas/download/**")
-                .hasAnyRole("ALUMNO", "DOCENTE", "ADMIN")
-                .requestMatchers(HttpMethod.GET, "/entregas/alumno/**")
-                .hasAnyRole("ALUMNO", "DOCENTE", "ADMIN")
-                .requestMatchers(HttpMethod.POST,"/entregas/examen/*//*").hasRole("ALUMNO")
-                .requestMatchers(HttpMethod.POST, "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.PUT,  "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
-                .requestMatchers(HttpMethod.DELETE, "/entregas/**").hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.POST, "/entregas/tarea/*/alumno/*")
+                .hasAnyRole("ALUMNO", "ADMIN", "DOCENTE")
+
+                .requestMatchers(HttpMethod.POST, "/entregas/examen/*/alumno/*")
+                .hasAnyRole("ALUMNO", "ADMIN", "DOCENTE")
+
+                .requestMatchers(HttpMethod.GET, "/entregas/**")
+                .hasAnyRole("DOCENTE", "ALUMNO", "ADMIN")
+
+                .requestMatchers(HttpMethod.PUT, "/entregas/**")
+                .hasAnyRole("DOCENTE", "ADMIN", "ALUMNO")
+
+                .requestMatchers(HttpMethod.DELETE, "/entregas/**")
+                .hasAnyRole("DOCENTE", "ADMIN")
+
+                // MATERIAL CURSO
+                // =========================
+                .requestMatchers(HttpMethod.POST, "/materiales/**")
+                    .hasAnyRole("ADMIN", "DOCENTE")
+
+                .requestMatchers(HttpMethod.GET, "/materiales/**")
+                    .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
+
+                .requestMatchers(HttpMethod.DELETE, "/materiales/**")
+                    .hasAnyRole("ADMIN", "DOCENTE")
 
 
                 // MERCADO PAGO

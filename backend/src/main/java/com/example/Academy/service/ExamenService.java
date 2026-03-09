@@ -16,4 +16,5 @@ public interface ExamenService {
     ExamenResponseDTO obtenerExamenPorId(Long id);
     void eliminarExamen(Long id);
     ExamenResponseDTO actualizarExamen(Long id, UpdateExamenRequestDTO dto);
+    List<ExamenResponseDTO> obtenerExamenesPorCurso(Long cursoId);
 }

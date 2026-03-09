@@ -10,6 +10,6 @@ import lombok.Setter;
 public class CorregirEntregaDTO {
 
     private Double nota;
-    private Boolean aprobado;
+    private String comentario;
 }
 

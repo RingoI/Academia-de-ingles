@@ -1,0 +1,27 @@
+Tablas hash: Una tabla hash es una estructura de datos que asocia claves o llaves con un respectivo valor. Esta conformada por una array de entradas, que es donde se va a almacenar los valores. Estas tablas tambien estan conformadas por una funcion de dispersion o funcion hash, que la funcion de esta es distribuir uniformemente las claves a los respectivos valores. Para tener en cuenta de las tablas hash:
+	* Distribuye uniformemente las claves a todos sus respectivos valores.
+	* Evitar la cantidad de coalisiones, ya que estas no se pueden mermar definitivamente, sino que se pueden reducir, con las siguentes estrategias:
+		Encadenamiento: Se utiliza cuando hay mas de una llave con un mismo valor, entonces se realiza un compartimiento especial, parecido al de una lista.
+		Redireccionamiento: Se utiliza cuando hay mas de una llave con un respectivo valor, pero en este caso, se buscan los espacios libres de la tabla para almacenarlas.
+		Redimencionamiento: Se utiliza nuevamente cuando hay mas de una llave con un valor, pero esta vez se crea una nueva tabla para guardar el valor.
+		
+Grafos: Un grafo es una estructura de datos matematica que consiste en la creacion de objetos, llamados nodos o verices, y las relaciones que existen entre ellos, llamados aristas o arcos. Los grafos se utilizan para representar problemas que tengan que ver con conexiones , vinculos o intersecciones.
+ Existe un termino que se le asigna mucho a los grafos, que son los ciclos de grafos. Estos se producen cuando hay un camino cerrado, es decir, cuando un nodo o vertice es el
+ primero  y es el ultimo, sin repetir aristas ni vertices.
+	Para implementarlos tenemos dos formas:
+		La primera es la matriz de adyacencia: Es una representacion de un grafo en una matriz n * n, donde n son los vertices o nodos y las celdas son si existen un vinculo 
+			entre dos vertices.
+			Sus ventajas son: 
+				- Eficiente en decir si existe un vinchulo entre dos vertices.
+				- Comunica a todos con todo.
+				- Es bueno con los grafos densos.
+			Sus desventajas son: 
+				- No son buenas con la busqueda en los grafos dispersos O(N¨2)
+		La segunda es una lista de adyacencia: Es una forma de representar los grafos con listas vinculadas, donde los vertices tienen una lista con todos sus vertices
+			conectados.
+			Sus ventajas son:
+				- Son muy buenas con los grafos dispersos.
+				- Espacio eficiente.
+				
+			Sus desventajas son: 
+				-No son buenos con la busqueda en los grafos densos.

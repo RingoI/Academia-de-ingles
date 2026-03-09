@@ -16,16 +16,19 @@ import lombok.Setter;
 @Getter
 @Setter 
 public class Tarea {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String titulo;
-    private String descripcion;
-    private LocalDate fechaCreacion;
+    private String nombre;
+
+    private LocalDate fechaEntrega;
 
     @ManyToOne
     private Curso curso;
 
+    @ManyToOne
+    private Docente docente;
 }
 

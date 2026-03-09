@@ -42,6 +42,7 @@ public class ExamenResource {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE', 'ALUMNO')")
     public ResponseEntity<List<ExamenResponseDTO>> obtenerExamenes() {
         return ResponseEntity.ok(examenService.obtenerExamenes());
     }
@@ -74,4 +75,11 @@ public class ExamenResource {
             examenService.actualizarExamen(id, dto))
     );
     }
+
+
+    @GetMapping("/curso/{cursoId}")
+    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE','ALUMNO')")
+    public ResponseEntity<List<ExamenResponseDTO>> obtenerExamenesPorCurso(@PathVariable Long cursoId) {
+        return ResponseEntity.ok(examenService.obtenerExamenesPorCurso(cursoId));
+}
 }

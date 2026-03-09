@@ -2,6 +2,7 @@ package com.example.Academy.dto;
 
 import java.time.LocalDate;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,19 +14,26 @@ public class EntregaResponseDTO {
 
     private Long id;
     private String cursoNombre;
-    private String nombreArchivo;
-    private String nombre;
-    private String tipo; 
-    private LocalDate fechaSubida;
-    private String subidoPor;
-    private Long usuarioId;
-    
-/*     
-    private Long id;
-    private String alumno;
-    private String examen;
-    private String archivoEntregado;
-    private Double nota;
-    private Boolean aprobado; */
+    private Long cursoId;
 
+    private String nombreArchivo;
+    private String nombreCurso;
+    
+
+    private LocalDate fechaSubida;
+
+    private Long alumnoId;
+
+    private Long tareaId;   // puede ser null
+    private Long examenId;  // puede ser null
+
+    private String estado;
+    private Double nota;
+    private String comentario;
+
+    private String alumnoNombre;
+
+    private String nombreTarea;
+
+    private String examenNombre;
 }

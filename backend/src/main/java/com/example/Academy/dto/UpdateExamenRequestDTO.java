@@ -16,7 +16,7 @@ public class UpdateExamenRequestDTO {
     private LocalDate fecha;
     private String tipo;
     private Double puntajeMaximo;
-    private Long nivelId;
     private Long docenteId;
+    private Long cursoId;
 }
 

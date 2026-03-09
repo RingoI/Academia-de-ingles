@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import com.example.Academy.dto.CreateExamenRequestDTO;
 import com.example.Academy.dto.ExamenResponseDTO;
 import com.example.Academy.dto.UpdateExamenRequestDTO;
+import com.example.Academy.entity.Curso;
 import com.example.Academy.entity.Docente;
 import com.example.Academy.entity.Examen;
-import com.example.Academy.entity.Nivel;
+import com.example.Academy.repository.CursoRepository;
 import com.example.Academy.repository.DocenteRepository;
 import com.example.Academy.repository.ExamenRepository;
-import com.example.Academy.repository.NivelRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -22,40 +22,42 @@ import org.springframework.transaction.annotation.Transactional;
 public class ExamenServiceImp implements ExamenService {
 
     private final ExamenRepository examenRepository;
-    private final NivelRepository nivelRepository;
     private final DocenteRepository docenteRepository;
+    private final CursoRepository cursoRepository;
 
     public ExamenServiceImp(
             ExamenRepository examenRepository,
-            NivelRepository nivelRepository,
-            DocenteRepository docenteRepository) {
+            DocenteRepository docenteRepository,
+            CursoRepository cursoRepository) {
 
         this.examenRepository = examenRepository;
-        this.nivelRepository = nivelRepository;
         this.docenteRepository = docenteRepository;
+        this.cursoRepository = cursoRepository;
     }
 
     @Override
     public ExamenResponseDTO crearExamen(CreateExamenRequestDTO dto) {
 
-        Nivel nivel = nivelRepository.findById(dto.getNivelId())
-                .orElseThrow(() -> new RuntimeException("Nivel no encontrado"));
+        Curso curso = cursoRepository.findById(dto.getCursoId())
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
         Docente docente = docenteRepository.findById(dto.getDocenteId())
                 .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
 
-        Examen examen = new Examen();
+        Examen examen = new Examen();   
+
         examen.setNombre(dto.getNombre());
-        examen.setFecha((dto.getFecha()));
+        examen.setFecha(dto.getFecha());
         examen.setTipo(dto.getTipo());
         examen.setPuntajeMaximo(dto.getPuntajeMaximo());
-        examen.setNivel(nivel);
+        examen.setCurso(curso);        
         examen.setDocente(docente);
 
         Examen guardado = examenRepository.save(examen);
 
         return mapToResponseDTO(guardado);
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -109,10 +111,10 @@ public class ExamenServiceImp implements ExamenService {
             examen.setPuntajeMaximo(dto.getPuntajeMaximo());
         }
 
-        if (dto.getNivelId() != null) {
-            Nivel nivel = nivelRepository.findById(dto.getNivelId())
-                    .orElseThrow(() -> new RuntimeException("Nivel no encontrado"));
-            examen.setNivel(nivel);
+        if (dto.getCursoId() != null) {
+            Curso curso = cursoRepository.findById(dto.getCursoId())
+                    .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
+            examen.setCurso(curso);
         }
 
         if (dto.getDocenteId() != null) {
@@ -124,6 +126,15 @@ public class ExamenServiceImp implements ExamenService {
         return mapToResponseDTO(examenRepository.save(examen));
     }
 
+    @Override
+    public List<ExamenResponseDTO> obtenerExamenesPorCurso(Long cursoId) {
+
+        return examenRepository.findByCursoId(cursoId)
+                .stream()
+                .map(this::mapToResponseDTO)
+                .toList();
+    }
+
     
     private ExamenResponseDTO mapToResponseDTO(Examen examen) {
 
@@ -133,8 +144,10 @@ public class ExamenServiceImp implements ExamenService {
                 examen.getFecha(),
                 examen.getTipo(),
                 examen.getPuntajeMaximo(),
-                examen.getNivel().getId(),
-                examen.getDocente().getId()
+                examen.getDocente().getId(),
+                examen.getCurso().getId()
         );
     }
+
+    
 }

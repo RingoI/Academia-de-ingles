@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -67,9 +66,5 @@ public class Alumno extends Persona {
     inverseJoinColumns = @JoinColumn(name = "examen_id") )
     
     private List<Examen> examen = new ArrayList<>();
-
-    @OneToMany(mappedBy = "alumno", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<ExamenAlumno> entregas = new ArrayList<>();
 
 }

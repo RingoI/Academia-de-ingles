@@ -50,7 +50,7 @@ function TablaMaterial({ idUsuario, rol }) {
           {materiales.map((m, idx) => (
             <tr key={m.id}>
               <th>{idx + 1}</th>
-              <th>{m.cursoNombre}</th>
+              <th>{m.nombreCurso}</th>
               <th className="font-normal">
                 <div className="flex gap-2">
                   {m.tipo === "MATERIAL" ? (

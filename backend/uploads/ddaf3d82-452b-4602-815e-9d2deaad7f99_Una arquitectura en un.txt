@@ -1,0 +1,80 @@
+Una arquitectura en un entorno de sistemas distribuidos se refiere a la estructura organizacional del sistema y define como se relacionan los componentes entre si, para cumplir con objetivos funcionales y no funcionales. Entre estos componentes estan como se organizan los nodos, como se relacionan entre si y como se coordinan y gestionan los recursos y procesos distribuhidos.
+	Estos son los componentes de una arquitectura en un entorno de sistemas distribuidos:
+		-Nodos: Son cualquier tipo de cosa, que se relacionen entre si para cumplir con un objetivo.
+		-Comunicacion: Son como se comunican los nodos, para cumplir con dicho objetivo.
+		-Coordinacion: Se implementan mecanismos con el fin de cumplir con el objetivo.
+		-Topologias: Se utilizan tanto topologias fisicas, como logicas.
+		-Distribucion de tareas: Se refiere a la manera de dividir las tareas para que sea mas eficiente.
+
+ Diferencias entre on-premises y cloud:
+ Las principales diferencias entre on-premises (local) y cloud (nube) radican en aspectos que tienen que ver con la ubicacion de los recursos, la gestion, los costos y la escalabilidad.
+ 
+ 	Ubicacion: premises: los recursos entan ubicados de manera local, por ejemplo en la empresa.
+ 		   cloud: Los recursos estan ubicados de manera remota, por ejemplo en Google.
+ 		   
+ 	Gestion: premises: la empresa es responsable por la instalacion y la mantencion del software.
+ 		 cloud: El provedor es responsable del mantenimiento del software.
+ 		 
+ 	Costos: premises: La empresa es responsable de pagar por la infraestructura, licencias e instalacion.
+ 		cloud: Solamente se paga por lo que se usa, por ejemplo el mantenimiento.
+ 		
+ 	Escalabilidad: premises: La escalabilidad tiene un techo que es la infraestructura.
+ 			cloud: La escalabilidad no tiene techo, ya que no depende de una infraestructura.
+ 			
+ 	En conclusion, se utiliza on-premises para empresas que quieran tener el control completo y que tengan los recursos suficientes para sustentar tanto gasto, en cambio cloud, es mucho mas flexible y tiene un menor costo.
+ 	
+Criptografia asimetrica:
+	La criptografia asimetrica es un tipo de cifrado que utliza dos pares de claves matematicamente relacionadas con el objetivo de garantizar la segurdad de la comunicacion.
+	Estas dos pares de claves son:
+		Clave publica: La clave publica es de publico conocimiento, es decir la conocen todos. Se utiliza para poder cifrar mensajes y verificar firmas digitales.
+		Clave privada: La clave privada es secreta y solo es conocida por el propietario. Se utiliza para decifrar mensajes o para general firmas digitales.
+		
+PKI VS PGP
+
+La principal diferencia entre estos dos tipos de implementaciones es la confianza que genera entre las dos partes por el modo que se manejan las claves.
+	Mientras que la PKI utiliza una confianza centralizada, ya que utiliza la CA (Autoridad Certificadora), la PGP utiliza una confianza decentralizada, ya que utiliza la confianzaz entre pares.
+	Mientras que la PKI distribuye sus claves publicas por medio de certificados digitales, la PGP las distribuye de forma manual.
+	
+	
+
+Pods K8S vs Docker
+
+Las principales diferencias entre los pods y los contenedores radican en el proposito que tiene cada uno, en la cantidad de contenedores que se le asignan, la gestion de red, la escalabilidad y el nivel de abstraccion.
+
+	Proposito: Mientras que los contenedores solo ejecutan aplicaciones y servicios, los pods gestionan contenedores relacionados.
+	Cantidad de contenedores: Mientras que los contendores solo tienen uno por instancia, los pods no se limitan a eso, pueden tener mas de uno por instancia.
+	Gestion de red: Mientras que los contenedores tienen una direccion ip por cada contenedor, los pods que estan en el mismo contenedor comparten la misma ip.
+	Escalabilidad: Mientras que los contenedores necesitan herramientas externas, los pods estas herramientas ya estan integradas en Kubernetes.
+	Nivel de abstraccion: Mientras que los contenedores tienen un nivel bajo de abstraccion, los pods tienen un nivel alto.
+	
+RAID
+	Los raid de discos es una tecnologia que combina multiples discos duros en una unidad logica con el fin de mejorar el rendimiento, tolerar fallos o ambos. Existen diferentes tipos de raid, cada uno con sus diferentes formas de almacenar la informacion y proteger los datos.
+	Striping: Los datos se dividen y se distribuyen en diferentes discos para que haya mas rendimiento.
+	Mirroring: Los datos se duplican en todos los discos para protegerlos.
+	Parity: Se almacena la informacion de paridad, con el objetivo que si los discos fallan, se puedan reconstruir los datos.
+	
+	La ventaja que tiene RAID5 es que combino striping con parity, lo que le permitio tener un equilibrio entre capacidad, rendimiento y tolerancia a fallos.
+	
+		Capacidad: Se utiliza el equivalente a un disco para paridad.
+		Rendimiento: El proceso de lectura se puede aprovechar en todos los discos.
+		Tolerancia a fallos: Si los discos fallan se pueden reconstruir los datos, utilizando la informacion de paridad que se almaceno de antemano.
+		
+		
+SSL
+	SSL funciona de la siguente manera, se utiliza criptografia simetrica, criptografia asimetrica y certificados digitales con el objetivo de garantizar la seguridad de la comunicacion.
+	Este proceso tiene dos pasos, la HandShake SSL y la transimcion cifrada de datos.
+		-Handshake SSL consiste en autenticar el servidor y establecer la clave simetrica.
+		-Transmicion cifrada de datos consiste en que los datos se cifran con la clave simetrica antes establecida, lo que genera mas eficiencia ya que, es mas rapida que la clave asimetrica. Y se protejen los datos utilizando hashes criptograficos. 
+		
+		
+Cloud computing
+	Cloud computing es un modelo de prestacion de servicios tecnologicos que permite al usuario acceder a recursos tecnologicos, como almacenamiento, servidores y redes a traves del internet. Los usuarios no tienen la necesidad de tener software ni hadware propios, sino que lo acceden de manera remota, pagando solamente por lo que usan.
+	IaaS: Nos permite tener una infraestructura virtualizada, como almacenamiento, servidores y redes. La ventaja que tiene es que tiene total control sobre la infraestructura, por ejemplo AWS EC2.
+	PaaS: Nos permite tener herramientas para desarrollar, implemetar y gestionar aplicaciones. La ventaja que tiene es que reduce el desarrollo del software, por ejemplo Heroku.
+	SaaS: Nos permite tener aplicaciones listas para usar. La ventaja que tiene es que no hace falta que los usuarios instalen las aplicaciones, por ejemplo Gmail.
+	
+	
+Prometheus y Grafana.
+
+	Prometheus es una herramienta de monitoreo y alertas de codigo abierto. Se utiliza para recopilar y almacenar matricas de tiempo real. Es muy famoso en entornos de infraestructura modernos, como lo son los contenedores y los microservidores.
+	Grafana es una herramienta de visualizacion y analisis de codigo abierto. Se utiliza para crear paneles interactivos basados en datos de distintas fuentes. Es muy famoso para representar metricas de herramientas como por ejemplo Prometheus.
