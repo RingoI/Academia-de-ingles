@@ -1,0 +1,155 @@
+Practica 5
+
+
+A- ¿En qué salas se proyectaron durante el mes pasado películas donde haya actuado "Ricardo Darín"?
+Informar datos del cine y cantidad de butacas de las mismas.
+
+SELECT ci.nombre AS nombre_cine, s.cod_salas, s.num_butacas
+FROM salas s
+JOIN cines ci ON s.cineid = ci.idcine
+JOIN proyecciones p ON s.idsala = p.salaid
+JOIN cartelera c ON p.carteleraid = c.idcartelera
+JOIN peliculas pe ON c.peliculaid = pe.idpelicula
+JOIN actuan a ON pe.idpelicula = a.idpelicula
+JOIN actores acto ON a.idactores = acto.idactores
+WHERE acto.nombre = 'Ricardo' 
+  AND acto.apellido = 'Darin'
+  AND c.fecha BETWEEN '2025-06-01' AND '2025-06-30';
+
+B-Qué proyecciones de que película no tuvieron entradas vendidas? Informar datos del cine, sala y
+fecha de la proyección.
+SELECT c.cod_id,c.email, c.nombre, c.calle, c.ciudad, c.telefono , s.cod_salas, car.fecha
+FROM proyecciones p
+JOIN carteleras car
+	ON p.carteleraid = car.idcartelera
+JOIN peliculas pe
+	ON car.peliculaid = pe.idpelicula
+JOIN salas s
+	ON p.salaid = s.idsala
+JOIN cines c
+	ON s.cineid = c.idcine
+LEFT JOIN entradas e
+	ON p.idproyeccion = e.proyeccion_id
+WHERE e.identrada IS NULL;
+
+C-/*¿Cuál fue el cine que más entradas vendió durante el mes de febrero de 2023?
+*/
+SELECT c.nombre, COUNT(*) AS entradas_vendidas
+FROM cines c
+JOIN salas s
+	ON c.idcine = s.cineid
+JOIN proyecciones p
+	ON s.idsala = p.salaid
+JOIN entradas e
+	ON p.idproyeccion = e.proyeccion_id
+JOIN cartelera car
+	ON p.carteleraid = car.idcartelera
+WHERE car.fecha BETWEEN '01-02-2023' AND '28-02-2023'
+GROUP BY c.nombre
+ORDER BY cantidad_entradas DESC
+LIMIT 1;
+
+D-/*Genere un ranking con cantidad de entradas vendidas por cine durante la proyección del jueves 6 de
+abril de 2023 de la pelicula Titanic
+*/
+SELECT c.idcine, COUNT(*) AS cantidad_entradas
+FROM entradas e
+JOIN proyecciones p
+	ON e.proyeccion_id = p.idproyeccion
+JOIN cartelera car
+	ON p.carteleraid = car.idcartelera
+JOIN peliculas pe
+	ON car.peliculaid = pe.idpelicula
+JOIN salas s
+	ON p.salaid = s.idsala
+JOIN cines c
+	ON s.cineid = c.idcine
+WHERE p.titulo = 'Titanic'
+	AND car.fecha = '06-04-2023'
+GROUP BY c.idcine
+ORDER BY cantidad_entradas DESC;
+
+E-/*
+¿Qué cantidad de empleados del Cine "Abasto" han visto películas en ese mismo cine
+durante marzo de 2023? Informar datos del empleado y fecha de la proyección.
+*/
+SELECT per.dni, per.nombre, per.apellido, car.fecha, COUNT(*) AS cantidad_empleados
+FROM empleados emp
+JOIN personas per
+	ON emp.idpersona = per.idpersona
+JOIN cines c
+	ON emp.cineid = c.idcine
+JOIN salas s
+	ON c.idcine = s.cineid
+JOIN proyecciones pro
+	ON s.idsala = pro.salaid
+JOIN cartelera car
+	ON pro.carteleraid = car.idcartelera
+JOIN peliculas pel
+	ON car.peliculaid = pel.idpelicula
+WHERE c.nombre = 'Abasto'
+	AND car.fecha BETWEEN '01-03-2023' 
+    AND '31-03-2023'
+GROUP BY per.dni, per.nombre, per.apellido, car.fecha;
+
+F-/*
+¿Qué personas vieron todas las películas?durante marzo de 2023? Informar datos del empleado y fecha de la proyección.
+*/
+SELECT per.nombre, per.apellido, per.dni
+FROM persona per
+WHERE NOT EXISTS (
+	SELECT pel.cod_peli
+	FROM peliculas pel
+	EXCEPT 
+	SELECT car.peliculaid
+	FROM entradas e
+	JOIN proyecciones proy ON e.proyeccion_id = proy.idproyeccion
+	JOIN cartelera car ON proy.carteleraid = car.idcartelera
+	WHERE e.clienteid = per.idpersona
+);
+
+G-/*
+Obtener importe recaudado por la película “TItanic”.
+*/
+SELECT pel.titulo, SUM(e.importe) AS total_entradas
+FROM peliculas pel
+JOIN cartelera car
+	ON pel.idpelicula = car.peliculaid
+JOIN proyecciones proy
+	ON car.idcartelera = proy.carteleraid
+JOIN entradas e
+	ON proy.idproyeccion = e.proyeccion_id
+WHERE pel.titulo = 'Titanic'
+GROUP BY pel.titulo;
+
+H-/*
+Informar toda la lista de empleados del cine “Abasto”, con la cantidad de películas vistas en la cadena de cines.
+*/
+SELECT emp.idpersona, COUNT(*) AS cantidad_peliculas
+FROM empleados emp
+JOIN personas per
+	ON emp.idpersona = per.idpersona
+JOIN cines c
+	ON emp.cineid = c.idcine
+LEFT JOIN entradas ent
+	ON per.idpersonas = ent.clienteid
+LEFT JOIN proyecciones proy
+	ON ent.proyeccion_id = proy.idproyecccion
+LEFT JOIN cartelera car
+	ON proy.carteleraid = car.idcartelera
+LEFT JOIN peliculas pel
+	ON car.peliulaid = pel.idpelicula
+WHERE c.nombre = 'Abasto'
+GROUP BY emp.idpersona;
+
+I-/*
+ Actualizar el precio en un 10% de las proyecciones en salas con más de 500 butacas. 
+*/
+UPDATE cartelera c
+SET precio = precio * 1.10
+FROM proyecciones proy
+JOIN salas s
+	ON proy.salaid = s.idsala
+WHERE s.num_butacas > 500
+	AND proy.carteleraid = c.idcartelera; //UNE LO QUE ESTA EN EL UPDATE Y LO QUE ESTA EN EL FROM	
+

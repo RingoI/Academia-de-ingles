@@ -9,6 +9,7 @@ import { cursoStore } from "../../store/cursos.store";
 import { useMemo } from "react";
 import { tareaStore } from "../../store/tarea.store";
 import { authStore } from "../../store/auth.store";
+import AsistenciaCurso from "../../pages/AsistenciaPage.jsx";
 
 function DocenteCursoDetalle() {
   const { id: cursoId } = useParams();
@@ -190,6 +191,16 @@ function DocenteCursoDetalle() {
           }`}
         >
           Alumnos
+        </button>
+        <button
+          onClick={() => setVistaActiva("asistencia")}
+          className={`px-4 py-2 rounded-xl font-semibold transition ${
+            vistaActiva === "asistencia"
+              ? "bg-blue-600 text-white"
+              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+          }`}
+        >
+          Asistencia
         </button>
       </div>
 
@@ -550,6 +561,11 @@ function DocenteCursoDetalle() {
                 ))
               )}
             </div>
+          </section>
+        )}
+        {vistaActiva === "asistencia" && (
+          <section className="bg-slate-900/50 rounded-2xl border mt-10 border-slate-800 p-6 shadow-2xl h-[650px] overflow-y-scroll flex flex-col transition-all hover:border-slate-700/50">
+            <AsistenciaCurso cursoId={cursoId} />
           </section>
         )}
       </main>

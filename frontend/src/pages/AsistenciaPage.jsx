@@ -1,18 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
 import { authStore } from "../store/auth.store";
-import {
-  Save,
-  ArrowLeft,
-  History,
-  Calendar,
-  Search,
-  UserCheck,
-} from "lucide-react";
-import axios from "axios";
+import { Save, History, Calendar, Search, UserCheck } from "lucide-react";
+import { axiosInstance } from "../utils/axios";
 
-function AsistenciaPage() {
-  const { cursoId } = useParams();
+function AsistenciaCurso({ cursoId }) {
   const [nombreCurso, setNombreCurso] = useState("Cargando...");
   const [alumnos, setAlumnos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
@@ -24,21 +15,15 @@ function AsistenciaPage() {
     const cargarDatos = async () => {
       setCargando(true);
       try {
-        const tokenDelStore = authStore.getState().token;
-
-        if (!tokenDelStore || tokenDelStore === "null") {
-          setCargando(false);
-          return;
-        }
+        const tokenDelStore =
+          authStore.getState().token || localStorage.getItem("token");
 
         const config = {
           headers: { Authorization: `Bearer ${tokenDelStore}` },
         };
-
         // 1. Cargamos los alumnos
-        const resAlumnos = await axios.get(
-          `http://localhost:8082/cursos/${cursoId}/alumnos`,
-          config,
+        const resAlumnos = await axiosInstance.get(
+          `/cursos/${cursoId}/alumnos`,
         );
 
         const listaAlumnos = resAlumnos.data.data || [];
@@ -53,9 +38,8 @@ function AsistenciaPage() {
 
         // 3. Cargamos el historial
         try {
-          const resHistorial = await axios.get(
-            `http://localhost:8082/asistencias/curso/${cursoId}`,
-            config,
+          const resHistorial = await axiosInstance.get(
+            `/asistencias/curso/${cursoId}`,
           );
           const datosHistorial = resHistorial.data.data || [];
           setHistorial(agruparHistorial(datosHistorial));
@@ -116,9 +100,8 @@ function AsistenciaPage() {
   const cargarHistorial = async () => {
     try {
       const tokenDelStore = authStore.getState().token;
-      const resHistorial = await axios.get(
-        `http://localhost:8082/asistencias/curso/${cursoId}`,
-        { headers: { Authorization: `Bearer ${tokenDelStore}` } },
+      const resHistorial = await axiosInstance.get(
+        `/asistencias/curso/${cursoId}`,
       );
       const datosHistorial = resHistorial.data.data || [];
       setHistorial(agruparHistorial(datosHistorial));
@@ -140,11 +123,7 @@ function AsistenciaPage() {
         })),
       };
 
-      const res = await axios.post(
-        "http://localhost:8082/asistencias/lote",
-        dataParaEnviar,
-        { headers: { Authorization: `Bearer ${tokenDelStore}` } },
-      );
+      const res = await axiosInstance.post("/asistencias/lote", dataParaEnviar);
 
       if (res.status === 200 || res.status === 201) {
         alert("¡Asistencia guardada correctamente!");
@@ -158,18 +137,8 @@ function AsistenciaPage() {
   };
 
   return (
-    <div className="h-full w-full p-6 text-white bg-[#0c1224] min-h-screen">
-      <Link
-        to={`/cursos/${cursoId}`}
-        className="flex items-center gap-2 text-slate-400 hover:text-[#06b6d4] transition-colors mb-6 group"
-      >
-        <ArrowLeft
-          size={20}
-          className="group-hover:-translate-x-1 transition-transform"
-        />
-        <span>Volver al Curso</span>
-      </Link>
-
+    <div className="text-white">
+      {" "}
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-[2]">
           <div className="mb-6 flex justify-between items-end">
@@ -314,4 +283,4 @@ function AsistenciaPage() {
   );
 }
 
-export default AsistenciaPage;
+export default AsistenciaCurso;

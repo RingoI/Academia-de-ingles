@@ -1,0 +1,374 @@
+Parcial 2024
+Consultas
+
+A-/*
+Listado de clientes que hayan realizado al menos una reserva durante el año 2024
+*/
+SELECT DISTINCT c.nombre, c.documento 
+FROM clientes c
+JOIN reservas r
+	ON c.cliente_id = r.cliente_id
+WHERE r.fecha_inicio = '01-01-2024'
+	AND r.fecha_fin = '31-12-2024';
+	
+B-/*
+Liste los paquetes turísticos que hayan sido reservados y que requieran pasaporte.
+*/
+SELECT pt.nombre
+FROM paquetes_turisticos pt
+JOIN tipo_paquete tp
+	ON pt.tipo_paquete_id = tp.tipo_paquete_id
+JOIN reservas_paquetes rp
+	ON pt.paquete_id = rp.paquete_id
+WHERE tp.requiere_pasaporte = TRUE;
+
+C-/*
+Obtenga un listado de paquetes turísticos, informando nombre, descripción, tipo y descripción de tipo, que fueron reservados con servicios adicionales.
+*/
+SELECT DISTINCT pt.nombre, pt.descripcion, pt.tipo_paquete, tp.descripcion 
+FROM paquetes_turisticos pt
+JOIN tipo_paquete tp
+	ON pt.tipo_paquete_id = tp.tipo_paquete_id
+JOIN reservas_paquetes  rp
+	ON pt.paquete_id = rp.paquete_id
+JOIN reservas r
+	ON rp.reserva_id = r.reserva_id
+JOIN reservas_servicions rs
+	ON r.reserva_id = rs.reserva_id
+JOIN servicios_adicionales sa
+	ON rs.servicio_id = sa.servicio_id;
+
+D-/*
+Obtenga un listado de aquellos clientes que hayan reservado todos los paquetes turísticos al menos una vez.
+*/
+
+SELECT c.cliente_id, c.nombre, COUNT(DISTINCT pt.paquete_id) AS cantidad_paquetes
+FROM clientes c
+JOIN reservas r ON c.cliente_id = r.cliente_id
+JOIN reservas_paquetes rp ON r.reserva_id = rp.reserva_id
+JOIN paquetes_turisticos pt ON rp.paquete_id = pt.paquete_id
+GROUP BY c.cliente_id, c.nombre
+HAVING COUNT(DISTINCT pt.paquete_id) = (
+	SELECT COUNT(*) FROM paquetes_turisticos
+);
+
+E-/*
+Obtenga un listado de los servicios adicionales que nunca fueron reservados.
+*/
+
+SELECT sa.nombre
+FROM servicios_adicionales sa
+LEFT JOIN reserva_servicios rs
+	ON sa.servicio_id = rs.servicio_id
+LEFT JOIN reservas r
+	ON rs.reserva_id = r.reserva_id
+WHERE sa.servicio_id IS NULL;
+
+E-/*
+Informe la cantidad de clientes con reservas confirmadas durante el año 2023 para cada paquete turístico.
+*/
+
+SELECT c.nombre, COUNT(DISTINCT c.cliente_id) AS cantidad_clientes
+FROM clientes c
+JOIN reservas r
+	ON c.cliente_id = r.cliente_id
+JOIN reserva_paquetes rp
+	ON r.reserva_id = rp.reserva_id
+JOIN paquetes_turisticos pt
+	ON rp.paquete_id = pt_paquete_id
+WHERE r.fecha_inicio = '01-01-2023'
+	AND r.fecha_fin = '31-12-2023'
+    AND r.estado_reserva = 'C'
+GROUP BY c.nombre;
+
+F-/*
+Obtenga un listado del cliente y el paquete turístico siempre que el cliente NO tenga pasaporte y el paquete lo requiera.
+*/
+
+SELECT c.cliente_id, pt.paquete_id
+FROM cliente c
+JOIN reservas r
+	ON c.cliente_id = r.cliente_id
+JOIN reserva_paquetes rp
+	ON r.reserva_id = rp.reserva_id
+JOIN paquetes_turisticos pt
+	ON rp.paquete_id = pt_paquete_id
+JOIN tipo_paquete tp
+	ON pt.tipo_paquete_id = tp.tipo_paquete_id
+WHERE c.pasaporte = 'N'
+	AND tp.requiere_pasaporte = TRUE;
+	
+G-/*
+informar datos de los clientes que han reservado en el 2do semestre de 2024 los paquetes
+"LAGOS ARGENTINOS" y "EL FARO DEL FIN DEL MUNDO".
+*/
+
+SELECT c.nombre, c.documento, c.telefono, c.pasaporte
+FROM clientes c
+JOIN reservas r
+	ON c.cliente_id = r.cliente_id
+JOIN reserva_paquetes rp
+	ON r.reserva_id = rp.reserva_id
+JOIN paquetes_turisticos pt
+	ON rp.paquete_id = pt.paquete_id
+WHERE pt.nombre IN ('LAGOS ARGENTINOS', 'EL FARO DEL FIN DEL MUNDO')
+	AND r.fecha_inicio = '01-07-2024'
+    AND r.fecha_fin = '31-12-2024';
+    
+    
+Recuperatorio 2024
+
+A-/*
+ Genere un listado de usuarios (con todos sus datos) que hayan tenido actividad durante la última semana.
+*/
+
+SELECT u.nombreapellido, u.email, u.password, u.fecha_registro
+FROM usuarios u
+JOIN actividades a
+	ON u.id_usuario = a.usuarioid
+WHERE a.fecha >= CURRENT_DATE - INTERVAL '7 days';
+
+B-/*
+Obtenga un listado de contenidos lanzados durante el 2023 que contenga actores premiados agrupados por país. Mostrar información del contenido y la nacionalidad.
+*/
+
+SELECT c.titulo, c.descripcion,n.descripcion, COUNT(DISTINCT c.idcontenido) AS total_contenidos
+FROM contenidos c
+JOIN actividades a
+	ON c.idcontenido = a.contenidoid
+JOIN usuarios u
+	ON a.usuarioid = u.id_usuario
+JOIN nacionalidades n
+	ON u.nacionalidad_id = n.idnacionalidad
+JOIN repartos r
+	ON c.idcontenido = r.contenidoid
+JOIN actores ac
+	ON r.actorid = ac.idactor
+WHERE c.fecha_lanzamiento BETWEEN '01-01-2023' AND '31-12-2023'
+	AND ac.premiado = 'S'
+GROUP BY c.titulo, c.descripcion,n.descripcion;
+
+C-/*
+Indique un listado de los usuarios que hayan visto todos los estilos.
+*/
+
+SELECT u.*, COUNT(DISTINCT e.idestilo) AS cantidad_estilos
+FROM usuarios u
+JOIN actividades a
+    ON u.id_usuario = a.usuarioid
+JOIN contenidos c
+    ON a.contenidoid = c.idcontenido 
+JOIN estilos e
+    ON c.estilo = e.idestilo
+GROUP BY u.id_usuario
+HAVING COUNT(DISTINCT e.idestilo) = (
+    SELECT COUNT(*) FROM estilos
+);
+
+
+D-/*
+ Muestre los contenidos (título y estilo) que fueron vistos por usuarios que tienen nacionalidad ‘Argentina’.
+*/
+
+SELECT c.titulo, e.estilo
+FROM contenidos c
+JOIN actividades a
+	ON c.idcontenido = a.contenidoid
+JOIN usuarios u
+	ON a.usuarioid = u.id_usuario
+JOIN nacionalidades n
+	ON u.nacionalidad_id = n.idnacionalidad
+JOIN estilos e
+	ON c.estilo = e.idestilo
+WHERE n.descripcion = 'ARGENTINA';
+
+E-/*
+ Obtener la cantidad de contenidos por estilo que hayan sido vistos por más de 5 usuarios distintos.
+*/
+
+SELECT e.descripcion AS estilo, COUNT(*) AS cantidad_contenidos
+FROM contenidos c
+JOIN estilos e ON c.estilo = e.idestilo
+WHERE c.idcontenido IN (
+    SELECT contenidoid
+    FROM actividades
+    GROUP BY contenidoid
+    HAVING COUNT(DISTINCT usuarioid) > 5
+)
+GROUP BY e.descripcion;
+
+
+F-/*
+Listar los contenidos que hayan sido vistos por algún usuario en su mes de cumpleaños.
+*/
+
+SELECT c.titulo 
+FROM contenidos c
+JOIN actividades a
+	ON c.idcontenido = a.contenidoid
+JOIN usuarios u
+	ON a.usuarioid = u.id_usuario
+WHERE EXTRACT(MONTH FROM a.fecha) = EXTRACT(MONTH FROM u.fecha_nacimiento);
+
+
+E-/*
+Listar contenidos(titulo y fecha de lanzamiento) con la cantidad de usuarios con actividades sobre, cada uno, para aquellos que tengan mas de 
+10.000 usuarios 
+*/
+
+SELECT c.titulo, c.fecha_lanzamiento, COUNT(DISTINCT u.idusuario) AS cantidad_usuarios
+FROM contenidos c
+JOIN actividades a
+	On c.idcontenido = a.contenidoid
+JOIN usuarios u
+	ON a.usuarioid = u.id_usuario 
+GROUP BY c.titulo, c.fecha_lanzamiento
+HAVING COUNT(DISTINCT u.idusuario) > 10000;
+
+F-/*
+Calcular el porcentaje de los usuarios que prefieren el estilo de terror
+*/
+
+SELECT u.id_usuario, AVG(DISTINCT u.id_usuario) AS Promedio_usuarios }
+FROM usuarios u
+JOIN preferencias p
+	ON u.id_usuario = p.usuarioid
+JOIN estilos e
+	ON p.estilo = e.idestilo
+JOIN contenidos c
+	ON e.idestilo = c.estilo
+WHERE c.descripcion = 'Terror';
+
+G-/*
+Obtener el usuario (nombre, apellido, nacionalidad) con mayor actividad
+*/
+
+
+CREATE VIEW actividades_por_usuarios AS
+SELECT u.nombreapellido, n.descripcion, COUNT(*) AS cantidad_actividad
+FROM usuarios u
+JOIN nacionalidad n
+	ON u.nacionalidad_id = n.idnacionalidad
+JOIN actividades a
+	ON u.usuario_id = a.idusuario
+GROUP BY u.nombreapellido, n.descripcion;
+
+SELECT *
+FROM actividades_por_usuarios 
+WHERE cantidad_actividad = (
+	SELECT MAX(COUNT(cantidad_actividad))
+    FROM actividades_por_usuarios
+);
+
+Consultas totalizador
+A-
+/*
+Listar la cantidad de pedidos realizados por cada cliente durante el ultimo mes 
+*/
+
+SELECT c.idcliente, COUNT(*) AS cantidad_pedidos
+FROM pedidos p
+JOIN clientes c ON p.cliente = c.idcliente
+WHERE p.fecha >= CURRENT_DATE - INTERVAL '30 days'
+GROUP BY c.idcliente;
+
+
+B-/*
+Genere un listado de los clientes que hayan pedido todos los helados
+*/
+
+SELECT c.idcliente, COUNT(DISTINCT h.idhelado)AS Cantidad_helados
+FROM clientes c
+JOIN pedidos p
+	ON c.idcliente = p.cliente 
+JOIN contiene con
+	ON p.idpedido = con.pedido_id
+JOIN helados h
+	ON con.helado_id = h.idhelado
+JOIN compone com
+	ON h.idhelado = com.helado_id
+JOIN gustos g
+	ON com.gusto_id = g.idgusto
+GROUP BY c.idcliente
+HAVING COUNT(DISTINCT h.idhelado)	 = (
+	SELECT COUNT(*)
+    FROM clientes
+);
+
+C-
+/*
+Informe nombre, apellido, dni del repartidor/es que entregar la mayor cantidad de pedidos 
+*/
+
+SELECT emp.nombre, emp.apellido, emp.dni, COUNT(*) AS cantidad_pedidos
+FROM repartidores r
+JOIN empleados emp ON r.idrepartidor = emp.idempleado
+JOIN pedidos p ON r.idrepartidor = p.repartidor
+GROUP BY emp.idempleado, emp.nombre, emp.apellido, emp.dni
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+);
+
+D-/*
+Informe nombre y descripcion de los gustos no solicitados durante el ultimo mes
+*/
+
+SELECT g.nombre_g, g.descripcion 
+FROM gustos g
+LEFT JOIN compone com
+	ON g.idgusto = com.gusto_id
+LEFT JOIN helados h
+	ON com.helado_id = h.idhelado
+LEFT JOIN contiene con
+	ON h.idhelado = con.helado_id
+LEFT JOIN pedidos pe
+	ON con.pedido_id = pe.idpedido
+WHERE p.idpedido IS NULL
+	AND pe.fecha >= CURRENT_DATE - INTERVAL '30 days';
+	
+E-/*
+Informe el nombre y el mail de los clietnes que han solicitado helados de gusto "chocolate" y "frutila"
+*/
+SELECT c.nombre, c.email, COUNT(DISTINCT g.descripcion) AS Cantidad_gustos
+FROM clientes c
+JOIN pedidos p
+	ON c.idcliente = p.cliente
+JOIN contiene con
+	ON p.idpedido = con.pedido_id
+JOIN helados h
+	ON con.helado_id = h.idhelado
+JOIN compone com
+	ON h.idhelado = com.helado_id
+JOIN gustos g
+	ON com.gusto_id = g.idgusto
+WHERE g.descripcion IN ('Chocolate' , 'Frutilla')
+GROUP BY c.nombre, c.email
+HAVING COUNT(DISTINCT g.descripcion) = 2;
+
+F-/*
+Empleados que sean repartidores y administrativos
+*/
+SELECT e.nombre, e.apellido, e.dni
+FROM empleados e
+JOIN administrativos a ON e.idempleado = a.idadmin
+
+INTERSECT
+
+SELECT e.nombre, e.apellido, e.dni
+FROM empleados e
+JOIN repartidores r ON e.idempleado = r.idrepartidor;
+
+
+G-/*
+Listar nombre, apellido y dni de los administrativos con la cantidad de pedidos atendidos (tengan o no pedidos) durante el primer trimestre del año 
+*/
+
+SELECT emp.nombre, emp.apellido, emp.dni, COUNT(DISTINCT p.idpedidos) AS cantidad_pedidos
+FROM administrativos admi
+JOIN empleados emp
+	ON admi.idadmin = emp.idempleado
+JOIN pedidos p
+	ON admi.idamdmin = p.empleado_administrativo 
+WHERE p.fehca BETWEEN '01-01-2025' AND '31-03-2025'
+GROUP BY emp.nombre, emp.apellido, emp.dni;
+

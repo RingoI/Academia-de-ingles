@@ -13,7 +13,7 @@ import AlumnoCursoDetalle from "./pages/cursos/AlumnoCursoDetalle";
 import DocenteCursoDetalle from "./pages/cursos/DocenteCursoDetalle";
 import DocenteTareaDetalle from "./pages/cursos/DocecnteTareaDetalle";
 import AvisosPage from "./pages/AvisosPage";
-
+import AsistenciaPage from "./pages/AsistenciaPage";
 function App() {
   return (
     <Routes>
