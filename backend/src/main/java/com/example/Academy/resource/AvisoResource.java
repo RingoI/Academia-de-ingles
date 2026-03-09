@@ -35,8 +35,8 @@ public class AvisoResource {
 	private CursoRepository cursoRepository;
 
 	@PostMapping
-	@PreAuthorize("hasRole('DOCENTE') or hasRole('ADMIN')")
-	public ResponseEntity<Aviso> crearAviso(@RequestBody AvisoRequestDTO avisoDTO, Authentication auth){
+  	@PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
+  	public ResponseEntity<Aviso> crearAviso(@RequestBody AvisoRequestDTO avisoDTO, Authentication auth){
 		Persona persona = personaRepository.findByUsername(auth.getName())
 							.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
