@@ -5,6 +5,9 @@ import TablaTareasAlumno from "../../components/TablaTareasAlumnos";
 import { authStore } from "../../store/auth.store";
 import HistorialEntregasAlumno from "../../components/HistorialEntregasAlumno";
 import { materialStore } from "../../store/material.store";
+import ForoCurso from "../../components/foro/ForoCurso";
+import { cursoStore } from "../../store/cursos.store";
+
 import {
   ArrowLeft,
   BookOpen,
@@ -12,6 +15,7 @@ import {
   File,
   FileDown,
   ClipboardList,
+  Users,
 } from "lucide-react";
 function AlumnoCursoDetalle() {
   const { id } = useParams();
@@ -27,8 +31,8 @@ function AlumnoCursoDetalle() {
   const [vistaActiva, setVistaActiva] = useState("materiales");
 
   useEffect(() => {
-    obtenerArchivosPorCurso(id);
     obtenerCursoPorId(id);
+    obtenerArchivosPorCurso(id);
   }, []);
 
   return (
@@ -177,6 +181,12 @@ function AlumnoCursoDetalle() {
 
             <HistorialEntregasAlumno alumnoId={idUsuario} />
           </section>
+        )}
+
+        {/* TAB FORO */}
+
+        {vistaActiva === "foro" && (
+          <div>{cursoPorId && <ForoCurso cursoId={cursoPorId.id} />}</div>
         )}
       </main>
     </div>

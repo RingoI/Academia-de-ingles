@@ -22,7 +22,7 @@ function ExamenesPage() {
 				</div>
 			</header>
 
-			<div className="border-b border-slate-400 mt-6 mb-10"></div>
+			<div className="border-b border-slate-400 mt-2 mb-8"></div>
 
 			<div className={`${abrirFormulario ? "fixed inset-0 ml-60" : "hidden"} z-10 flex items-center justify-center bg-black/50`}>
 				<FormularioMaterial idUsuario={idUsuario} setAbrirFormulario={setAbrirFormulario} />

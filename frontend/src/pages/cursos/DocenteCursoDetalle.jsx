@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { entregaStore } from "../../store/entrega.store";
-import { ArrowLeft, FileDown, CheckCircle } from "lucide-react";
+import { ArrowLeft, FileDown, CheckCircle, Users } from "lucide-react";
 import { materialStore } from "../../store/material.store";
 import { File } from "lucide-react";
 import { BookOpen } from "lucide-react";
@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { tareaStore } from "../../store/tarea.store";
 import { authStore } from "../../store/auth.store";
 import AsistenciaCurso from "../../pages/AsistenciaPage.jsx";
+import ForoCurso from "../../components/foro/ForoCurso";
 
 function DocenteCursoDetalle() {
   const { id: cursoId } = useParams();
@@ -203,6 +204,17 @@ function DocenteCursoDetalle() {
           Asistencia
         </button>
       </div>
+
+      <button
+        onClick={() => setVistActiva("foro")}
+        className={`pb-2 font-semibold ${
+          tabActiva === "foro"
+            ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+            : "text-slate-400 hover:text-white"
+        }`}
+      >
+        Foro
+      </button>
 
       <main className="max-w-7xl mx-auto gap-10">
         {/* ARCHIVOS DOCENTE */}
@@ -567,6 +579,11 @@ function DocenteCursoDetalle() {
           <section className="bg-slate-900/50 rounded-2xl border mt-10 border-slate-800 p-6 shadow-2xl h-[650px] overflow-y-scroll flex flex-col transition-all hover:border-slate-700/50">
             <AsistenciaCurso cursoId={cursoId} />
           </section>
+        )}
+
+        {/* TAB FORO */}
+        {tabActiva === "foro" && (
+          <div>{cursoPorId && <ForoCurso cursoId={cursoPorId.id} />}</div>
         )}
       </main>
     </div>

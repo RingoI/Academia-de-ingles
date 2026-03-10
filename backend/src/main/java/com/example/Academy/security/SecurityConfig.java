@@ -59,7 +59,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         
         // Métodos permitidos
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         
         // IMPORTANTE: En lugar de "*", seamos específicos con los headers
         configuration.setAllowedHeaders(List.of(
@@ -170,7 +170,17 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/files/download/**")
                     .authenticated()
 
-                
+                // FORO
+                // =========================
+                .requestMatchers(HttpMethod.GET, "/foro/**")
+                    .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
+                .requestMatchers(HttpMethod.POST, "/foro/**")
+                    .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
+                .requestMatchers(HttpMethod.DELETE, "/foro/**")
+                    .hasAnyRole("ADMIN", "DOCENTE")
+                .requestMatchers(HttpMethod.PATCH, "/foro/**")
+                    .hasAnyRole("ADMIN", "DOCENTE")
+
                 //EXÁMENES
                 // =========================
                 .requestMatchers(HttpMethod.POST, "/examenes/**")
@@ -231,7 +241,6 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.DELETE, "/materiales/**")
                     .hasAnyRole("ADMIN", "DOCENTE")
-
 
                 // MERCADO PAGO
                 // =========================
