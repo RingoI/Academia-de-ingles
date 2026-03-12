@@ -1,0 +1,23 @@
+Modelo Logico
+
+Desiciones
+-Atributos derivados. Se decide, si dejarlo o no, porque atenta con la minimalidad
+	-Lo podemos dejar solamente si lo usamos mucho
+	-Lo sacamos cuando lo usamos poco
+-Ciclo de relaciones. Nos fijamos si es relevante, ya que tambien atenta con la minimalidad
+	-Debe haber como minimo 3 entidades, para que haya un ciclo
+	-Cuando puedo llegar por dos caminos o mas, esta atentando contra la minimalidad.
+	-Pero si llegamos a usar mucho ambos caminos, se deja, sino se saca.
+-Atributos compuestos.Se convierten
+	-Se pone solo un atributo que represente la suma de todos los simples.
+	-Se saca el atributo que representa todo, y se deja todos los simples.
+	-Se crea una nueva entidad.
+-Atributos polivalentes.Se convierten
+	-Se crea una nueva entidad, con la cardinalidad del mismo.
+-Jerarquias. Se convierten
+	-Se elimina a los hijos: Se pasan los atributos a los padres como opcionales, se pone un atributo, como por ejemplo, categoria. Para distinguir mas que nada.
+	-Se elimina el padre: Se pasan los atributos del padre a los hijos.
+	-Se convierte en una relacion es_un.
+
+
+

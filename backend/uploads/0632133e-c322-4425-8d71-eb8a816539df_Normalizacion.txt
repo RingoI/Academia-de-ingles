@@ -1,0 +1,96 @@
+Normalizacion
+
+Dependencia funcional
+-Una dependencia funcional es una restriccion entre dos conjuntos de atributos de una misma tabla.
+-Formalmente x----y , esto quiere decir que x es un atributo de la tabla e y es otro atributo de esa tabla, que depende del otro. 
+- Entonces cuando decimos que x ---- y, estamos diciendo que con tener el valor de x, podemos saber el valor de y
+Por ejemplo: Tenemos dni, que es una PC porque no se repite el valor, podemos decir que dni es x, e y depende de x, osea que podemos saber el nombre de una persona, si tuvieramos el dni(x----y). Pero ahora nos vamos a hacer esta pregunta, y----x?
+Solamente y ----- x si y solo si y es clave univoca.
+
+Dependencia funcional completa
+-B depende completamente funcional de A si y solo si B depende de A pero de ningun subconjunto de A
+A----B = (nro_empl,nro_proy) ----- nombre_empleado  esta no lo es, porque depende del par, si lo separo se sigue cumpliendo
+						    es decir (nro_em) ---- normbre_empleado
+							     (nro:pry)------ nombre_empleado depende de A y de un subconjunto
+	 (nro_empl) ------ nombre_empleado        esta es completa
+
+Dependencia funcional parcial
+-Es cuando tenemos un atributo que puede eliminarse y todavia que siga existiendo la dependencia funcional
+A----B  (nro_empl,nro_pry) ------ nombre esta es parcial, ya que si eliminamos un atributo, la dependencia se sigue cumpliend
+	(nro_empl) ------nombre Esta como habiamos visto es completa
+
+
+Dependencia funcional transitiva
+
+A---B , B----C entonces A----C
+El problema que deja es que repite informacion
+
+Normalizacion
+-Es una tecnica de modelado de la base de datos que estudia las dependencias funcionales. Lo que se asegura la normalizacion es revisar todas las tablas para verificar que todas tengan dependencias funcionales completas para que no se repita informacion
+-Se puede usar en cualquier etapa del modelado
+-Es un proceso incremental, cada vez mas restrictivo
+
+Formas normales
+-1FN va siempre
+-2FN va, pero depende de nuestro problema
+-3FN va, pero depende de nuestro problema
+
+1FN: Estara en 1ra forma normal, si y solo si, no tiene atributos polivalentes
+2FN: Estara en 2da forma normal, si y solo si, no tiene dependencias parciales
+3FN: Estara en 3ra forma normal, si y solo si, no hay dependencias transitivas
+Boyce Codd: Estara en Boyce Codd, si y solo si, el determinante es una clave candidata, es decir x es clave primaria
+
+Nosotros podemos decidir si dejarla en 3FN o BCNF 
+
+3FN                       BCNF
+
+-Mantengo el control	 -Evita redundancias	 	
+-Repite informacion	 -Pierdo una CC
+
+Para que este en BCNF tengo que sacrificar algo, evito redundancias, pero pierdo el control al perder una CC
+
+Dependencias multivaluadas
+
+A _____------_____ B Esto quiere decir que A multidetermina B y A______------______ C
+
+Ejemplo, una fecha de nacimiento multidetermina nombre de personas, ya que en un dia del año pudieron nacer 50 millones personas
+
+No es un problema una dependencia multivaluada, mientras no se nos vaya de las manos 
+
+4FN
+-Estara en 4FN si esta en BCNF o en 3FN
+-Solo exiten dependencias multivaluadas triviales
+
+5FN
+-Estara en 5FN si es en 4FN
+-Si no existen dependencias de combinacion
+Solamente hay problema con relaciones ternarias o de rango superior, por eso casi nunca tenemos problemas
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

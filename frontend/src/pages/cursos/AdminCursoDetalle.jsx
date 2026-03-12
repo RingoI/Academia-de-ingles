@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { CursosService } from "../../utils/CursosService";
-import { Search, ArrowLeft, CheckCircle, Users, UserPlus, BookOpen, Trash2, X } from "lucide-react";
+import {
+  Search,
+  ArrowLeft,
+  CheckCircle,
+  Users,
+  UserPlus,
+  BookOpen,
+  Trash2,
+  X,
+} from "lucide-react";
 import ForoCurso from "../../components/foro/ForoCurso";
 
 function AdminCursoDetalle() {
@@ -124,23 +133,19 @@ function AdminCursoDetalle() {
     );
 
   return (
-      <> 
+    <>
       {/* HEADER */}
       <header className="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-
         <div className="mb-1">
           <h1 className="font-semibold text-3xl text-slate-400">
             {curso.nombre}
           </h1>
 
-          <p className="text-slate-400">
-            Gestión del curso
-          </p>
+          <p className="text-slate-400">Gestión del curso</p>
         </div>
 
         {/* CUPO */}
         <div className="flex items-center gap-3 bg-slate-900/50 border border-slate-800 px-4 py-2 rounded-xl">
-          
           <div className="text-right">
             <p className="text-[10px] text-slate-500 uppercase tracking-widest">
               Cupo
@@ -155,16 +160,13 @@ function AdminCursoDetalle() {
           <div className="w-9 h-9 bg-blue-500/10 rounded-lg flex items-center justify-center text-blue-500">
             <Users size={18} />
           </div>
-
         </div>
-
       </header>
 
       <div className="border-b border-slate-400 mt-2 mb-6"></div>
 
       {/* TABS */}
       <div className="flex gap-6 border-b border-slate-700 mt-6 mb-8">
-
         <button
           onClick={() => setTabActiva("alumnos")}
           className={`pb-2 font-semibold ${
@@ -197,141 +199,134 @@ function AdminCursoDetalle() {
         >
           Foro
         </button>
-
-</div>
+      </div>
 
       <main className="max-w-7xl mx-auto gap-10">
-
-          {/* TAB ALUMNOS */}
-          {tabActiva === "alumnos" && (
-
+        {/* TAB ALUMNOS */}
+        {tabActiva === "alumnos" && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-
-
-              {/* --- 1. ALUMNOS INSCRITOS --- */}
-              <section className={cardContainer}>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400 border border-emerald-500/20 text-emerald-400">
-                    <CheckCircle size={22} />
-                  </div>
-                  <h2 className="text-xl font-bold tracking-tight text-white">
-                    Alumnos inscritos
-                  </h2>
+            {/* --- 1. ALUMNOS INSCRITOS --- */}
+            <section className={cardContainer}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400 border border-emerald-500/20 text-emerald-400">
+                  <CheckCircle size={22} />
                 </div>
+                <h2 className="text-xl font-bold tracking-tight text-white">
+                  Alumnos inscritos
+                </h2>
+              </div>
 
-                <div className="relative mb-4">
-                  <Search
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
-                    size={18}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Buscar alumno inscrito..."
-                    value={busquedaInscritos}
-                    onChange={(e) => setBusquedaInscritos(e.target.value)}
-                    className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/40 outline-none text-white"
-                  />
-                </div>
+              <div className="relative mb-4">
+                <Search
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+                  size={18}
+                />
+                <input
+                  type="text"
+                  placeholder="Buscar alumno inscrito..."
+                  value={busquedaInscritos}
+                  onChange={(e) => setBusquedaInscritos(e.target.value)}
+                  className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/40 outline-none text-white"
+                />
+              </div>
 
-                <div className={scrollArea}>
-                  {alumnosInscritosFiltrados?.length === 0 ? (
-                    <div className="h-full flex flex-col items-center justify-center text-slate-600 border-2 border-dashed border-slate-800/50 rounded-2xl">
-                      <div className="h-full flex flex-col items-center justify-center text-slate-500">
-                        <Users size={80} className="mb-3 opacity-30" />
-                        <p className="text-sm font-medium">
-                          Aún no hay estudiantes en este curso
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    alumnosInscritosFiltrados?.map((alumno, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all"
-                      >
-                        <div className="flex items-center gap-4">
-                          <span className="text-slate-200 font-medium">
-                            {alumno.nombre || alumno}
-                          </span>
-                        </div>
-                        <button
-                          onClick={() => manejarDesvincularAlumno(alumno.id)}
-                          className="p-0 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
-                          title="Desvincular alumno"
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </section>
-
-              {/* --- 2. ASIGNAR ALUMNOS --- */}
-              <section className={cardContainer}>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2.5 bg-blue-500/10 rounded-xl text-blue-400 border border-blue-500/20 text-blue-400">
-                    <UserPlus size={22} />
-                  </div>
-                  <h2 className="text-xl font-bold tracking-tight text-white">
-                    Inscribir alumnos
-                  </h2>
-                </div>
-
-                <div className="relative mb-4">
-                  <Search
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
-                    size={18}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Buscar alumno sin curso..."
-                    value={busqueda}
-                    onChange={(e) => setBusqueda(e.target.value)}
-                    className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-blue-500/40 outline-none text-white"
-                  />
-                </div>
-                <div className={scrollArea}>
-                  {cupoCompleto ? (
-                    <div className="h-full flex flex-col items-center justify-center text-red-400">
-                      <Users size={80} className="mb-4 opacity-60" />
-                      <p className="text-sm font-medium">Cupo Completo</p>
-                    </div>
-                  ) : alumnosFiltrados.length === 0 ? (
+              <div className={scrollArea}>
+                {alumnosInscritosFiltrados?.length === 0 ? (
+                  <div className="h-full flex flex-col items-center justify-center text-slate-600 border-2 border-dashed border-slate-800/50 rounded-2xl">
                     <div className="h-full flex flex-col items-center justify-center text-slate-500">
                       <Users size={80} className="mb-3 opacity-30" />
                       <p className="text-sm font-medium">
-                        No hay alumnos disponibles
+                        Aún no hay estudiantes en este curso
                       </p>
                     </div>
-                  ) : (
-                    alumnosFiltrados.map((alumno) => (
-                      <div
-                        key={alumno.id}
-                        className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all"
-                      >
+                  </div>
+                ) : (
+                  alumnosInscritosFiltrados?.map((alumno) => (
+                    <div
+                      key={alumno.id}
+                      className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 group transition-all"
+                    >
+                      <div className="flex items-center gap-4">
                         <span className="text-slate-200 font-medium">
-                          {alumno.nombre}
+                          {alumno.nombre || alumno}
                         </span>
-                        <button
-                          onClick={() => manejarAsignarAlumno(alumno.id)}
-                          className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase transition-all"
-                        >
-                          Inscribir
-                        </button>
                       </div>
-                    ))
-                  )}
+                      <button
+                        onClick={() => manejarDesvincularAlumno(alumno.id)}
+                        className="p-0 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                        title="Desvincular alumno"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
+
+            {/* --- 2. ASIGNAR ALUMNOS --- */}
+            <section className={cardContainer}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 bg-blue-500/10 rounded-xl text-blue-400 border border-blue-500/20 text-blue-400">
+                  <UserPlus size={22} />
                 </div>
-              </section>
+                <h2 className="text-xl font-bold tracking-tight text-white">
+                  Inscribir alumnos
+                </h2>
+              </div>
 
-        </div>
-
+              <div className="relative mb-4">
+                <Search
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+                  size={18}
+                />
+                <input
+                  type="text"
+                  placeholder="Buscar alumno sin curso..."
+                  value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                  className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-3.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-blue-500/40 outline-none text-white"
+                />
+              </div>
+              <div className={scrollArea}>
+                {cupoCompleto ? (
+                  <div className="h-full flex flex-col items-center justify-center text-red-400">
+                    <Users size={80} className="mb-4 opacity-60" />
+                    <p className="text-sm font-medium">Cupo Completo</p>
+                  </div>
+                ) : alumnosFiltrados.length === 0 ? (
+                  <div className="h-full flex flex-col items-center justify-center text-slate-500">
+                    <Users size={80} className="mb-3 opacity-30" />
+                    <p className="text-sm font-medium">
+                      No hay alumnos disponibles
+                    </p>
+                  </div>
+                ) : (
+                  alumnosFiltrados.map((alumno) => (
+                    <div
+                      key={alumno.id}
+                      className="flex items-center justify-between bg-slate-800/30 p-2.5 rounded-xl border border-slate-700/30 hover:bg-slate-800/50 transition-all"
+                    >
+                      <span className="text-slate-200 font-medium">
+                        {alumno.nombre}
+                      </span>
+                      <button
+                        onClick={() => manejarAsignarAlumno(alumno.id)}
+                        className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase transition-all"
+                      >
+                        Inscribir
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
+          </div>
         )}
 
         {/* TAB DOCENTES */}
         {tabActiva === "docentes" && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {/* --- 3. DOCENTES ASIGNADOS --- */}
             <section className={cardContainer}>
               <div className="flex items-center gap-3 mb-4">
@@ -361,7 +356,9 @@ function AdminCursoDetalle() {
                 {docentesAsignadosFiltrados?.length === 0 ? (
                   <div className="h-full flex flex-col items-center justify-center text-slate-500">
                     <Users size={80} className="mb-3 opacity-30" />
-                    <p className="text-sm font-medium">Sin docentes asignados</p>
+                    <p className="text-sm font-medium">
+                      Sin docentes asignados
+                    </p>
                   </div>
                 ) : (
                   docentesAsignadosFiltrados.map((docente) => (
@@ -440,19 +437,16 @@ function AdminCursoDetalle() {
               </div>
             </section>
           </div>
-          )}
+        )}
 
-
-          {/* TAB FOROS */}
-          {tabActiva === "foro" && (
-            <div className="flex justify-center">
-              <div className="w-full max-w-4xl">
-                <ForoCurso cursoId={curso.id} />
-              </div>
+        {/* TAB FOROS */}
+        {tabActiva === "foro" && (
+          <div className="flex justify-center">
+            <div className="w-full max-w-4xl">
+              <ForoCurso cursoId={curso.id} />
             </div>
-          )}
-
-
+          </div>
+        )}
       </main>
 
       <style>{`

@@ -1,0 +1,79 @@
+Modelo conceptual.
+
+Fue propuesto en el 76 por Chen, y luego fue amppliado por Codd en el 79, donde se estandarizo.
+Pero todavia no definimos los que viene siendo este modelo conceptual. Se base en concepciones del mundo real, llamadas entidades y las relaciones de estas mismas.
+
+Los objetivos del modelo conceptual:
+-Represanta la informacion con un alto nivel de abstraccion.
+-Capta las necesidades del cliente.
+-Disminuir la brecha entre el cliente y el desarrollador.
+
+Caracteristicas del modelo conceputal:
+-Expresividad: Con los 9 constructores que tenemos, debemos representar el problema.
+-Formalidad: Cada elemento, tiene una unica forma de interpretarlo.
+-Minimalidad: Cada elemento, tiene una unica forma de representarlo.
+-Simplicidad: Debe ser facil de comprender, por eso es simple, para que el cliente lo entienda.
+
+Arrancamos con los constructores:
+Los tres fundamentales:
+			Entidad: Representa objetos del mundo real/Sustantivo/Rectangulo.
+			Atributo: Representa una cualidad/caracteristica de una entidad o relacion.
+				Cardinalidad: Cantidad de valores posibles.
+						Monovalentes/Polivalentes
+						Obligatorios/Opcionales
+						La gran mayoria son monovalentes obligatorios(1,1), que esta implicito
+			Los atributos pueden ser compuestos: Lo que significa es que esta compuesto por varios atributos simples,
+                          por lo menos 2.Pueden ser opcionales y polivalentes, tanto el compuesto como los simples que lo componen.
+			Relaciones: Representan agregaciones entre dos o mas entidades/Verbos/Rombos.
+
+
+Clave univoca o atributo identificador: Es un atributo o un conjunto de atributos que identifican de manera unica a cada registro dentro de una entidad.Puede haber mas de una clave univoca en una entidad, pero solo una va a usarse como clave primaria o primary key. Pueden ser internas o externas.
+
+
+
+Tenemos como ultimo tema las jerarquias
+
+Permite agrupar entidades que tienen atributos en comun en una superentidad. Utiliza el concepto de herencia. Puede ser total o parcial, o superpuesta o exclusiva.
+
+-Total: Cuando en nuestro problema, por ejemplo tenemos personas(superentidad), docentes y alumnos(hijos), si todas las personas de nuestro problema son docecntes o alumno, la cobertura es total.
+-Parcial: Si en nuestro problema hay una persona que no es ni docente, ni alumno, entonces la cobertura es parcial.
+-Superpuesta: Si en nuestro problema, el docente puede ser alumno, o el alumno puede ser docente, estariamos hablando de una cobertura superpuesta.
+-Exclusiva: Si en nuestro problema, el docecnte no puede ser alumno y el alumno no puede ser docente, entonces hablamos de una cobertura exclusiva.
+
+Cuando hablamos de jerarquias, podemos hablar de subconjuntos, que es solamente cuando del padre deciende un hijo. La cobertura es parcial y exclusiva. Porque parcial?, bueno, solamente tenemos un hijo, si la jerarquia fuera total, para que depender del padre, se pone una sola entidad y listo. Ahora con el mismo razonamiento vemos que es exclusiva, por que? bueno, tenemos que tener en cuenta que solo hay un hijo, con quien se va a superponer? con nadie, por ese motivo hablamos de cobertura parcial y exclusiva.
+
+Por ultimo, tenemos a los atributos derivados, son atributos simples, tienen la misma denotacion (D ). Lo que nos permite hacer es guardar el resultado de un calculo, me podran decir que lo podemos hacer sin tener ese atributo para no repetir informacion, la respuesta es que si. Pero es mas rapido tener ya el resultado del calculo que calcularlo. Por eso como estamos en el modelo conceptual, lo podemos poner tranquilamente, ya veremos en proximas unidades como lo resolveremos, por el momento queda asi. El atributo derivado atenta con la minimalidad, que como sabemos es que un elemento solo se puede representar una vez.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

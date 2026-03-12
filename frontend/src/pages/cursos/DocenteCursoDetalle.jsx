@@ -203,18 +203,18 @@ function DocenteCursoDetalle() {
         >
           Asistencia
         </button>
-      </div>
 
-      <button
-        onClick={() => setVistActiva("foro")}
-        className={`pb-2 font-semibold ${
-          tabActiva === "foro"
-            ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
-            : "text-slate-400 hover:text-white"
-        }`}
-      >
-        Foro
-      </button>
+        <button
+          onClick={() => setVistaActiva("foro")}
+          className={`px-4 py-2 rounded-xl font-semibold transition ${
+            vistaActiva === "foro"
+              ? "bg-blue-600 text-white"
+              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+          }`}
+        >
+          Foro
+        </button>
+      </div>
 
       <main className="max-w-7xl mx-auto gap-10">
         {/* ARCHIVOS DOCENTE */}
@@ -582,7 +582,7 @@ function DocenteCursoDetalle() {
         )}
 
         {/* TAB FORO */}
-        {tabActiva === "foro" && (
+        {vistaActiva === "foro" && (
           <div>{cursoPorId && <ForoCurso cursoId={cursoPorId.id} />}</div>
         )}
       </main>

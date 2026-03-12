@@ -1,0 +1,124 @@
+Introduccion
+
+Que es una base de datos?
+
+-Es un conjunto de datos que se conectan entre si
+-Es un conjunto de archivos que estan diseñados para servir a multiples aplicaciones
+-El dato, es un hecho conocido que puede registrarse y genera un resultado implicito
+Entoces resumiendo, una base de datos es especificar los tipos de datos, las estructuras y las restricciones de los mismos
+
+
+
+Que es la manipulacion de la base de datos?
+-La manipulacion de la base de datos consiste en consultar la base de datos para recuperar datos especificos
+-Actualizar datos existentes
+-Realizar cambios
+
+Propiedades:
+-La base de datos representa algunos conceptos de la vida real, a veces llamado universo de discurso
+-Los datos dentro de la base de datos deben tener una logica entre si
+-La base de datos se construye para resolver un problema en especifico
+-Esta almacenada en un DBMS
+
+
+Que significa DBMS
+-Es un sistema de gestion de la base de datos
+-Es un conjunto de programas que les permite a los usuarios a crear y mantener la base de datos
+-Es un sofware de proposito general que facilita la definicion, construccion y manipulacion de la base de datos.
+
+Objetivos de los DBMS
+-Evitar inconsistencias y redudancias de los datos
+-Acceder a los datos en cualquier momento
+-Evitar anomalias en el acceso recurrente
+-Backups
+-Integridad de datos
+-Seguridad
+-Suministro de almacenamieto persistente de datos(aun ante fallos)
+
+Componentes de los DBMS
+
+DDL(especificacion del lenguaje)
+DML(manipulacion del lenguaje)
+	Procedimentales: Consiste en especificar que datos se muetran y como se obtuvieron esos datos
+	No procedimentales: Consiste en especificar que datos se muestran, pero no como se obtuvieron
+
+
+Actores involucrados en la base de datos
+
+-ADB o DBA: Es el que administra el recurso, que es la base de datos. Administra el acceso, cordina y vigila la utilizacion de recursos de software y hadware, y tambien es responsable ante problemas de seguridad y si el sistema anda lento.
+-Diseñadores: Son los que crean la base de datos, para resolver un problema del mundo real
+-Analistas de sistemas: Son los que determinan las especificaciones finales con los clientes
+-Programadores: Son los que pasan a codigo las especificaciones que detrerminaron los analistas en la base de datos.
+-Usuarios
+
+
+Modelado
+
+Como tenemos varias visiones que debemos plasmar a nivel conceptual, necesitamos modelar
+
+Que es modelar?
+Es un conjunto de herramientas conceptuales para describir datos, las relaciones que hay entre ellos, como se interpretan y manejar las restricciones de consistencia de estos. A que me refiero con esto, a que si especifico un dato como por ejemplo Varchar, no puede ser Integer.
+
+Tipos de modelos
+-Modelos fisicos, totalmente obsoletos, no los cubrimos en la materia
+-Modelo basado en registros, estos nos permiten obtener una solucion en una computadora y se dividen en:
+	-Red, dejo de existir
+	-Jerarquico, dejo de existir
+	-Relacional, es el mas usado en el mundo, por cuestion de performance(Apunta el mercado)
+	-OO, deberia ser el mas afianzado en el mundo, pero por cueston de performance se sigue usando el relacional
+Basado en objetos, debemos poder conectar con los clietes, por eso debemos trabajar sobre un modelo entidad relacion
+
+Modelado
+Tres etapas
+	-Conceptual: Maqueta
+	-Logico: Planos
+	-Fisico: Almacenamiento fisico(TABLA)
+
+Conceptual                                 Logico                           Fisico
+-Generico			 -Mas especifico			-Especifico
+-Alejado del tipo DBMS		 -Orientado al tipo de DBMS		-Depende del tipo de DBMS
+
+Para que se modela?
+-Para obtener la vision de cada actor
+-Para saber las necesidades y como se utiliza cada dato
+-Para ver como cada actor, utiliza cada dato
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

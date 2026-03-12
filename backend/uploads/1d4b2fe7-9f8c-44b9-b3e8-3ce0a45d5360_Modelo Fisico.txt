@@ -1,0 +1,142 @@
+Modelo Fisico
+
+Depende del DBMS que utilicemos.
+
+Representa la base de datos como un conjunto de relaciones.
+
+-Todas las entidades, se convierten en tabla.
+-Algunas relaciones se convierten en tabla.
+-Cada tabla, va a contener registros.
+
+Pasos:
+-Eliminar los identificadores externos.
+-Seleccionar claves
+	-Primaria: 
+	-Candidata: Clave que no se repite = Identificador
+Ambas son claves univocas.
+La diferencia entre ambas: La clave primaria es una clave que no se repite, y que fue elegida como primaria. Ejemplo, tengo 10 identificadores, los 10 son claves univocas, pero eligire uno, el mas oportuno, para ser clave primaria. Que luego el DBMS, usara para hacer todo mas eficiente. La pregunta es como elegimos la clave primaria, en el caso que tengamos dni, cuil, legajo, el que deberiamos elegir el mas chico, dentro de ellos. Pero esta eleccion es de nosotros, porque podemos elegir cualquiera, pero si hacemos una eleccion erronea, el DBMS se vuelve mas lento. Por eso el DBMS hace esto, agrega un atributo, que no es el que tenemos como clave univoca, para hacer todo mas eficiente. (ID). La clave primaria la define el DBMS, es AUTOINCREMENTAL. Lo maneja el DBMS, solamente lo podemos consultar nosotros. Lo que garantiza la eficiencia.	
+
+Es obligatorio que sea autoincremental? No es obligatorio, pero es el mas recomendable. 
+Si no queremos usar el autoincremental, debemos elegir el menos malo.
+	-Autoincremental.
+	-El mas chico.
+	-Compuestos(se evita). No es el mas recomendable, pero se puede.
+
+Vamos a hablar de las relaciones, antes dijimos que algunas se convierten en tabla.
+	Como nos damos cuenta de esto?
+	N:N ...... Se convierte en tabla.
+	-La relacion se convierte en tabla, su clave candidata es la suma de las 2 claves.
+Clave foranea
+-La clave foranea es un atributo/s de una tabla que en otra tabla era clave primaria, y sirve para establecer una conexion entre dos tablas.
+
+Integridad referencial
+-Propiedad deseable de la base de datos
+-Asegura que un valor que aparece para un atributo en una tabla, aparezca para otro en otra tabla.
+
+Alta, Baja y Modificacion.
+
+Baja:
+
+-Restringir la operacion: No puedo borrar un alumno, porque tiene inscripciones.(La mas recomendable) 
+-Borrado en cascada: Si se borra el alumno, se borra todo lo que tiene que ver con este.
+-Establecer la clave foranea en nulo: Todos las tuplas de alumno tienen el valor nulo.
+-No hacer nada: Borra el alumno, pero me quedan las inscripciones colgadas.
+
+Modificacion:
+
+-No se puede modificar la clave primaria, solamente la podemos consultar.
+
+Restricciones
+
+-Restriccion de dominio: Vamos a definirlo con un ejemplo, Nombre = varchar(10), no puede haber otro tipo de valor para nombre, con lo que me refiero es que el nombre debe ser un varchar, no puede ser un integer.
+-Restriccion de clave: Dice que no puede haber dos tuplas iguales, es decir, que dos tuplas deben tener distintos valores.
+-Restriccion de valores nulos: Evita que el atributo quede en nulo, si yo no le asigne un valor.
+
+Para suerte de nosotros, el DBMS hace todo esto automatico.
+
+Restricciones de integridad
+-Una clave primaria, no puede ser nulo. Ya que debe ser monovalente obligatoria.
+
+Restricciones de integridad referencial
+
+Dos tablas marchan juntas, entonces un atributo que es clave foranea, que en otra tabla es clave primaria tiene que aparecer o no, dependiendo el problema
+
+Las operaciones pueden generar violaciones
+
+Alta
+Puede violar
+-Valor nulo para la clave,repeticion de clave, integridad referecial, y resticciones de dominio
+Aunque el DBMS rechaza estas operaciones.
+
+Baja
+Puede violar
+-Integridad referencial
+Pero el DBMS lo vuelve a rechazar 
+
+Modificacion|	
+-Puede violar cualquier tipo de operacion
+Pero como en las situaciones anteriores, el DBMS las rechaza
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

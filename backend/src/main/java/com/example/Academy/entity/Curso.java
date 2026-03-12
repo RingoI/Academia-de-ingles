@@ -1,6 +1,7 @@
 package com.example.Academy.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -17,6 +18,8 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,8 +66,8 @@ public class Curso {
         joinColumns = @JoinColumn(name = "curso_id"),
         inverseJoinColumns = @JoinColumn(name = "alumno_id")
     )
-    private List<Alumno> alumnos = new ArrayList<>();
-
+    private Set<Alumno> alumnos = new HashSet<>();
+     
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Aviso> avisos;
@@ -80,5 +83,7 @@ public class Curso {
     @OneToMany(mappedBy = "curso")
     private List<Asistencia> asistencias = new ArrayList<>();
 
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tema> temas;
     
 }

@@ -6,7 +6,6 @@ import { authStore } from "../../store/auth.store";
 import HistorialEntregasAlumno from "../../components/HistorialEntregasAlumno";
 import { materialStore } from "../../store/material.store";
 import ForoCurso from "../../components/foro/ForoCurso";
-import { cursoStore } from "../../store/cursos.store";
 
 import {
   ArrowLeft,
