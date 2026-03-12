@@ -36,38 +36,33 @@ function AlumnoCursoDetalle() {
 
   return (
     <div>
-      <header className="max-w-7xl mx-auto mb-10">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-slate-900/40 p-8 rounded-3xl border border-slate-800 shadow-inner">
-          <div className="flex items-center gap-6">
-            <button
-              onClick={() => navigate(-1)}
-              className="group p-3 bg-slate-800 hover:bg-blue-600 rounded-2xl transition-all duration-300 shadow-lg"
-            >
-              <ArrowLeft
-                size={24}
-                className="group-hover:-translate-x-1 transition-transform"
-              />
-            </button>
+      <header className="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="mb-1 flex items-center gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition"
+          >
+            <ArrowLeft size={20} />
+          </button>
 
-            <div>
-              <h1 className="font-semibold text-3xl text-slate-400">
-                {cursoPorId?.nombre}
-              </h1>
+          <div>
+            <h1 className="font-semibold text-3xl text-slate-400">
+              {cursoPorId?.nombre}
+            </h1>
 
-              <p className="text-slate-400 flex items-center gap-2 mt-1 italic">
-                <BookOpen size={14} /> Archivos del curso
-              </p>
-            </div>
+            <p className="text-slate-400">Cursos</p>
           </div>
         </div>
       </header>
+
+      <div className="border-b border-slate-400 mt-2 mb-6"></div>
       <div className="max-w-7xl mx-auto mb-8 flex gap-4">
         <button
           onClick={() => setVistaActiva("materiales")}
-          className={`px-5 py-2 rounded-xl font-semibold transition ${
+          className={`pb-2 font-semibold ${
             vistaActiva === "materiales"
-              ? "bg-blue-600 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Materiales
@@ -75,10 +70,10 @@ function AlumnoCursoDetalle() {
 
         <button
           onClick={() => setVistaActiva("actividades")}
-          className={`px-5 py-2 rounded-xl font-semibold transition ${
+          className={`pb-2 font-semibold ${
             vistaActiva === "actividades"
-              ? "bg-blue-600 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Actividades
@@ -86,13 +81,24 @@ function AlumnoCursoDetalle() {
 
         <button
           onClick={() => setVistaActiva("historial")}
-          className={`px-5 py-2 rounded-xl font-semibold transition ${
+          className={`pb-2 font-semibold ${
             vistaActiva === "historial"
-              ? "bg-blue-600 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Historial
+        </button>
+
+        <button
+          onClick={() => setVistaActiva("foro")}
+          className={`pb-2 font-semibold ${
+            vistaActiva === "foro"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
+          }`}
+        >
+          Foro
         </button>
       </div>
 

@@ -125,37 +125,34 @@ function DocenteCursoDetalle() {
   }, [cursoId]);
 
   return (
-    <div>
-      <header className="max-w-7xl mx-auto mb-10">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-slate-900/40 p-8 rounded-3xl border border-slate-800 shadow-inner">
-          <div className="flex items-center gap-6">
-            <button
-              onClick={() => navigate(-1)}
-              className="group p-3 bg-slate-800 hover:bg-blue-600 rounded-2xl transition-all duration-300 shadow-lg"
-            >
-              <ArrowLeft
-                size={24}
-                className="group-hover:-translate-x-1 transition-transform"
-              />
-            </button>
-            <div>
-              <h1 className="font-semibold text-3xl text-slate-400">
-                {cursoPorId?.nombre}
-              </h1>
-              <p className="text-slate-400 flex items-center gap-2 mt-1 italic">
-                <BookOpen size={14} /> Archivos del curso
-              </p>
-            </div>
+    <div className="max-w-7xl mx-auto bg-slate-900/40 border border-slate-800 rounded-3xl p-8 shadow-inner">
+      <header className="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="mb-1 flex items-center gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition"
+          >
+            <ArrowLeft size={20} />
+          </button>
+
+          <div>
+            <h1 className="font-semibold text-3xl text-slate-400">
+              {cursoPorId?.nombre}
+            </h1>
+
+            <p className="text-slate-400">Gestión del curso</p>
           </div>
         </div>
       </header>
+
+      <div className="border-b border-slate-400 mt-2 mb-6"></div>
       <div className="max-w-7xl mx-auto mb-6 flex gap-4">
         <button
           onClick={() => setVistaActiva("archivos")}
-          className={`px-4 py-2 rounded-xl font-semibold transition ${
+          className={`pb-2 font-semibold ${
             vistaActiva === "archivos"
-              ? "bg-blue-600 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Archivos
@@ -163,10 +160,10 @@ function DocenteCursoDetalle() {
 
         <button
           onClick={() => setVistaActiva("actividades")}
-          className={`px-4 py-2 rounded-xl font-semibold transition ${
+          className={`pb-2 font-semibold ${
             vistaActiva === "actividades"
-              ? "bg-blue-600 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Actividades
@@ -174,10 +171,10 @@ function DocenteCursoDetalle() {
 
         <button
           onClick={() => setVistaActiva("entregas")}
-          className={`px-4 py-2 rounded-xl font-semibold transition ${
+          className={`pb-2 font-semibold ${
             vistaActiva === "entregas"
-              ? "bg-blue-600 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Entregas
@@ -185,20 +182,21 @@ function DocenteCursoDetalle() {
 
         <button
           onClick={() => setVistaActiva("alumnos")}
-          className={`px-4 py-2 rounded-xl font-semibold transition ${
+          className={`pb-2 font-semibold ${
             vistaActiva === "alumnos"
-              ? "bg-blue-600 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Alumnos
         </button>
+
         <button
           onClick={() => setVistaActiva("asistencia")}
-          className={`px-4 py-2 rounded-xl font-semibold transition ${
+          className={`pb-2 font-semibold ${
             vistaActiva === "asistencia"
-              ? "bg-blue-600 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Asistencia
@@ -206,10 +204,10 @@ function DocenteCursoDetalle() {
 
         <button
           onClick={() => setVistaActiva("foro")}
-          className={`px-4 py-2 rounded-xl font-semibold transition ${
+          className={`pb-2 font-semibold ${
             vistaActiva === "foro"
-              ? "bg-blue-600 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "text-[#06b6d4] border-b-2 border-[#06b6d4]"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Foro
