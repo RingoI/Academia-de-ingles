@@ -31,7 +31,7 @@ function Menu() {
         </div>
       </div>
       <div className="flex flex-col w-full items-center p-5 gap-3">
-        <ItemMenu to={"/dashboard"} Icono={LayoutDashboard} tag={"Dashboard"} />
+        <ItemMenu to={"/dashboard"} Icono={LayoutDashboard} tag={"Inicio"} />
         {rol === "ROLE_ADMIN" ? (
           <ItemMenu to={"/usuarios"} Icono={Users} tag={"Usuarios"} />
         ) : (

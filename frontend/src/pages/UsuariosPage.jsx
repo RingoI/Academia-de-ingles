@@ -29,7 +29,7 @@ function UsuariosPage() {
       </div>
       <div>
         <h1 className="font-semibold text-3xl text-[#818cf8]">
-          Gestión de Usuarios
+          Gestión de usuarios
         </h1>
         <p className="text-slate-400">
           Administra el acceso de alumnos y docentes.

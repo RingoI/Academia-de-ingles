@@ -1,24 +1,28 @@
 import "./cartelera.css";
+import { MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function CarteleraPreview() {
   const notas = [
     {
       id: 1,
       texto: "Aula virtual\nEl viernes hay encuentro a las 8",
-      color: "#fff3c4",
+      color: "#88d486",
       meet: "https://meet.google.com/abc-defg-hij",
     },
 
     {
       id: 2,
-      texto: "Importante:\nRecuerden entrar al apartado de avisos",
-      color: "#fff3c4",
+      texto: "Importante:\nRecuerden entrar periódicamente a la sección de",
+      color: "#e0f2fe",
+      link: "/avisos"
     },
     {
       id: 3,
-      texto: "Contacto\n+54 9 11 3624-820112",
+      texto: "Contacto",
       color: "#fff3c4",
-    },
+      whatsapp: "549113624820112"
+    }
   ];
 
   const randomOffset = () => Math.floor(Math.random() * 80 - 40);
@@ -43,18 +47,42 @@ function CarteleraPreview() {
             >
               <div className="pin"></div>
 
-              <p style={{ whiteSpace: "pre-line" }}>{nota.texto}</p>
+              <div className="texto-nota">{nota.texto}</div>
 
               {nota.meet && (
-                <a href={nota.meet} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={nota.meet}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-meet"
+                >
                   Unirse al Meet
                 </a>
+              )}
+
+              {nota.whatsapp && (
+                <a
+                  href={`https://wa.me/${nota.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-whatsapp"
+                >
+                  <MessageCircle size={22} color="#25D366" />
+                    WhatsApp
+                </a>
+              )}
+
+              {nota.link && (
+                <Link to={nota.link} className="link-aviso">
+                  Avisos
+                </Link>
               )}
             </div>
           );
         })}
       </div>
     </div>
+    
   );
 }
 
