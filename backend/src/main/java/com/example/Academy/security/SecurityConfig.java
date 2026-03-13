@@ -177,7 +177,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/foro/**")
                     .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
                 .requestMatchers(HttpMethod.DELETE, "/foro/**")
-                    .hasAnyRole("ADMIN", "DOCENTE")
+                    .hasAnyRole("ADMIN", "DOCENTE", "ALUMNO")
                 .requestMatchers(HttpMethod.PATCH, "/foro/**")
                     .hasAnyRole("ADMIN", "DOCENTE")
 
