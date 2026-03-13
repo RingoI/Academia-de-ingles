@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CursosService } from "../../utils/CursosService";
-import { Trash2 } from "lucide-react";
 import {
   Plus,
   Users,
   GraduationCap,
   X,
+  Trash2,
   Layers,
   BookOpen,
-  ArrowRight,
+  ChevronRight,
 } from "lucide-react";
 
 function AdminCursos() {
@@ -33,39 +33,6 @@ function AdminCursos() {
   const formatearFecha = (fechaISO) => {
     const [anio, mes, dia] = fechaISO.split("-");
     return `${dia}/${mes}/${anio}`;
-  };
-
-  const coloresTexto = [
-    "text-blue-300",
-    "text-purple-300",
-    "text-cyan-300",
-    "text-indigo-300",
-    "text-amber-300",
-    "text-emerald-300",
-    "text-pink-300",
-  ];
-
-  const coloresAura = [
-    "bg-blue-500/25",
-    "bg-purple-500/25",
-    "bg-cyan-500/25",
-    "bg-indigo-500/25",
-    "bg-amber-500/25",
-    "bg-emerald-500/25",
-    "bg-pink-500/25",
-  ];
-
-  const getColorIndex = (nombre) => {
-    const letra = nombre.charAt(0).toUpperCase();
-    return letra.charCodeAt(0) % coloresTexto.length;
-  };
-
-  const getNivelColor = (nombre) => {
-    return coloresTexto[getColorIndex(nombre)];
-  };
-
-  const getNivelAura = (nombre) => {
-    return coloresAura[getColorIndex(nombre)];
   };
 
   const fetchCursos = async () => {
@@ -219,7 +186,8 @@ function AdminCursos() {
                   </div>
                 </div>
 
-                <div className="space-y-4 mb-8">
+                <div className="space-y-2 mb-2 flex-1">
+
                   <div className="flex items-center gap-4 text-slate-400">
                     <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-blue-400">
                       <Layers size={16} />
@@ -262,32 +230,25 @@ function AdminCursos() {
                 </div>
               </div>
 
-              <div className="relative z-10 pt-6 border-t border-slate-800 flex flex-col gap-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
-                      Vigencia
-                    </span>
-                    <span className="text-xs text-slate-300 font-mono">
-                      {formatearFecha(curso.fechaInicio)} —{" "}
-                      {formatearFecha(curso.fechaFin)}
-                    </span>
-                  </div>
+              <div className="relative z-10 pt-6 border-t border-slate-800 flex items-center justify-between">
+                
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+                    Vigencia
+                  </span>
+                  <span className="text-xs text-slate-300 font-mono">
+                    {formatearFecha(curso.fechaInicio)} — {formatearFecha(curso.fechaFin)}
+                  </span>
                 </div>
 
-                {/* BOTÓN VER DETALLE / GESTIONAR */}
                 <button
                   onClick={() => navigate(`/cursos/${curso.id}`)}
-                  className="w-full bg-slate-800 hover:bg-blue-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-lg"
+                  className="bg-slate-800 hover:bg-white hover:text-slate-900 p-3 rounded-xl transition-all shadow-lg"
                 >
-                  Gestionar integrantes
-                  <ArrowRight
-                    size={18}
-                    className="group-hover/btn:translate-x-1 transition-transform"
-                  />
+                  <ChevronRight size={20} />
                 </button>
+               </div>
               </div>
-            </div>
           ))
         )}
       </div>

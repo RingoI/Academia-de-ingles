@@ -1,7 +1,9 @@
 package com.example.Academy.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,7 +43,7 @@ public class Alumno extends Persona {
     @JoinTable( name = "alumno_curso", 
     joinColumns = @JoinColumn(name = "alumno_id"), 
     inverseJoinColumns = @JoinColumn(name = "curso_id") ) 
-    
+        
     private List<Curso> cursos = new ArrayList<>();
 
    @ManyToMany

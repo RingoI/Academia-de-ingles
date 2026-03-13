@@ -210,11 +210,13 @@ public CursoResponseDTO actualizarCurso(Long id, UpdateCursoRequestDTO dto) {
     curso.getDocentes().forEach(d -> d.getCursos().remove(curso));
     curso.getDocentes().clear();
 
+    curso.getAlumnos().forEach(a -> a.getCursos().remove(curso));
+    curso.getAlumnos().clear();
+
     for (Alumno a : alumnos) {
         a.getCursos().add(curso);
         curso.getAlumnos().add(a);
     }
-    curso.getAlumnos().clear();
 
     for (Docente d : docentes) {
         d.getCursos().add(curso);
