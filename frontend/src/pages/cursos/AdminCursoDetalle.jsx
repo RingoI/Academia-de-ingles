@@ -131,7 +131,6 @@ function AdminCursoDetalle() {
     return (
       <div className="p-10 text-white text-center">Curso no encontrado</div>
     );
-
   return (
     <>
       {/* HEADER */}

@@ -15,6 +15,7 @@ public class CreateCursoRequestDTO {
     private String nombre;
     private Integer cupo;
     private LocalDate fechaInicio;
+    private Double costo;
     private LocalDate fechaFin;
     private List<Long> nivelesIds;
     private List<Long> docentesIds;

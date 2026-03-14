@@ -23,6 +23,7 @@ function AdminCursos() {
   const [formData, setFormData] = useState({
     nombre: "",
     cupo: 20,
+    costo: "",
     fechaInicio: "",
     fechaFin: "",
     docentesIds: [],
@@ -82,6 +83,7 @@ function AdminCursos() {
         docentesIds: [],
         nivelesIds: [],
         alumnosIds: [],
+        costo: "",
       });
     } catch (error) {
       alert("Error al procesar la creación del curso.");
@@ -187,7 +189,6 @@ function AdminCursos() {
                 </div>
 
                 <div className="space-y-2 mb-2 flex-1">
-
                   <div className="flex items-center gap-4 text-slate-400">
                     <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-blue-400">
                       <Layers size={16} />
@@ -217,6 +218,16 @@ function AdminCursos() {
                   </div>
 
                   <div className="flex items-center gap-4 text-slate-400">
+                    <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-yellow-400">
+                      💰
+                    </div>
+                    <span className="text-sm">
+                      Costo:{" "}
+                      <b className="text-slate-200">${curso.costo ?? "0"}</b>
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-4 text-slate-400">
                     <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-emerald-400">
                       <Users size={16} />
                     </div>
@@ -231,13 +242,13 @@ function AdminCursos() {
               </div>
 
               <div className="relative z-10 pt-6 border-t border-slate-800 flex items-center justify-between">
-                
                 <div className="flex flex-col">
                   <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
                     Vigencia
                   </span>
                   <span className="text-xs text-slate-300 font-mono">
-                    {formatearFecha(curso.fechaInicio)} — {formatearFecha(curso.fechaFin)}
+                    {formatearFecha(curso.fechaInicio)} —{" "}
+                    {formatearFecha(curso.fechaFin)}
                   </span>
                 </div>
 
@@ -247,8 +258,8 @@ function AdminCursos() {
                 >
                   <ChevronRight size={20} />
                 </button>
-               </div>
               </div>
+            </div>
           ))
         )}
       </div>
@@ -300,6 +311,21 @@ function AdminCursos() {
                     onChange={(e) =>
                       setFormData({ ...formData, cupo: e.target.value })
                     }
+                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono text-white"
+                  />
+                </div>
+                {/* COSTO */}
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
+                    Costo
+                  </label>
+                  <input
+                    type="number"
+                    value={formData.costo}
+                    onChange={(e) =>
+                      setFormData({ ...formData, costo: e.target.value })
+                    }
+                    placeholder="Ej: 15000"
                     className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono text-white"
                   />
                 </div>

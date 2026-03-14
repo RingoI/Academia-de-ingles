@@ -34,7 +34,7 @@ public class Curso {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private double costo;
+    private Double costo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private Integer cupo;

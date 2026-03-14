@@ -21,5 +21,6 @@ public class CursoResponseDTO {
     private Integer cupo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+    private Double costo;
 }
 

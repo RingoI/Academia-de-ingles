@@ -47,6 +47,7 @@ public CursoResponseDTO crearCurso(CreateCursoRequestDTO dto) {
     Curso curso = new Curso();
     curso.setNombre(dto.getNombre());
     curso.setCupo(dto.getCupo());
+    curso.setCosto(dto.getCosto());
     curso.setFechaInicio(dto.getFechaInicio());
     curso.setFechaFin(dto.getFechaFin());
 
@@ -103,7 +104,8 @@ private CursoResponseDTO mapToResponse(Curso curso) {
             alumnos,
             curso.getCupo(),
             curso.getFechaInicio(),
-            curso.getFechaFin()
+            curso.getFechaFin(),
+            curso.getCosto()
     );
 }
 
@@ -119,7 +121,8 @@ public List<CursoResponseDTO> obtenerCursos() {
                     c.getAlumnos().stream().map(a -> new PersonaDTO(a.getId(), a.getNombre())).toList(),
                     c.getCupo(),
                     c.getFechaInicio(),
-                    c.getFechaFin()
+                    c.getFechaFin(),
+                    c.getCosto()
             ))
             .toList();
 }
