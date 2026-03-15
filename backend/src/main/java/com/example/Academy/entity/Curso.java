@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class Curso {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private double costo;
+    private BigDecimal costo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private Integer cupo;

@@ -1,6 +1,7 @@
 package com.example.Academy.dto;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class CreateCursoRequestDTO {
     private List<Long> nivelesIds;
     private List<Long> docentesIds;
     private List<Long> alumnosIds;
+    private BigDecimal costo;
 
     @Override
     public String toString() {

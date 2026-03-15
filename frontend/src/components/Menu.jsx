@@ -34,7 +34,7 @@ function Menu() {
 				<ItemMenu to={"/dashboard"} Icono={LayoutDashboard} tag={"Dashboard"} />
 				{rol === "ROLE_ADMIN" ? <ItemMenu to={"/usuarios"} Icono={Users} tag={"Usuarios"} /> : ""}
 				<ItemMenu to={"/cursos"} Icono={LibraryBig} tag={"Cursos"} />
-				<ItemMenu to={"/pagos"} Icono={Banknote} tag={"Pagos"} />
+				{rol === "ROLE_DOCENTE" ? "" : <ItemMenu to={"/pagos"} Icono={Banknote} tag={"Pagos"} />}
 				<ItemMenu to={"/avisos"} Icono={Bell} tag={"Avisos"} />
 				{rol === "ROLE_DOCENTE" ? <ItemMenu to={"/examenes"} Icono={FolderOpen} tag={"Material"} /> : ""}
 			</div>

@@ -19,10 +19,12 @@ function AdminCursos() {
 		fechaFin: "",
 		docentesIds: [],
 		nivelesIds: [],
+		costo: null,
 		alumnosIds: [],
 	});
 
 	const formatearFecha = (fechaISO) => {
+		if (!fechaISO) return "";
 		const [anio, mes, dia] = fechaISO.split("-");
 		return `${dia}/${mes}/${anio}`;
 	};
@@ -246,7 +248,7 @@ function AdminCursos() {
 									<div className="flex flex-col">
 										<span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Vigencia</span>
 										<span className="text-xs text-slate-300 font-mono">
-											{formatearFecha(curso.fechaInicio)} — {formatearFecha(curso.fechaFin)}
+											{formatearFecha(curso?.fechaInicio)} — {formatearFecha(curso?.fechaFin)}
 										</span>
 									</div>
 								</div>
@@ -340,14 +342,23 @@ function AdminCursos() {
 									/>
 								</div>
 								<div className="space-y-2">
-									<label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-										Fecha de finalización
-									</label>
+									<label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Fecha de fin</label>
 									<input
 										required
 										type="date"
 										value={formData.fechaFin}
 										onChange={(e) => setFormData({ ...formData, fechaFin: e.target.value })}
+										className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-slate-300"
+									/>
+								</div>
+								<div className="space-y-2">
+									<label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Costo del Curso</label>
+									<input
+										required
+										type="number"
+										value={formData.costo}
+										placeholder="Ej: 2000"
+										onChange={(e) => setFormData({ ...formData, costo: e.target.value })}
 										className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-slate-300"
 									/>
 								</div>

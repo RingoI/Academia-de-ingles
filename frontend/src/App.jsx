@@ -15,39 +15,33 @@ import DocenteTareaDetalle from "./pages/cursos/DocecnteTareaDetalle";
 import AvisosPage from "./pages/AvisosPage";
 
 function App() {
-  return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN"]} />}>
-          <Route path="/usuarios" element={<UsuariosPage />} />
-        </Route>
+	return (
+		<Routes>
+			<Route element={<Layout />}>
+				<Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN"]} />}>
+					<Route path="/usuarios" element={<UsuariosPage />} />
+				</Route>
 
-        <Route
-          element={
-            <ProteccionRutas
-              rolesPermitidos={["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ALUMNO"]}
-            />
-          }
-        >
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/cursos" element={<CursosPage />} />
-          <Route path="/cursos/:id" element={<AdminCursoDetalle />} />
-          <Route path="/cursos/alumno/:id" element={<AlumnoCursoDetalle />} />
-          <Route path="/cursos/docente/:id" element={<DocenteCursoDetalle />} />
-          <Route path="/pagos" element={<PagosPage />} />
-          <Route path="/examenes" element={<ExamenesPage />} />
-          <Route path="/avisos" element={<AvisosPage />} />
-          <Route
-            path="/docente/curso/:cursoId/tarea/:tareaId"
-            element={<DocenteTareaDetalle />}
-          />
-        </Route>
-      </Route>
+				<Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ALUMNO"]} />}>
+					<Route path="/dashboard" element={<DashboardPage />} />
+					<Route path="/cursos" element={<CursosPage />} />
+					<Route path="/cursos/:id" element={<AdminCursoDetalle />} />
+					<Route path="/cursos/alumno/:id" element={<AlumnoCursoDetalle />} />
+					<Route path="/cursos/docente/:id" element={<DocenteCursoDetalle />} />
+					<Route path="/examenes" element={<ExamenesPage />} />
+					<Route path="/avisos" element={<AvisosPage />} />
+					<Route path="/docente/curso/:cursoId/tarea/:tareaId" element={<DocenteTareaDetalle />} />
+				</Route>
 
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-    </Routes>
-  );
+				<Route element={<ProteccionRutas rolesPermitidos={["ROLE_ADMIN", "ROLE_ALUMNO"]} />}>
+					<Route path="/pagos" element={<PagosPage />} />
+				</Route>
+			</Route>
+
+			<Route path="/" element={<HomePage />} />
+			<Route path="/login" element={<LoginPage />} />
+		</Routes>
+	);
 }
 
 export default App;

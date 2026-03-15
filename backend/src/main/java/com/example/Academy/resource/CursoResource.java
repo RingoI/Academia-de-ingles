@@ -19,6 +19,7 @@ import com.example.Academy.dto.CreateCursoRequestDTO;
 import com.example.Academy.dto.CursoResponseDTO;
 import com.example.Academy.dto.CursosPorDocenteDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
+import com.example.Academy.entity.Curso;
 import com.example.Academy.service.CursoService;
 
 @RestController
@@ -130,5 +131,10 @@ public class CursoResource {
     cursoService.desvincularDocente(id, docenteId);
     return ResponseEntity.ok(new ApiResponseDTO<>("Docente desvinculado", null));
 }
+
+    @GetMapping("/alumno/{alumnoId}")
+    public ResponseEntity<List<Curso>> obtenerCursosPorAlumno(@PathVariable Long alumnoId){
+        return ResponseEntity.ok(cursoService.cursosPorAlumno(alumnoId));
+    }
 
 }

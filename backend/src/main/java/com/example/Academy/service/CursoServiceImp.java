@@ -44,6 +44,7 @@ public CursoResponseDTO crearCurso(CreateCursoRequestDTO dto) {
     curso.setCupo(dto.getCupo());
     curso.setFechaInicio(dto.getFechaInicio());
     curso.setFechaFin(dto.getFechaFin());
+    curso.setCosto(dto.getCosto());
 
     if (dto.getNivelesIds() != null && !dto.getNivelesIds().isEmpty()) {
         List<Nivel> niveles = nivelRepository.findAllById(dto.getNivelesIds());
@@ -127,6 +128,13 @@ public CursoResponseDTO obtenerCursoPorId(Long id) {
 
 
 }
+
+    @Override
+    public List<Curso> cursosPorAlumno(Long alumnoId){
+        return cursoRepository.findByAlumnos_Id(alumnoId);
+    }
+
+
 
     @Override
     public List<CursosPorDocenteDTO> obtenerCursosPorDocente(Long id){

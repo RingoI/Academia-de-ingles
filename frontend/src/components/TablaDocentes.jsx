@@ -12,16 +12,10 @@ function TablaDocentes({ busqueda }) {
 		obtenerDocentes();
 	}, []);
 
-	console.log("Docentes:  ", docentes);
-
 	const docentesFiltrados = docentes.filter((d) => {
-	const texto = (busqueda || "").toLowerCase();
+		const texto = (busqueda || "").toLowerCase();
 
-	return (
-		d.nombre?.toLowerCase().includes(texto) ||
-		d.email?.toLowerCase().includes(texto) ||
-		d.dni?.toString().includes(texto)
-	);
+		return d.nombre?.toLowerCase().includes(texto) || d.email?.toLowerCase().includes(texto) || d.dni?.toString().includes(texto);
 	});
 
 	const cabecera = ["", "Nombre", "Email", "Dirección", "CUIL", "Estado", "Acciones"];

@@ -6,6 +6,7 @@ import com.example.Academy.dto.CreateCursoRequestDTO;
 import com.example.Academy.dto.CursoResponseDTO;
 import com.example.Academy.dto.CursosPorDocenteDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
+import com.example.Academy.entity.Curso;
 
 public interface CursoService {
     
@@ -21,4 +22,7 @@ public interface CursoService {
     void asignarDocente(Long cursoId, Long docenteId);
     void desvincularAlumno(Long cursoId, Long alumnoId);
     void desvincularDocente(Long cursoId, Long docenteId);
+
+    List<Curso> cursosPorAlumno(Long alumnoId);
+
 }

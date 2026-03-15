@@ -73,4 +73,7 @@ export const usuarioStore = create((set) => ({
 			console.log("Error en modificar docentes: ", error);
 		}
 	},
+
+
+	
 }));
