@@ -66,4 +66,21 @@ export const usuarioStore = create((set) => ({
       console.log("Error en modificar docente ", error);
     }
   },
+
+  actualizarAlumno: async (id, datos) => {
+    try {
+      const res = await axiosInstance.put(`/alumnos/${id}`, datos);
+      await usuarioStore.getState().obtenerAlumnos();
+    } catch (error) {
+      console.log("Error en actualizar alumno:", error);
+    }
+  },
+  actualizarDocente: async (id, datos) => {
+    try {
+      const res = await axiosInstance.put(`/docentes/${id}`, datos);
+      await usuarioStore.getState().obtenerDocentes();
+    } catch (error) {
+      console.log("Error en actualizar docente:", error);
+    }
+  },
 }));

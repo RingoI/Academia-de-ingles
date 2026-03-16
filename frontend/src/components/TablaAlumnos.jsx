@@ -65,7 +65,7 @@ function TablaAlumnos({ busqueda }) {
                 {a.activo ? (
                   <div className="flex items-center gap-1">
                     <CheckCircle2 className="size-4 text-green-500" />
-                    <span className="text-sm font-semibold">Activo</span>
+                    <span className="text-sm">Activo</span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-1">
@@ -78,11 +78,8 @@ function TablaAlumnos({ busqueda }) {
                 {a.activo ? (
                   <span>
                     <Ban
-                      className="size-5 cursor-pointer"
-                      onClick={() => {
-                        console.log("click alumno", a.id);
-                        modificarAlumno(a.id);
-                      }}
+                      className="size-5 cursor-pointer hover:text-red-500"
+                      onClick={() => modificarAlumno(a.id)}
                     />
                   </span>
                 ) : (
@@ -93,11 +90,13 @@ function TablaAlumnos({ busqueda }) {
                     />
                   </span>
                 )}
+
                 <span>
                   <SquarePen
                     className="size-5 cursor-pointer"
                     onClick={() => {
-                      (setEditarAlumno(!editarAlumno), setDatosAlumno(a));
+                      setEditarAlumno(true);
+                      setDatosAlumno(a);
                     }}
                   />
                 </span>

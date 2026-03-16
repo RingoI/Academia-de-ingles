@@ -8,7 +8,7 @@ function FormularioDocentes({
   setAbrirFormularioDocentes,
   values = {},
 }) {
-  const { agregarDocente, modificarDocente } = usuarioStore();
+  const { agregarDocente, actualizarDocente } = usuarioStore();
 
   const [formularioDocentes, setFormularioDocentes] = useState({
     nombre: values.nombre || "",
@@ -36,7 +36,7 @@ function FormularioDocentes({
     if (!values.id) {
       agregarDocente(data);
     } else {
-      modificarDocente(values.id, data);
+      actualizarDocente(values.id, data);
     }
 
     setAbrirFormularioDocentes(false);
@@ -44,30 +44,28 @@ function FormularioDocentes({
 
   return (
     <div className="bg-[#0f172a] border border-slate-700 w-full max-w-2xl rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-300">
-    {/* HEADER */}
-    <div className="flex items-center justify-between gap-3 border-b border-slate-700 p-5 bg-slate-900/50">
-      
-      <div className="flex items-center gap-4">
-        <UserRoundPlus className="bg-[#0c354b] text-[#818cf8] size-12 p-2.5 rounded-xl" />
-        
-        <div>
-          <h1 className="font-bold text-xl text-white">
-            {values.id ? "Modificar Docente" : "Nuevo Docente"}
-          </h1>
-          <p className="text-sm text-slate-400">
-            Completa los datos para registrar al docente.
-          </p>
+      {/* HEADER */}
+      <div className="flex items-center justify-between gap-3 border-b border-slate-700 p-5 bg-slate-900/50">
+        <div className="flex items-center gap-4">
+          <UserRoundPlus className="bg-[#0c354b] text-[#818cf8] size-12 p-2.5 rounded-xl" />
+
+          <div>
+            <h1 className="font-bold text-xl text-white">
+              {values.id ? "Modificar Docente" : "Nuevo Docente"}
+            </h1>
+            <p className="text-sm text-slate-400">
+              Completa los datos para registrar al docente.
+            </p>
+          </div>
         </div>
+
+        <button
+          onClick={() => setAbrirFormularioDocentes(false)}
+          className="text-slate-500 hover:text-white transition-colors p-2"
+        >
+          <X size={24} />
+        </button>
       </div>
-
-      <button
-        onClick={() => setAbrirFormularioDocentes(false)}
-        className="text-slate-500 hover:text-white transition-colors p-2"
-      >
-        <X size={24} />
-      </button>
-
-    </div>
 
       {/* FORM */}
       <form className="flex flex-col w-full" onSubmit={handleSubmit}>
@@ -186,11 +184,11 @@ function FormularioDocentes({
         {/* FOOTER BOTONES */}
         <div className="flex items-center justify-end gap-3 border-t border-slate-700 px-6 py-5 bg-slate-900/30">
           <button
-              className="px-5 py-2 rounded-lg text-slate-400 font-semibold hover:text-white transition-colors cursor-pointer"
-              onClick={() => setAbrirFormularioDocentes(false)}
-              type="button"
+            className="px-5 py-2 rounded-lg text-slate-400 font-semibold hover:text-white transition-colors cursor-pointer"
+            onClick={() => setAbrirFormularioDocentes(false)}
+            type="button"
           >
-          Cancelar
+            Cancelar
           </button>
 
           <button

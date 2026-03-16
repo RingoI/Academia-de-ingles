@@ -80,26 +80,23 @@ function TablaDocentes({ busqueda }) {
                   <span>
                     <Ban
                       className="size-5 cursor-pointer hover:text-red-500"
-                      onClick={() =>
-                        modificarDocente(d.id, { ...d, estado: false })
-                      }
+                      onClick={() => modificarDocente(d.id)}
                     />
                   </span>
                 ) : (
                   <span>
                     <CheckCircle2
                       className="size-5 cursor-pointer hover:text-green-500"
-                      onClick={() =>
-                        modificarDocente(d.id, { ...d, estado: true })
-                      }
+                      onClick={() => modificarDocente(d.id)}
                     />
                   </span>
                 )}
+
                 <span>
                   <SquarePen
                     className="size-5 cursor-pointer"
                     onClick={() => {
-                      setEditarDocente(!editarDocente);
+                      setEditarDocente(true);
                       setDatosDocente(d);
                     }}
                   />
