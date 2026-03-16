@@ -62,7 +62,7 @@ function TablaAlumnos({ busqueda }) {
               <td>{a.direccion}</td>
               <td>{a.dni}</td>
               <td>
-                {a.estado ? (
+                {a.activo ? (
                   <div className="flex items-center gap-1">
                     <CheckCircle2 className="size-4 text-green-500" />
                     <span className="text-sm font-semibold">Activo</span>
@@ -75,22 +75,21 @@ function TablaAlumnos({ busqueda }) {
                 )}
               </td>
               <td className="flex gap-2 text-slate-300">
-                {a.estado ? (
+                {a.activo ? (
                   <span>
                     <Ban
                       className="size-5 cursor-pointer"
-                      onClick={() =>
-                        modificarAlumno(a.id, { ...a, estado: false })
-                      }
+                      onClick={() => {
+                        console.log("click alumno", a.id);
+                        modificarAlumno(a.id);
+                      }}
                     />
                   </span>
                 ) : (
                   <span>
                     <CheckCircle2
                       className="size-5 cursor-pointer hover:text-green-500"
-                      onClick={() =>
-                        modificarAlumno(a.id, { ...a, estado: true })
-                      }
+                      onClick={() => modificarAlumno(a.id)}
                     />
                   </span>
                 )}

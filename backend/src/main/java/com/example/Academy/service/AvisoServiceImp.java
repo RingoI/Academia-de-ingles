@@ -41,12 +41,13 @@ public class AvisoServiceImp implements AvisoService{
 		Persona persona = personaRepository.findByUsername(username)
 							.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-		if(persona instanceof Alumno alumno){
+	if(persona instanceof Alumno alumno){
 			List<Aviso> institucionales = avisoRepository.findByInstitucionalTrue();
 			List<Aviso> deCursos = avisoRepository.findByCursoIn(alumno.getCursos());
 			return Stream.concat(institucionales.stream(), deCursos.stream()).
 			sorted(Comparator.comparing(Aviso::getFechaCreacion).reversed()).
 			toList();
+			
 		} else if (persona instanceof Docente docente){
 			List<Aviso> institucionales = avisoRepository.findByInstitucionalTrue();
 			List<Aviso> propios = avisoRepository.findByCreador(docente);

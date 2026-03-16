@@ -1,7 +1,9 @@
 package com.example.Academy.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,15 +37,11 @@ public class Alumno extends Persona {
     
     private List<Telefono> telefonos = new ArrayList<>();
 
-
-    @ManyToMany 
+    @ManyToMany(mappedBy = "alumnos")
     @JsonIgnore
-    @JoinTable( name = "alumno_curso", 
-    joinColumns = @JoinColumn(name = "alumno_id"), 
-    inverseJoinColumns = @JoinColumn(name = "curso_id") ) 
-        
-    private List<Curso> cursos = new ArrayList<>();
+    private Set<Curso> cursos = new HashSet<>();
 
+    
    @ManyToMany
     @JoinTable(
         name = "alumno_nivel",

@@ -7,21 +7,21 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.Academy.config.ModelMapperConfig;
 import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.dto.CreateAlumnoDTO;
 import com.example.Academy.dto.CursoAlumnoDTO;
 import com.example.Academy.dto.UpdateAlumnoDTO;
 import com.example.Academy.entity.Alumno;
 import com.example.Academy.entity.Persona;
+import com.example.Academy.repository.PersonaRepository;
 import com.example.Academy.service.AuthService;
 import com.example.Academy.service.PersonaService;
 
@@ -29,14 +29,15 @@ import com.example.Academy.service.PersonaService;
 @RequestMapping("/alumnos")
 public class AlumnoResource {
 
+   
     private final PersonaService personaService;
-    private final ModelMapperConfig modelMapperConfig;
     private final AuthService authService;
+    private final PersonaRepository personaRepository;
 
-    public AlumnoResource(PersonaService personaService, ModelMapperConfig modelMapperConfig, AuthService authService) {
+    public AlumnoResource(PersonaService personaService , AuthService authService, PersonaRepository personaRepository){ 
         this.personaService = personaService;
         this.authService = authService;
-        this.modelMapperConfig = modelMapperConfig;
+        this.personaRepository = personaRepository;
         
     }
 
@@ -96,37 +97,52 @@ public class AlumnoResource {
     @PostMapping(path = "/auth", produces = "application/json")
     public ResponseEntity<?> authenticateAlumno(@RequestBody CreateAlumnoDTO createAlumnoDTO) {
         try {
-            var alumno = modelMapperConfig.modelMapper().map(createAlumnoDTO, com.example.Academy.entity.Alumno.class);
-            String token = authService.authenticate(alumno.getUsername(), alumno.getPassword());
+
+            Persona persona = personaRepository
+                    .findByUsername(createAlumnoDTO.getUsername())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+            if (!persona.getActivo()) {
+                return ResponseEntity.status(403)
+                        .body(new ApiResponseDTO<>("El usuario está desactivado", null));
+            }
+
+            String token = authService.authenticate(
+                    createAlumnoDTO.getUsername(),
+                    createAlumnoDTO.getPassword()
+            );
+
             return ResponseEntity.ok("{\"token\":\"" + token + "\"}");
+
         } catch (Exception e) {
-            return ResponseEntity.status(401).body(new ApiResponseDTO<>("Authentication failed", null));
+            return ResponseEntity.status(401)
+                    .body(new ApiResponseDTO<>("Authentication failed", null));
         }
     }
 
     
-    @DeleteMapping ("/{id}")
+    @PatchMapping ("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
     public ResponseEntity<ApiResponseDTO<Void>> deleteAlumno(@PathVariable Long id) {
         try {
             personaService.deleteAlumno(id);
-            return ResponseEntity.ok(new ApiResponseDTO<>("Alumno eliminado correctamente", null));
+            return ResponseEntity.ok(new ApiResponseDTO<>("Alumno modificado correctamente", null));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponseDTO<>("Error al eliminar el alumno", null));
         }
     }
 
-    
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
-    public ResponseEntity<?> updateAlumno(
-            @PathVariable Long id,
-            @RequestBody UpdateAlumnoDTO dto) throws Exception {
+        @PutMapping("/{id}")
+        @PreAuthorize("hasAnyRole('ADMIN', 'DOCENTE')")
+        public ResponseEntity<?> updateAlumno(
+                @PathVariable Long id,
+                @RequestBody UpdateAlumnoDTO dto) throws Exception {
 
-        personaService.updateAlumno(id, dto);
+            personaService.updateAlumno(id, dto);
 
-        return ResponseEntity.ok(new ApiResponseDTO<>("Alumno actualizado correctamente", null));
-    }
+            return ResponseEntity.ok(new ApiResponseDTO<>("Alumno actualizado correctamente", null));
+        }
+
 
 
     //AGREGO. NO ESTABA EN EL BACK ORIGINAL
@@ -137,7 +153,5 @@ public class AlumnoResource {
             personaService.getAlumnosSinCurso()
         );
     }
-
-
 
 }

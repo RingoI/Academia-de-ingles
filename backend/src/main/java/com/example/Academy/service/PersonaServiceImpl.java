@@ -113,7 +113,8 @@ public class PersonaServiceImpl implements PersonaService {
         Alumno alumno = alumnoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
 
-        alumno.setActivo(false);
+        // toggle del estado
+        alumno.setActivo(!alumno.getActivo());
 
         alumnoRepository.save(alumno);
     }
@@ -121,12 +122,14 @@ public class PersonaServiceImpl implements PersonaService {
     @Override
     public void deleteDocente(Long id) {
         Docente docente = docenteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
 
-        docente.setActivo(false);
+        // toggle del estado
+        docente.setActivo(!docente.getActivo());
 
         docenteRepository.save(docente);
     }
+
 
 
     @Override
