@@ -10,14 +10,15 @@
 .tablero{
   display:grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  justify-items:center;
 
   gap:clamp(30px, 4vw, 60px);
 
   padding:clamp(25px, 4vw, 50px);
 
   max-width:1100px;
-  width:90%;
+  width:95%;
 
   margin:0 auto;
 
@@ -33,11 +34,11 @@
 .nota{
   width:100%;
 
-  max-width:150px;
+  max-width:170px;
 
   padding:clamp(10px, 1vw, 14px);
 
-  font-size:clamp(13px, 1.1vw, 15px);
+  font-size:clamp(13px, 1.1vw, 20px);
 
   white-space:pre-line;
 
@@ -55,6 +56,11 @@
   transition:0.2s;
 
   margin:auto;
+
+  text-align:center;       /* ← centra el texto */
+  display:flex;
+  flex-direction:column;
+  align-items:center;      /* ← centra íconos */
 }
 
 .nota{
@@ -85,3 +91,90 @@
     inset 0 1px 2px rgba(255,255,255,0.4);
 }
 
+  .texto-nota{
+    white-space: pre-line;
+  }
+
+  .link-meet{
+    display:block;
+    margin-top:0px;
+
+    color:#e628c6;
+    font-weight:600;
+
+    text-decoration:none;
+  }
+
+  .link-meet:hover{
+    text-decoration:underline;
+}
+
+.link-whatsapp{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  margin-top:0px;
+
+  color:#16a34a;
+  font-weight:600;
+
+  text-decoration:none;
+}
+
+.link-whatsapp:hover{
+  text-decoration:underline;
+}
+
+.link-aviso{
+  display:block;
+  margin-top:0px;
+
+  color:#2563eb;
+  font-weight:600;
+
+  text-decoration:none;
+}
+
+.link-aviso:hover{
+  text-decoration:underline;
+}
+
+.nota-destacada{
+
+  grid-column: 1 / -1;   /* ocupa toda la fila */
+
+  max-width:750px;
+
+  margin:0 auto;
+
+  font-size:50px;
+
+  padding:12px 28px;
+  min-height:auto;
+  text-align:center;
+  
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.35);
+
+}
+
+.nota-destacada .pin{
+  width:18px;
+  height:18px;
+}
+
+.nota-destacada .texto-nota{
+  line-height:0;
+}
+
+.nota-destacada{
+  display:inline-flex;
+
+  padding:10px 24px;
+
+  height:auto;
+
+  align-items:center;
+  justify-content:center;
+}
