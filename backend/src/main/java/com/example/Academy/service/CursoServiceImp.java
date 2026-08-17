@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Academy.dto.CreateCursoRequestDTO;
 import com.example.Academy.dto.CursoResponseDTO;
+import com.example.Academy.dto.CursosAlumnoDTO;
 import com.example.Academy.dto.CursosPorDocenteDTO;
 import com.example.Academy.dto.PersonaDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
@@ -50,6 +51,7 @@ public CursoResponseDTO crearCurso(CreateCursoRequestDTO dto) {
     curso.setCosto(dto.getCosto());
     curso.setFechaInicio(dto.getFechaInicio());
     curso.setFechaFin(dto.getFechaFin());
+    curso.setCosto(dto.getCosto());
 
     if (dto.getNivelesIds() != null && !dto.getNivelesIds().isEmpty()) {
         List<Nivel> niveles = nivelRepository.findAllById(dto.getNivelesIds());
@@ -150,6 +152,19 @@ public List<CursoResponseDTO> obtenerCursos() {
                     .collect(Collectors.toList());
                     
 }
+
+    @Override
+    public List<CursosAlumnoDTO> cursosPorAlumno(Long alumnoId){
+        // Obtener la lista de cursos del alumno
+        List<Curso> cursos = cursoRepository.findByAlumnos_Id(alumnoId);
+
+        // Mapear cada Curso a CursosAlumnoDTO
+        return cursos.stream()
+                    .map(c -> new CursosAlumnoDTO(c.getId(), c.getNombre()))
+                    .toList(); // Java 16+, sino usar .collect(Collectors.toList())
+    }
+
+
 
     @Override
     public List<CursosPorDocenteDTO> obtenerCursosPorDocente(Long id){

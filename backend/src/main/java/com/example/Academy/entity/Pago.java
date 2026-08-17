@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class Pago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "payment_id", nullable = false, unique = true)
+    @Column(name = "payment_id", nullable = true, unique = true)
     private String paymentId;
 
     @Column(nullable = false)
@@ -49,9 +50,25 @@ public class Pago {
     @Column(name = "fecha")
     private LocalDateTime fecha;
 
+    @ManyToOne
+    private Alumno alumno;
+
+    private String preferenceId;
+
+    @ManyToOne
+    private Curso curso;
+
+    private Integer numeroCuota;
+
+    @Column(name = "init_point", nullable = false)
+    private String initPoint;
 
 
     @Column(nullable = false)
     private String source = "MERCADO_PAGO";
 
+    private LocalDateTime fechaDePago;
+
+    @Column(name = "cant_cuotas")
+    private int cantCuotas;
 }

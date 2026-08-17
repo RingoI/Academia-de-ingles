@@ -29,6 +29,7 @@ function AdminCursos() {
     docentesIds: [],
     nivelesIds: [],
     alumnosIds: [],
+    costo: null,
   });
 
   const formatearFecha = (fechaISO) => {
@@ -300,39 +301,62 @@ function AdminCursos() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                    Cupo de alumnos
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.cupo}
-                    onChange={(e) =>
-                      setFormData({ ...formData, cupo: e.target.value })
-                    }
-                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono text-white"
-                  />
+              <div className="relative z-10 pt-6 border-t border-slate-800 flex flex-col gap-6">
+                {/* VIGENCIA */}
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+                      Vigencia
+                    </span>
+                    <span className="text-xs text-slate-300 font-mono">
+                      {formData.fechaInicio
+                        ? formatearFecha(formData.fechaInicio)
+                        : "—"}{" "}
+                      —{" "}
+                      {formData.fechaFin
+                        ? formatearFecha(formData.fechaFin)
+                        : "—"}
+                    </span>
+                  </div>
                 </div>
-                {/* COSTO */}
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                    Costo
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.costo}
-                    onChange={(e) =>
-                      setFormData({ ...formData, costo: e.target.value })
-                    }
-                    placeholder="Ej: 15000"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono text-white"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                    Niveles
-                  </label>
+
+                {/* FORMULARIO */}
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
+                      Cupo de alumnos
+                    </label>
+                    <input
+                      type="number"
+                      value={formData.cupo}
+                      onChange={(e) =>
+                        setFormData({ ...formData, cupo: e.target.value })
+                      }
+                      className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono text-white"
+                    />
+                  </div>
+
+                  {/* COSTO */}
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
+                      Costo
+                    </label>
+                    <input
+                      type="number"
+                      value={formData.costo}
+                      onChange={(e) =>
+                        setFormData({ ...formData, costo: e.target.value })
+                      }
+                      placeholder="Ej: 15000"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono text-white"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
+                      Niveles
+                    </label>
+                  </div>
 
                   <select
                     multiple

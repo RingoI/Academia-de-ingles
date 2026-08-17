@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Academy.dto.ApiResponseDTO;
 import com.example.Academy.dto.CreateCursoRequestDTO;
 import com.example.Academy.dto.CursoResponseDTO;
+import com.example.Academy.dto.CursosAlumnoDTO;
 import com.example.Academy.dto.CursosPorDocenteDTO;
 import com.example.Academy.dto.UpdateCursoRequestDTO;
 import com.example.Academy.dto.AlumnoResponseDTO;
@@ -152,4 +153,9 @@ public class CursoResource {
             )   
     );
 }
+    @GetMapping("/alumno/{alumnoId}")
+    public ResponseEntity<List<CursosAlumnoDTO>> obtenerCursosPorAlumno(@PathVariable Long alumnoId){
+        return ResponseEntity.ok(cursoService.cursosPorAlumno(alumnoId));
+    }
+
 }

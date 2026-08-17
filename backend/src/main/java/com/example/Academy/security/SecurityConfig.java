@@ -246,6 +246,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/pagos/webhook").permitAll()
                 .requestMatchers(HttpMethod.GET, "/pagos/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/pagos/crear").authenticated()
+                .requestMatchers(HttpMethod.POST, "/pagos/cuponera").permitAll()
                 .requestMatchers("/webhooks/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()                            
                 

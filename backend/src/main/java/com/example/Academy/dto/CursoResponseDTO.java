@@ -1,12 +1,15 @@
 package com.example.Academy.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class CursoResponseDTO {
 
@@ -21,6 +24,6 @@ public class CursoResponseDTO {
     private Integer cupo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    private Double costo;
+    private BigDecimal costo;
 }
 

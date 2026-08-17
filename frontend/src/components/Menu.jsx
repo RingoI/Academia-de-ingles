@@ -38,7 +38,11 @@ function Menu() {
           ""
         )}
         <ItemMenu to={"/cursos"} Icono={LibraryBig} tag={"Cursos"} />
-        <ItemMenu to={"/pagos"} Icono={Banknote} tag={"Pagos"} />
+        {rol === "ROLE_DOCENTE" ? (
+          ""
+        ) : (
+          <ItemMenu to={"/pagos"} Icono={Banknote} tag={"Pagos"} />
+        )}
         <ItemMenu to={"/avisos"} Icono={Bell} tag={"Avisos"} />
 
         {rol === "ROLE_DOCENTE" ? (

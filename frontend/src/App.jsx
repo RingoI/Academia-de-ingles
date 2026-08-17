@@ -34,7 +34,6 @@ function App() {
           <Route path="/cursos/:id" element={<AdminCursoDetalle />} />
           <Route path="/cursos/alumno/:id" element={<AlumnoCursoDetalle />} />
           <Route path="/cursos/docente/:id" element={<DocenteCursoDetalle />} />
-          <Route path="/pagos" element={<PagosPage />} />
           <Route path="/examenes" element={<ExamenesPage />} />
           <Route path="/avisos" element={<AvisosPage />} />
           <Route path="/asistencias/:cursoId" element={<AsistenciaPage />} />
@@ -42,6 +41,14 @@ function App() {
             path="/docente/curso/:cursoId/tarea/:tareaId"
             element={<DocenteTareaDetalle />}
           />
+        </Route>
+
+        <Route
+          element={
+            <ProteccionRutas rolesPermitidos={["ROLE_ADMIN", "ROLE_ALUMNO"]} />
+          }
+        >
+          <Route path="/pagos" element={<PagosPage />} />
         </Route>
       </Route>
 

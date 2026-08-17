@@ -2,27 +2,42 @@ import { create } from "zustand";
 import { axiosInstance } from "../utils/axios";
 
 export const cursoStore = create((set) => ({
-	cursosAlumno: [],
-	cursoPorId: null,
+  cursosAlumno: [],
+  cursoPorId: null,
+  cursosAlumnoId: [],
 
-	obtenerCursosAlumno: async () => {
-		try {
-			const res = await axiosInstance.get(`/alumnos/mis-cursos`);
-			console.log("Res de obtenerCursosAlumno: ", res.data);
-			set({ cursosAlumno: res.data });
-		} catch (error) {
-			console.log("Error en obtenerCursosAlumno: ", error);
-		}
-	},
+  obtenerCursosAlumno: async () => {
+    try {
+      const res = await axiosInstance.get(`/alumnos/mis-cursos`);
+      console.log("Res de obtenerCursosAlumno: ", res.data);
+      set({ cursosAlumno: res.data });
+    } catch (error) {
+      console.log("Error en obtenerCursosAlumno: ", error);
+    }
+  },
 
-	obtenerCursoPorId: async (cursoId) => {
-		try {
-			console.log("obteniendo info cursos");
-			const res = await axiosInstance.get(`/cursos/${cursoId}`);
-			console.log("res obtener curso: ", res);
-			set({ cursoPorId: res.data });
-		} catch (error) {
-			console.log("Error en obtenerCursoPorId: ", error);
-		}
-	},
+  obtenerCursoPorId: async (cursoId) => {
+    try {
+      console.log("obteniendo info cursos");
+      const res = await axiosInstance.get(`/cursos/${cursoId}`);
+      console.log("res obtener curso: ", res);
+      set({ cursoPorId: res.data });
+    } catch (error) {
+      console.log("Error en obtenerCursoPorId: ", error);
+    }
+  },
+
+  obtenerCursoPorAlumnoId: async (alumnoId) => {
+    try {
+      console.log("entrando a la funcion: con id: ", alumnoId);
+      const res = await axiosInstance.get(`/cursos/alumno/${alumnoId}`);
+      console.log("data:", res);
+      const data = Array.isArray(res.data) ? res.data : (res.data.cursos ?? []);
+      set({
+        cursosAlumnoId: data.map((c) => ({ id: c.id, nombre: c.nombre })),
+      });
+    } catch (error) {
+      console.log("Error en obtenerCursoPorAlumnoId: ", error);
+    }
+  },
 }));

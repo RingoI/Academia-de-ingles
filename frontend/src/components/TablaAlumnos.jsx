@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { usuarioStore } from "../store/usuarios.store";
-import { Ban, CheckCircle2, SquarePen, XCircle } from "lucide-react";
+import {
+  Ban,
+  CheckCircle2,
+  SquarePen,
+  WalletCards,
+  XCircle,
+} from "lucide-react";
 import FormularioAlumnos from "./FormularioAlumnos";
+import FormularioCuponera from "./FormularioCuponera";
 
 function TablaAlumnos({ busqueda }) {
   const { alumnos, obtenerAlumnos, modificarAlumno } = usuarioStore();
   const [editarAlumno, setEditarAlumno] = useState(false);
+  const [abrirCuponera, setAbrirCuponera] = useState(false);
   const [datosAlumno, setDatosAlumno] = useState({});
 
   useEffect(() => {
@@ -43,6 +51,17 @@ function TablaAlumnos({ busqueda }) {
           values={datosAlumno}
         />
       </div>
+
+      {/* MODAL CUPONERA */}
+      <div
+        className={`${abrirCuponera ? "fixed inset-0 ml-60" : "hidden"} z-10 flex items-center justify-center bg-black/50`}
+      >
+        <FormularioCuponera
+          setAbrirCuponera={setAbrirCuponera}
+          datosAlumno={datosAlumno}
+        />
+      </div>
+
       <table className="table rounded-lg overflow-hidden">
         <thead className="bg-[#0d1526]">
           <tr>
@@ -53,6 +72,7 @@ function TablaAlumnos({ busqueda }) {
             ))}
           </tr>
         </thead>
+
         <tbody className="bg-[#0c1224] text-slate-300">
           {alumnosFiltrados.map((a, idx) => (
             <tr key={a.id}>
@@ -61,6 +81,7 @@ function TablaAlumnos({ busqueda }) {
               <td>{a.email}</td>
               <td>{a.direccion}</td>
               <td>{a.dni}</td>
+
               <td>
                 {a.activo ? (
                   <div className="flex items-center gap-1">
@@ -74,6 +95,7 @@ function TablaAlumnos({ busqueda }) {
                   </div>
                 )}
               </td>
+
               <td className="flex gap-2 text-slate-300">
                 {a.activo ? (
                   <span>
@@ -96,6 +118,17 @@ function TablaAlumnos({ busqueda }) {
                     className="size-5 cursor-pointer"
                     onClick={() => {
                       setEditarAlumno(true);
+                      setDatosAlumno(a);
+                    }}
+                  />
+                </span>
+
+                {/* BOTON PAGOS */}
+                <span>
+                  <WalletCards
+                    className="size-5 cursor-pointer hover:text-yellow-400"
+                    onClick={() => {
+                      setAbrirCuponera(true);
                       setDatosAlumno(a);
                     }}
                   />
